@@ -14,12 +14,12 @@
 //
 // Persons:          (x)
 //
-// Online sources:   (x)
+// Online sources:   https://tinyurl.com/m9zku222
+//                   https://tinyurl.com/djbyr8bb
 //////////////////////////// 80 columns wide //////////////////////////////////
 import java.lang.reflect.InvocationTargetException;
-import java.io.*;
-
 import java.lang.reflect.Method;
+import java.io.*;
 
 /**
  * Test class for this assignment.
@@ -29,11 +29,20 @@ import java.lang.reflect.Method;
 public class P1 {
     /**
      * Main method, entry of the test
+     * getDeclaredMethods() is used to enumerate all methods defined in this
+     * class. The main method then routinely calls all methods found by
+     * getDeclaredMethods. Of course, before calling methods, it checks if
+     * the method is indeed a unit test method, i.e. it is not the main
+     * method or any other methods, such as lambdas.
+     *
      * @param args command lind arguments, not used
-     * @throws InvocationTargetException throws by invoke
-     * @throws IllegalAccessException throws by invoke
+     * @throws InvocationTargetException threw by invoke()
+     * @throws IllegalAccessException threw by invoke()
      */
-    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args) throws
+            InvocationTargetException,
+            IllegalAccessException
+    {
         // Get all methods declared in this class
         Method[] methods = P1.class.getDeclaredMethods();
         boolean allSuccess = true;
@@ -60,7 +69,7 @@ public class P1 {
      * Test if Sym initialized with correct type
      * @return true if test passed
      */
-    public static boolean testSymInitializedWithCorrectType() {
+    private static boolean testSymInitializedWithCorrectType() {
         final String type = "ser";
         Sym sym = new Sym(type);
         return sym.getType().equals(type);
@@ -70,7 +79,7 @@ public class P1 {
      * Test if Sym's string representation is correct
      * @return true if test passed
      */
-    public static boolean testSymProductCorrectString() {
+    private static boolean testSymProductCorrectString() {
         final String type = "haber";
         Sym sym = new Sym(type);
         return sym.toString().equals(type);
@@ -81,7 +90,7 @@ public class P1 {
      * HashMap
      * @return true if test passed
      */
-    public static boolean testSymTableInitializedAListWithAHashMap() {
+    private static boolean testSymTableInitializedAListWithAHashMap() {
         SymTable table = new SymTable();
         try {
             table.removeScope();
@@ -96,7 +105,7 @@ public class P1 {
      * HashMap
      * @return true if test passed
      */
-    public static boolean testSymTableInitializedAListWithAnEmptyHashMap() {
+    private static boolean testSymTableInitializedAListWithAnEmptyHashMap() {
         SymTable table = new SymTable();
         try {
             final Sym result = table.lookupLocal("");
@@ -110,7 +119,7 @@ public class P1 {
      * Test if SymTable can remove HashMap successfully
      * @return true if test passed
      */
-    public static boolean testSymTableRemoveHashMap() {
+    private static boolean testSymTableRemoveHashMap() {
         SymTable table = new SymTable();
         try {
             table.removeScope();
@@ -132,7 +141,7 @@ public class P1 {
      * parameters is null
      * @return true if test passed
      */
-    public static boolean testSymTableAddDeclThrowsNPE1() {
+    private static boolean testSymTableAddDeclThrowsNPE1() {
         SymTable table = new SymTable();
         try {
             table.addDecl(null, new Sym("Hello"));
@@ -149,7 +158,7 @@ public class P1 {
      * parameters is null
      * @return true if test passed
      */
-    public static boolean testSymTableAddDeclThrowsNPE2() {
+    private static boolean testSymTableAddDeclThrowsNPE2() {
         SymTable table = new SymTable();
         try {
             table.addDecl("Hello", null);
@@ -166,7 +175,7 @@ public class P1 {
      * parameters is null
      * @return true if test passed
      */
-    public static boolean testSymTableAddDeclThrowsNPE3() {
+    private static boolean testSymTableAddDeclThrowsNPE3() {
         SymTable table = new SymTable();
         try {
             table.addDecl(null, null);
@@ -183,7 +192,7 @@ public class P1 {
      * HashMaps in the list
      * @return true if test passed
      */
-    public static boolean testSymTableThrowsEmptySymTableException() {
+    private static boolean testSymTableThrowsEmptySymTableException() {
         SymTable table = new SymTable();
         try {
             table.removeScope();
@@ -204,7 +213,7 @@ public class P1 {
      * Test if addDecl can successfully add Sym
      * @return true if test passed
      */
-    public static boolean testSymTableAddDecl1() {
+    private static boolean testSymTableAddDecl1() {
         SymTable table = new SymTable();
         try {
             final Sym sym = new Sym("World!");
@@ -221,7 +230,7 @@ public class P1 {
      * Test if addDecl can successfully add Sym
      * @return true if test passed
      */
-    public static boolean testSymTableAddDecl2() {
+    private static boolean testSymTableAddDecl2() {
         SymTable table = new SymTable();
         try {
             final Sym sym1 = new Sym("World!");
@@ -245,7 +254,7 @@ public class P1 {
      * to be added
      * @return true if test passed
      */
-    public static boolean testSymTableThrowsDuplicateSymException1() {
+    private static boolean testSymTableThrowsDuplicateSymException1() {
         SymTable table = new SymTable();
         try {
             final Sym sym = new Sym("World!");
@@ -265,7 +274,7 @@ public class P1 {
      * to be added
      * @return true if test passed
      */
-    public static boolean testSymTableThrowsDuplicateSymException2() {
+    private static boolean testSymTableThrowsDuplicateSymException2() {
         SymTable table = new SymTable();
         try {
             final Sym sym = new Sym("World!");
@@ -286,7 +295,7 @@ public class P1 {
      * to be added
      * @return true if test passed
      */
-    public static boolean testSymTableThrowsDuplicateSymException3() {
+    private static boolean testSymTableThrowsDuplicateSymException3() {
         SymTable table = new SymTable();
         try {
             final Sym sym1 = new Sym("World!");
@@ -306,7 +315,7 @@ public class P1 {
      * Test if addDecl() add symbol to the hashmap at index 0 in the list
      * @return true if test passed
      */
-    public static boolean testSymTableAddDeclOnlyAddToFirstHashMap() {
+    private static boolean testSymTableAddDeclOnlyAddToFirstHashMap() {
         SymTable table = new SymTable();
         try {
             table.addScope();
@@ -327,7 +336,7 @@ public class P1 {
      * Test if addScope() add scope to the beginning of the list
      * @return true if test passed
      */
-    public static boolean testSymTableAddScopeAddToFront() {
+    private static boolean testSymTableAddScopeAddToFront() {
         SymTable table = new SymTable();
         try {
             final String name = "name";
@@ -345,7 +354,7 @@ public class P1 {
      * HashMap in the list
      * @return true if test passed
      */
-    public static boolean testSymTableLookUpLocalThrowsEmptySymTableExcep1() {
+    private static boolean testSymTableLookUpLocalThrowsEmptySymTableExcep1() {
         SymTable table = new SymTable();
         try {
             table.removeScope();
@@ -364,7 +373,7 @@ public class P1 {
      * HashMap in the list
      * @return true if test passed
      */
-    public static boolean testSymTableLookUpLocalThrowsEmptySymTableExcep2() {
+    private static boolean testSymTableLookUpLocalThrowsEmptySymTableExcep2() {
         SymTable table = new SymTable();
         try {
             final String name = "name";
@@ -385,7 +394,7 @@ public class P1 {
      * HashMap in the list
      * @return true if test passed
      */
-    public static boolean testSymTableLookUpGlobalThrowsEmptySymTableExcep1() {
+    private static boolean testSymTableLookUpGlobalThrowsEmptySymTableExcep1() {
         SymTable table = new SymTable();
         try {
             table.removeScope();
@@ -404,7 +413,7 @@ public class P1 {
      * HashMap in the list
      * @return true if test passed
      */
-    public static boolean testSymTableLookUpGlobalThrowsEmptySymTableExcep2() {
+    private static boolean testSymTableLookUpGlobalThrowsEmptySymTableExcep2() {
         SymTable table = new SymTable();
         try {
             final String name = "name";
@@ -425,7 +434,7 @@ public class P1 {
      * has the lowest index
      * @return true if test passed
      */
-    public static boolean testSymTableLookupGlobalFindClosestToFront1() {
+    private static boolean testSymTableLookupGlobalFindClosestToFront1() {
         SymTable table = new SymTable();
         try {
             table.addScope();
@@ -453,7 +462,7 @@ public class P1 {
      * has the lowest index
      * @return true if test passed
      */
-    public static boolean testSymTableLookupGlobalFindClosestToFront2() {
+    private static boolean testSymTableLookupGlobalFindClosestToFront2() {
         SymTable table = new SymTable();
         try {
             table.addScope();
@@ -482,7 +491,7 @@ public class P1 {
      * Check if sym key cannot be found when scope that contains it is removed
      * @return true if test passed
      */
-    public static boolean testSymTableRemoveScopeRemovesAndCannotFind() {
+    private static boolean testSymTableRemoveScopeRemovesAndCannotFind() {
         SymTable table = new SymTable();
         try {
             final String name = "name";
@@ -503,7 +512,7 @@ public class P1 {
      * Check if print() begins with a new line character
      * @return true if test passed
      */
-    public static boolean testSymTablePrintBeginWithNewLine() {
+    private static boolean testSymTablePrintBeginWithNewLine() {
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -519,7 +528,7 @@ public class P1 {
      * Check if print() starts with the correct string
      * @return true if test passed
      */
-    public static boolean testSymTablePrintSymTable() {
+    private static boolean testSymTablePrintSymTable() {
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -535,7 +544,7 @@ public class P1 {
      * Check if print() contains prints no HashMap when SymTable list is empty
      * @return true if test passed
      */
-    public static boolean testSymTableEmptyTablePrintNothingMore() {
+    private static boolean testSymTableEmptyTablePrintNothingMore() {
         // Redirect stdout so that they can be checked
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -557,7 +566,7 @@ public class P1 {
      * Check if print() contains the correct number of new lines
      * @return True if test passed
      */
-    public static boolean testSymTableCorrectNumberOfNewLine() {
+    private static boolean testSymTableCorrectNumberOfNewLine() {
         // Redirect stdout so that they can be checked
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
