@@ -1,0 +1,8 @@
+#+TITLE: P1
+#+AUTHOR: Reid Chen
+
+I first created the =Sym= class and then created the =SymTable= class. While
+creating =SymTable=, I also created the two Exception classes. I have decided to
+use a =LinkedList= since we only care about the front of the list while adding
+and removing scopes. =LinkedList= incurs less time complexity while doing these
+operations than =ArrayList=.
