@@ -11,6 +11,7 @@ import java_cup.runtime.*;  // defines Symbol
 public class P2 {
     public static void main(String[] args) throws IOException {
                                            // exception may be thrown by yylex
+
         // test all tokens
         testAllTokens();
         CharNum.num = 1;
@@ -174,5 +175,30 @@ public class P2 {
             my_token = my_scanner.next_token();
         } // end while
         outFile.close();
+    }
+
+    public int main(String[] args)
+    {
+        File file = new File("allTokens.in");
+
+
+        BufferedWriter out = new BufferedWriter(new FileWriter("allTokens" +
+                ".out));
+        try
+        {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNext())
+            {
+                String str1 = sc.next_token();
+                out.write(str1);
+            }
+            sc.close();
+            out.close();
+        }
+        catch(FileNotFoundException e){
+            System.out.println("file does not exist");
+        }
+        return 0;
+
     }
 }
