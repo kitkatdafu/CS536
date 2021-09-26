@@ -58,6 +58,22 @@ class CharNum {
 
 DIGIT=        [0-9]
 WHITESPACE=   [\040\t]
+CHAR= [a-z | A-Z | {DIGIT} ]*
+IDENTIFIER=     [_ | a-z | A-Z] {CHAR}//exclude
+all reserved words
+IntLit= [0-9]+
+StrChar= [\n | \t | \" | \"" | ? | \\ | {CHAR} | {WHITESPACE}]
+//shall be + or nothing behind the {CHAR} ?
+//unterminated error? Where the \n is supposed to be? UNTERM = \"{StrChar}*\n
+StrLit= \"{StrChar}*{StrChar}*\"
+OTChar= [{ | } | ( | ) | ; | , | . | < | >  | + | - | * | /
+| ! | =] [ ++ | -- | << | >> | && | || | == | != | <= | >= ]
+Comment = {TraditionalComment} | {EndOfLineComment} |
+          {DocumentationComment}
+
+TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
+DocumentationComment = "/*" "*"+ [^/*] ~"*/"
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -70,26 +86,223 @@ return new Symbol(sym.EOF);
 %line
 
 %%
+"bool"    {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.BOOL, tokenVal);
+          }
+"int"     {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.INT, tokenVal);
+          }
+"void"    {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.VOID, tokenVal);
+          }
+"tru"     {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.TRUE, tokenVal);
+          }
+"fls"     {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.FALSE, tokenVal);
+          }
+"struct"  {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.STRUCT, tokenVal);
+          }
+"receive" {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.RECEIVE, tokenVal);
+          }
+"print"   {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.PRINT, tokenVal);
+          }
+"if"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.IF, tokenVal);
+          }
+"else"    {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.ELSE, tokenVal);
+          }
+"while"   {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.WHILE, tokenVal);
+          }
+"ret"     {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.RETURN, tokenVal);
+          }
+
+\"{}\n
 
 {DIGIT}+  { // NOTE: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
-            int val = (new Integer(yytext())).intValue();
+            try {
+                int val = (new Integer(yytext())).intValue();
+            } catch (NumberFormatException e) {
+                ErrMsg.warn(yyline + 1,
+                            CharNum.num,
+                            "integer literal too large; using max value");
+                IntLitTokenVal tokenVal = new IntLitTokenVal(yyline + 1,
+                                                             CharNum.num,
+                                                             Integer.MAX);
+                CharNum.num += yytext().length();
+                return new Symbol(sym.INTLITERAL, tokenVal);
+            }
             Symbol S = new Symbol(sym.INTLITERAL,
                              new IntLitTokenVal(yyline+1, CharNum.num, val));
             CharNum.num += yytext().length();
             return S;
           }
 
+
+{IDENTIFIER}+ {
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+               }
+
+{StrLit}  {
+            StrLitTokenVal token = new StrLitTokenVal(yyline +1,
+                                                      CharNum.num,
+                                                      yytext());
+            CharNum.num += yytext().length();
+            return new Symbol(sym.STRINGLITERAL, token)
+          }
+
 \n        { CharNum.num = 1; }
 
 {WHITESPACE}+  { CharNum.num += yytext().length(); }
 
-"+"       { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num++;
-            return S;
+"+"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.PLUS, tokenVal);
           }
-        
+
+"-"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.MINUS, tokenVal);
+          }
+"*"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.TIMES, tokenVal);
+          }
+"/"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.DIVIDE, tokenVal);
+          }
+"="       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.ASSIGN, tokenVal);
+          }
+"<"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LESS, tokenVal);
+          }
+">"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.GREATER, tokenVal);
+          }
+"!"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.NOT, tokenVal);
+          }
+"{"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LCURLY, tokenVal);
+          }
+"}"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.RCURLY, tokenVal);
+          }
+"("       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LPAREN, tokenVal);
+          }
+")"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.RPAREN, tokenVal);
+          }
+";"       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.SEMICOLON, tokenVal);
+          }
+","       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.COMMA, tokenVal);
+          }
+"."       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.DOT, tokenVal);
+          }
+"<<"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.RECEIVE, tokenVal);
+          }
+">>"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.PRINT, tokenVal);
+          }
+"++"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.PLUSPLUS, tokenVal);
+          }
+"--"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.MINUSMINUS, tokenVal);
+          }
+"&&"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.AND, tokenVal);
+          }
+"||"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.OR, tokenVal);
+          }
+"=="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.EQUALS, tokenVal);
+          }
+"!="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.NOTEQUALS, tokenVal);
+          }
+"<="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.LESSEQ, tokenVal);
+          }
+">="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.GREATEREQ, tokenVal);
+          }
+
 .         { ErrMsg.fatal(yyline+1, CharNum.num,
-                         "ignoring illegal character: " + yytext());
+                         "illegal character ignored: " + yytext());
             CharNum.num++;
           }
