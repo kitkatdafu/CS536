@@ -9,32 +9,56 @@ import java_cup.runtime.*;  // defines Symbol
  * numbers, values associated with tokens).
  */
 public class P2 {
+
+    private static class FileHandlers {
+        private FileReader inFile;
+        private PrintWriter outFile;
+
+        public FileHandlers(String fileName) {
+            try {
+                inFile = new FileReader(fileName + ".in");
+                outFile = new PrintWriter(new FileWriter(fileName + ".out"));
+            } catch (FileNotFoundException ex) {
+                System.err.printf("File %s.in not found.\n", fileName);
+                System.exit(-1);
+            } catch (IOException ex) {
+                System.err.printf("%s.out cannot be opened.\n", fileName);
+                System.exit(-1);
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
                                            // exception may be thrown by yylex
 
         // test all tokens
-        testAllTokens();
+        testAllTokens("allTokens");
+        testIntegerLiteral();
         CharNum.num = 1;
-    
-        // File file = new File("allTokens.in");
-        // BufferedWriter out = new BufferedWriter(new FileWriter("allTokens.out"));
-        // try
-        // {
-        //     Scanner sc = new Scanner(file);
-        //     while(sc.hasNext())
-        //     {
-        //         String str1 = sc.next_token();
-        //         out.write(str1);
-        //     }
-        //     sc.close();
-        //     out.close();
-        // }
-        // catch(FileNotFoundException e){
-        //     System.out.println("file does not exist");
-        // }
-
         // ADD CALLS TO OTHER TEST METHODS HERE
     }
+
+
+    private static void testIntegerLiteral() throws IOException {
+        testAllTokens("intlit");
+    }
+
+    private static void testBadIntegerLiteral() throws IOException {
+
+    }
+
+    private static void testBadStringLiteral() throws IOException {
+
+    }
+
+    private static void testUnterminatedStringLiteral() throws IOException {
+
+    }
+
+    private static void testIllegalCharacter() throws IOException {
+
+    }
+
 
     /**
      * testAllTokens
@@ -45,20 +69,11 @@ public class P2 {
      * correctness of the scanner by comparing the input and output files
      * (e.g., using a 'diff' command).
      */
-    private static void testAllTokens() throws IOException {
+    private static void testAllTokens(String name) throws IOException {
         // open input and output files
-        FileReader inFile = null;
-        PrintWriter outFile = null;
-        try {
-            inFile = new FileReader("allTokens.in");
-            outFile = new PrintWriter(new FileWriter("allTokens.out"));
-        } catch (FileNotFoundException ex) {
-            System.err.println("File allTokens.in not found.");
-            System.exit(-1);
-        } catch (IOException ex) {
-            System.err.println("allTokens.out cannot be opened.");
-            System.exit(-1);
-        }
+        FileHandlers handlers = new FileHandlers(name);
+        FileReader inFile = handlers.inFile;
+        PrintWriter outFile = handlers.outFile;
 
         // create and call the scanner
         Yylex my_scanner = new Yylex(inFile);

@@ -38,6 +38,7 @@ ErrMsg.class: ErrMsg.java
 test:
 	java -cp $(CP) P2 
 	diff allTokens.in allTokens.out
+	diff intlit.in intlit.out
 
 ###
 # clean up
@@ -47,4 +48,4 @@ clean:
 	rm -f *~ *.class b.jlex.java
 
 cleantest:
-	rm -f allTokens.out
+	rm -f *.out

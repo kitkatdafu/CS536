@@ -58,20 +58,14 @@ class CharNum {
 DIGIT=        [0-9]
 LETTER=       [a-zA-Z]
 WHITESPACE=   [\040\t]
-CHAR=         [a-zA-Z{DIGIT}]*
+
+ESCAPEDCHAR=  [\\n|\\t|\\\'|\\\"|\\\?|\\\\]
+STRCHAR=      [^\n\"\\]
 
 IDENTIFIER=   ({LETTER}|_)(_|{LETTER}|{DIGIT})*
+STRLIT=       ({ESCAPEDCHAR}|{STRCHAR}|{WHITESPACE})*
 
-IntLit=       [0-9]+
-
-StrChar=      (\\n|\\t|\\"|\\'|\?|\\\|{CHAR}|{WHITESPACE})
-StrLit=       "\"({StrChar})*\""
-
-Comment=    {TraditionalComment}|{EndOfLineComment}|{DocumentationComment}
-
-TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
-DocumentationComment = "/*" "*"+ [^/*] ~"*/"
+COMMENT=      (///|###)(.)*
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -144,9 +138,7 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return new Symbol(sym.RETURN, tokenVal);
           }
-{DIGIT}+  { // NOTE: the following computation of the integer value does NOT
-            //       check for overflow.  This must be changed.
-            try {
+{DIGIT}+  {try {
                 int val = (new Integer(yytext())).intValue();
 
                 Symbol S = new Symbol(sym.INTLITERAL,
@@ -173,14 +165,16 @@ return new Symbol(sym.EOF);
                 CharNum.num += yytext().length();
                 return new Symbol(sym.ID, tokenVal);
               }
-	       
-{StrLit}  {
+
+{STRLIT}  {
             StrLitTokenVal token = new StrLitTokenVal(yyline +1,
                                                       CharNum.num,
                                                       yytext());
             CharNum.num += yytext().length();
             return new Symbol(sym.STRINGLITERAL, token);
           }
+
+{COMMENT} { CharNum.num += yytext().length(); }
 
 \n        { CharNum.num = 1; }
 
