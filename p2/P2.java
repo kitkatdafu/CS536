@@ -16,6 +16,23 @@ public class P2 {
         testAllTokens();
         CharNum.num = 1;
     
+        File file = new File("allTokens.in");
+        BufferedWriter out = new BufferedWriter(new FileWriter("allTokens.out"));
+        try
+        {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNext())
+            {
+                String str1 = sc.next_token();
+                out.write(str1);
+            }
+            sc.close();
+            out.close();
+        }
+        catch(FileNotFoundException e){
+            System.out.println("file does not exist");
+        }
+
         // ADD CALLS TO OTHER TEST METHODS HERE
     }
 
@@ -175,30 +192,5 @@ public class P2 {
             my_token = my_scanner.next_token();
         } // end while
         outFile.close();
-    }
-
-    public int main(String[] args)
-    {
-        File file = new File("allTokens.in");
-
-
-        BufferedWriter out = new BufferedWriter(new FileWriter("allTokens" +
-                ".out));
-        try
-        {
-            Scanner sc = new Scanner(file);
-            while(sc.hasNext())
-            {
-                String str1 = sc.next_token();
-                out.write(str1);
-            }
-            sc.close();
-            out.close();
-        }
-        catch(FileNotFoundException e){
-            System.out.println("file does not exist");
-        }
-        return 0;
-
     }
 }
