@@ -7,7 +7,6 @@ import java_cup.runtime.*; // defines the Symbol class
 // A TokenVal object contains the line number on which the token occurs as
 // well as the number of the character on that line that starts the token.
 // Some tokens (literals and IDs) also include the value of the token.
-
 class TokenVal {
   // fields
     int linenum;
@@ -57,17 +56,18 @@ class CharNum {
 %%
 
 DIGIT=        [0-9]
+LETTER=       [a-zA-Z]
 WHITESPACE=   [\040\t]
-CHAR= [a-z|A-Z|{DIGIT}]*
-IDENTIFIER=     [_|a-z|A-Z] {CHAR}//exclude
-all reserved words
-IntLit= [0-9]+
-StrChar= [\\n|\\t|\\"|\\""|?|\\\|{CHAR}|{WHITESPACE}]
-//shall be + or nothing behind the {CHAR} ?
-//unterminated error? Where the \n is supposed to be? UNTERM = \"{StrChar}*\n
-StrLit= \"{StrChar}*{StrChar}*\"
-OTChar= [{|}|(|)|;|,|.|<|>|+|-|*|/|!|=] [++|--|<<|>>|&&||||==|!=|<=|>=]
-Comment= {TraditionalComment}|{EndOfLineComment}|{DocumentationComment}
+CHAR=         [a-zA-Z{DIGIT}]*
+
+IDENTIFIER=   ({LETTER}|_)(_|{LETTER}|{DIGIT})*
+
+IntLit=       [0-9]+
+
+StrChar=      (\\n|\\t|\\"|\\'|\?|\\\|{CHAR}|{WHITESPACE})
+StrLit=       "\"({StrChar})*\""
+
+Comment=    {TraditionalComment}|{EndOfLineComment}|{DocumentationComment}
 
 TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/"
 EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
@@ -148,45 +148,38 @@ return new Symbol(sym.EOF);
             //       check for overflow.  This must be changed.
             try {
                 int val = (new Integer(yytext())).intValue();
+
+                Symbol S = new Symbol(sym.INTLITERAL,
+                                 new IntLitTokenVal(yyline+1, CharNum.num, val));
+                CharNum.num += yytext().length();
+                return S;
             } catch (NumberFormatException e) {
                 ErrMsg.warn(yyline + 1,
                             CharNum.num,
                             "integer literal too large; using max value");
                 IntLitTokenVal tokenVal = new IntLitTokenVal(yyline + 1,
                                                              CharNum.num,
-                                                             Integer.MAX);
+                                                             Integer.MAX_VALUE);
                 CharNum.num += yytext().length();
                 return new Symbol(sym.INTLITERAL, tokenVal);
             }
-            Symbol S = new Symbol(sym.INTLITERAL,
-                             new IntLitTokenVal(yyline+1, CharNum.num, val));
-            CharNum.num += yytext().length();
-            return S;
           }
 
 
-{IDENTIFIER}+ {
+{IDENTIFIER} {
                 IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
                                                      CharNum.num,
                                                      yytext());
                 CharNum.num += yytext().length();
                 return new Symbol(sym.ID, tokenVal);
-               }
+              }
 	       
-["{CHAR}*\0"] | ["{CHAR}*\n] {
-				ErrMsg.fatal(yyline+1, CharNum.num,
-                  			     "unterminated string literal ignored");
-            		        CharNum.num = 1;
-			     }
-
-["{CHAR}*\\^[nt\\'\]{CHAR*}"]
-
 {StrLit}  {
             StrLitTokenVal token = new StrLitTokenVal(yyline +1,
                                                       CharNum.num,
                                                       yytext());
             CharNum.num += yytext().length();
-            return new Symbol(sym.STRINGLITERAL, token)
+            return new Symbol(sym.STRINGLITERAL, token);
           }
 
 \n        { CharNum.num = 1; }
