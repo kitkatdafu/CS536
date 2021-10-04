@@ -38,7 +38,8 @@ ErrMsg.class: ErrMsg.java
 test:
 	java -cp $(CP) P2 
 	diff allTokens.in allTokens.out
-	diff intlit.in intlit.out
+	diff validIdentifier.in validIdentifier.out
+	diff invalidIdentifier.in invalidIdentifier.out
 
 ###
 # clean up

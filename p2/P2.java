@@ -23,10 +23,9 @@ public class P2 {
 
         // test all tokens
         testAllTokens("allTokens");
-        testAllTokens("eof");
-        // ADD CALLS TO OTHER TEST METHODS HERE
+        testAllTokens("validIdentifier");
+        testAllTokens("invalidIdentifier");
     }
-
 
     /**
      * testAllTokens
