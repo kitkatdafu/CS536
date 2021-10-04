@@ -251,7 +251,7 @@ class Yylex implements java_cup.runtime.Scanner {
 		return res;
 	}
 	private int yy_acpt[] = {
-		/* 0 */ YY_NO_ANCHOR,
+		/* 0 */ YY_NOT_ACCEPT,
 		/* 1 */ YY_NO_ANCHOR,
 		/* 2 */ YY_NO_ANCHOR,
 		/* 3 */ YY_NO_ANCHOR,
@@ -300,39 +300,85 @@ class Yylex implements java_cup.runtime.Scanner {
 		/* 46 */ YY_NO_ANCHOR,
 		/* 47 */ YY_NO_ANCHOR,
 		/* 48 */ YY_NO_ANCHOR,
-		/* 49 */ YY_NO_ANCHOR,
+		/* 49 */ YY_NOT_ACCEPT,
 		/* 50 */ YY_NO_ANCHOR,
 		/* 51 */ YY_NO_ANCHOR,
-		/* 52 */ YY_NO_ANCHOR
+		/* 52 */ YY_NO_ANCHOR,
+		/* 53 */ YY_NOT_ACCEPT,
+		/* 54 */ YY_NO_ANCHOR,
+		/* 55 */ YY_NO_ANCHOR,
+		/* 56 */ YY_NO_ANCHOR,
+		/* 57 */ YY_NOT_ACCEPT,
+		/* 58 */ YY_NO_ANCHOR,
+		/* 59 */ YY_NO_ANCHOR,
+		/* 60 */ YY_NOT_ACCEPT,
+		/* 61 */ YY_NO_ANCHOR,
+		/* 62 */ YY_NO_ANCHOR,
+		/* 63 */ YY_NOT_ACCEPT,
+		/* 64 */ YY_NO_ANCHOR,
+		/* 65 */ YY_NOT_ACCEPT,
+		/* 66 */ YY_NO_ANCHOR,
+		/* 67 */ YY_NO_ANCHOR,
+		/* 68 */ YY_NO_ANCHOR,
+		/* 69 */ YY_NO_ANCHOR,
+		/* 70 */ YY_NO_ANCHOR,
+		/* 71 */ YY_NO_ANCHOR,
+		/* 72 */ YY_NO_ANCHOR,
+		/* 73 */ YY_NO_ANCHOR,
+		/* 74 */ YY_NO_ANCHOR,
+		/* 75 */ YY_NO_ANCHOR,
+		/* 76 */ YY_NO_ANCHOR,
+		/* 77 */ YY_NO_ANCHOR,
+		/* 78 */ YY_NO_ANCHOR,
+		/* 79 */ YY_NO_ANCHOR,
+		/* 80 */ YY_NO_ANCHOR,
+		/* 81 */ YY_NO_ANCHOR,
+		/* 82 */ YY_NO_ANCHOR,
+		/* 83 */ YY_NO_ANCHOR,
+		/* 84 */ YY_NO_ANCHOR,
+		/* 85 */ YY_NO_ANCHOR,
+		/* 86 */ YY_NO_ANCHOR,
+		/* 87 */ YY_NO_ANCHOR,
+		/* 88 */ YY_NO_ANCHOR,
+		/* 89 */ YY_NO_ANCHOR,
+		/* 90 */ YY_NO_ANCHOR,
+		/* 91 */ YY_NO_ANCHOR,
+		/* 92 */ YY_NO_ANCHOR,
+		/* 93 */ YY_NO_ANCHOR,
+		/* 94 */ YY_NO_ANCHOR,
+		/* 95 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
-"21:10,22,21:37,18:10,21:7,19:26,21:4,20,21,19,1,13,8,14,11,19,17,4,19:2,3,1" +
-"9,5,2,15,19,9,12,6,10,7,16,19:3,21:5,0:2")[0];
+"23:9,45,26,23:2,22,23:18,45,35,21,44,23:2,43,24,38,39,30,28,41,29,42,31,18:" +
+"10,23,40,33,32,34,24,23,19:26,23,25,23:2,20,23,19,1,13,8,14,11,19,17,4,19:2" +
+",3,19,5,2,15,19,9,12,6,10,7,16,19:3,36,27,37,23:2,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,53,
-"0,1,2,3,1,4:12,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,4,22,23,24,25," +
-"26,27,28,29,30,31,32,4,33,34,35,36,37,38")[0];
+	private int yy_rmap[] = unpackFromString(1,96,
+"0,1,2,3,4,1,5,6,1,7,8,9,10,11,1:7,12,13,14,1:10,13:4,1,15,13:3,16,1,13:4,4," +
+"17,1:2,18,19,20,18,21,22,23,24,25,26,27,28,16,29,30,31,32,33,34,35,36,37,38" +
+",39,13,40,41,42,43,44,45,46,47,48,49,50,13,51,52,53,54,55,56")[0];
 
-	private int yy_nxt[][] = unpackFromString(39,23,
-"1,2,46:2,18,46,30,48,46,31,46,32,49,46,50,51,52,46,3,46:2,17,4,-1:24,46,33," +
-"46:2,34:2,46:11,34,46,34,17,-1:2,17:17,3,17:3,-1:2,46:4,34:2,46:11,34,46,34" +
-",17,-1:2,17:21,-1:2,46:4,19,34,46:4,5,46:6,34,46,34,17,-1:2,46:4,34,6,46:11" +
-",34,46,34,17,-1:2,46:4,34:2,46:3,7,46:7,34,46,34,17,-1:2,46:4,34,8,46:6,39," +
-"46:4,34,46,34,17,-1:2,46:4,34:2,46:5,9,46:5,34,46,34,17,-1:2,46:2,10,46,34:" +
-"2,46:11,34,46,34,17,-1:2,46:4,34:2,46,11,46:9,34,46,34,17,-1:2,46:4,34:2,46" +
-":7,12,46:3,34,46,34,17,-1:2,46:4,34,13,46:11,34,46,34,17,-1:2,46:4,34:2,46:" +
-"7,14,46:3,34,46,34,17,-1:2,46:4,34,15,46:11,34,46,34,17,-1:2,46:4,34:2,46:7" +
-",16,46:3,34,46,34,17,-1:2,46:4,34:2,46:2,20,46:8,34,46,34,17,-1:2,46:4,34:2" +
-",46:7,21,46:3,34,46,34,17,-1:2,46:2,22,46,34:2,46:11,34,46,34,17,-1:2,46,23" +
-",46:2,34:2,46:11,34,46,34,17,-1:2,46:3,24,34:2,46:11,34,46,34,17,-1:2,46:4," +
-"34:2,46:2,40,46:8,34,46,34,17,-1:2,46:4,34:2,46:5,25,46:5,34,46,34,17,-1:2," +
-"46:3,41,34:2,46:11,34,46,34,17,-1:2,46:4,34:2,46:7,43,46:3,34,46,34,17,-1:2" +
-",46:4,34:2,46:3,44,46:7,34,46,34,17,-1:2,46:4,26,34,46:11,34,46,34,17,-1:2," +
-"46:2,27,46,34:2,46:11,34,46,34,17,-1:2,46:3,45,34:2,46:11,34,46,34,17,-1:2," +
-"46:4,34:2,46:6,28,46:4,34,46,34,17,-1:2,46:4,34:2,29,46:10,34,46,34,17,-1:2" +
-",46:3,42,34:2,46:11,34,46,34,17,-1:2,46,35,46:2,34:2,46:11,34,46,34,17,-1:2" +
-",46:4,34,36,46:11,34,46,34,17,-1:2,46:2,37,46,34:2,46:11,34,46,34,17,-1:2,4" +
-"6:4,34:2,46:2,38,46:8,34,46,34,17,-1:2,46:4,34:2,46:10,47,34,46,34,17,-1");
+	private int yy_nxt[][] = unpackFromString(57,46,
+"1,2,89:2,50,89,73,91,89,74,89,75,92,89,93,94,95,89,3,89:2,4,-1,51:3,5,55,6," +
+"7,8,9,10,11,12,13,14,15,16,17,18,19,20,59,62,21,-1:47,89,76,89:15,77,89,77," +
+"-1:43,3,-1:28,49:4,-1:2,49:14,23,49:2,-1,53,-1:2,49:18,-1:28,25,-1:46,26,-1" +
+":47,57,-1:46,27,-1:45,28,29,-1:44,30,-1,31,-1:43,32,-1:58,21,-1,89:17,77,89" +
+",77,-1:26,38:21,-1,38:3,-1,38:19,-1,39:21,-1,39:3,-1,39:19,-1,43:4,52:2,43:" +
+"14,44,65,43,52:2,-1,52,43:18,-1,89:4,54,89:5,22,89:6,77,89,77,-1:26,63:4,-1" +
+":2,63:14,-1,63:2,-1:2,63:20,-1,89:5,34,89:11,77,89,77,-1:52,24,-1:49,39,-1:" +
+"15,89:9,35,89:7,77,89,77,-1:68,33,-1:46,39,-1:2,89:5,36,89:6,82,89:4,77,89," +
+"77,-1:69,60,-1:2,43:4,52:2,43:14,44,65,43,52,56,-1,52,43:18,-1,89:11,37,89:" +
+"5,77,89,77,-1:26,89:2,40,89:14,77,89,77,-1:26,89:7,41,89:9,77,89,77,-1:26,8" +
+"9:13,42,89:3,77,89,77,-1:26,89:5,45,89:11,77,89,77,-1:26,89:13,46,89:3,77,8" +
+"9,77,-1:26,89:5,47,89:11,77,89,77,-1:26,89:13,48,89:3,77,89,77,-1:26,89:8,5" +
+"8,89:8,77,89,77,-1:26,89:13,61,89:3,77,89,77,-1:26,89:2,64,89:14,77,89,77,-" +
+"1:26,89,66,89:15,77,89,77,-1:26,89:3,67,89:13,77,89,77,-1:26,89:8,83,89:8,7" +
+"7,89,77,-1:26,89:11,68,89:5,77,89,77,-1:26,89:3,84,89:13,77,89,77,-1:26,89:" +
+"13,86,89:3,77,89,77,-1:26,89:9,87,89:7,77,89,77,-1:26,89:4,69,89:12,77,89,7" +
+"7,-1:26,89:2,70,89:14,77,89,77,-1:26,89:3,88,89:13,77,89,77,-1:26,89:12,71," +
+"89:4,77,89,77,-1:26,89:6,72,89:10,77,89,77,-1:26,89:3,85,89:13,77,89,77,-1:" +
+"26,89,78,89:15,77,89,77,-1:26,89:5,79,89:11,77,89,77,-1:26,89:2,80,89:14,77" +
+",89,77,-1:26,89:8,81,89:8,77,89,77,-1:26,89:16,90,77,89,77,-1:25");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -379,19 +425,9 @@ return new Symbol(sym.EOF);
 					}
 					yy_to_mark();
 					switch (yy_last_accept_state) {
-					case 0:
-						{
-            StrLitTokenVal token = new StrLitTokenVal(yyline +1,
-                                                      CharNum.num,
-                                                      yytext());
-            CharNum.num += yytext().length();
-            return new Symbol(sym.STRINGLITERAL, token);
-          }
-					case -2:
-						break;
 					case 1:
 						
-					case -3:
+					case -2:
 						break;
 					case 2:
 						{
@@ -400,11 +436,12 @@ return new Symbol(sym.EOF);
                                                      yytext());
                 CharNum.num += yytext().length();
                 return new Symbol(sym.ID, tokenVal);
-              }
-					case -4:
+             }
+					case -3:
 						break;
 					case 3:
-						{try {
+						{
+            try {
                 int val = (new Integer(yytext())).intValue();
                 Symbol S = new Symbol(sym.INTLITERAL,
                                  new IntLitTokenVal(yyline+1, CharNum.num, val));
@@ -421,109 +458,138 @@ return new Symbol(sym.EOF);
                 return new Symbol(sym.INTLITERAL, tokenVal);
             }
           }
-					case -5:
+					case -4:
 						break;
 					case 4:
+						{
+            ErrMsg.fatal(yyline+1, CharNum.num,
+                         "illegal character ignored: " + yytext());
+            CharNum.num++;
+          }
+					case -5:
+						break;
+					case 5:
 						{ CharNum.num = 1; }
 					case -6:
 						break;
-					case 5:
+					case 6:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.PLUS, tokenVal);
+          }
+					case -7:
+						break;
+					case 7:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.MINUS, tokenVal);
+          }
+					case -8:
+						break;
+					case 8:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.TIMES, tokenVal);
+          }
+					case -9:
+						break;
+					case 9:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.DIVIDE, tokenVal);
+          }
+					case -10:
+						break;
+					case 10:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.ASSIGN, tokenVal);
+          }
+					case -11:
+						break;
+					case 11:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LESS, tokenVal);
+          }
+					case -12:
+						break;
+					case 12:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.GREATER, tokenVal);
+          }
+					case -13:
+						break;
+					case 13:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.NOT, tokenVal);
+          }
+					case -14:
+						break;
+					case 14:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LCURLY, tokenVal);
+          }
+					case -15:
+						break;
+					case 15:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.RCURLY, tokenVal);
+          }
+					case -16:
+						break;
+					case 16:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.LPAREN, tokenVal);
+          }
+					case -17:
+						break;
+					case 17:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.RPAREN, tokenVal);
+          }
+					case -18:
+						break;
+					case 18:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.SEMICOLON, tokenVal);
+          }
+					case -19:
+						break;
+					case 19:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.COMMA, tokenVal);
+          }
+					case -20:
+						break;
+					case 20:
+						{
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.DOT, tokenVal);
+          }
+					case -21:
+						break;
+					case 21:
+						{ CharNum.num += yytext().length(); }
+					case -22:
+						break;
+					case 22:
 						{
             TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
             CharNum.num += yytext().length();
             return new Symbol(sym.IF, tokenVal);
           }
-					case -7:
+					case -23:
 						break;
-					case 6:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.INT, tokenVal);
-          }
-					case -8:
-						break;
-					case 7:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.TRUE, tokenVal);
-          }
-					case -9:
-						break;
-					case 8:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.RETURN, tokenVal);
-          }
-					case -10:
-						break;
-					case 9:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.FALSE, tokenVal);
-          }
-					case -11:
-						break;
-					case 10:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.BOOL, tokenVal);
-          }
-					case -12:
-						break;
-					case 11:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.VOID, tokenVal);
-          }
-					case -13:
-						break;
-					case 12:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.ELSE, tokenVal);
-          }
-					case -14:
-						break;
-					case 13:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.PRINT, tokenVal);
-          }
-					case -15:
-						break;
-					case 14:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.WHILE, tokenVal);
-          }
-					case -16:
-						break;
-					case 15:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.STRUCT, tokenVal);
-          }
-					case -17:
-						break;
-					case 16:
-						{
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.RECEIVE, tokenVal);
-          }
-					case -18:
-						break;
-					case 17:
+					case 23:
 						{
             StrLitTokenVal token = new StrLitTokenVal(yyline +1,
                                                       CharNum.num,
@@ -531,327 +597,204 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return new Symbol(sym.STRINGLITERAL, token);
           }
-					case -19:
-						break;
-					case 18:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -20:
-						break;
-					case 19:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -21:
-						break;
-					case 20:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -22:
-						break;
-					case 21:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -23:
-						break;
-					case 22:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
 					case -24:
-						break;
-					case 23:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -25:
 						break;
 					case 24:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -26:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.OR, tokenVal);
+          }
+					case -25:
 						break;
 					case 25:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -27:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.PLUSPLUS, tokenVal);
+          }
+					case -26:
 						break;
 					case 26:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -28:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.MINUSMINUS, tokenVal);
+          }
+					case -27:
 						break;
 					case 27:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -29:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.EQUALS, tokenVal);
+          }
+					case -28:
 						break;
 					case 28:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -30:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.LESSEQ, tokenVal);
+          }
+					case -29:
 						break;
 					case 29:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -31:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.WRITE, tokenVal);
+          }
+					case -30:
 						break;
 					case 30:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -32:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.GREATEREQ, tokenVal);
+          }
+					case -31:
 						break;
 					case 31:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -33:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.READ, tokenVal);
+          }
+					case -32:
 						break;
 					case 32:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -34:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.NOTEQUALS, tokenVal);
+          }
+					case -33:
 						break;
 					case 33:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -35:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.AND, tokenVal);
+          }
+					case -34:
 						break;
 					case 34:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -36:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.INT, tokenVal);
+          }
+					case -35:
 						break;
 					case 35:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -37:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.TRUE, tokenVal);
+          }
+					case -36:
 						break;
 					case 36:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -38:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.RETURN, tokenVal);
+          }
+					case -37:
 						break;
 					case 37:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -39:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.FALSE, tokenVal);
+          }
+					case -38:
 						break;
 					case 38:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -40:
+                ErrMsg.fatal(yyline+1,
+                             CharNum.num,
+                             "unterminated string literal ignored");
+            }
+					case -39:
 						break;
 					case 39:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -41:
+						{ CharNum.num += yytext().length(); }
+					case -40:
 						break;
 					case 40:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -42:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.BOOL, tokenVal);
+          }
+					case -41:
 						break;
 					case 41:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -43:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.VOID, tokenVal);
+          }
+					case -42:
 						break;
 					case 42:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -44:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.ELSE, tokenVal);
+          }
+					case -43:
 						break;
 					case 43:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -45:
+            ErrMsg.fatal(yyline + 1,
+                         CharNum.num,
+                         "unterminated string literal with bad escaped character ignored");
+          }
+					case -44:
 						break;
 					case 44:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -46:
+                    ErrMsg.fatal(yyline + 1,
+                                 CharNum.num,
+                                 "string literal with bad escaped character ignored");
+                    CharNum.num += yytext().length();
+               }
+					case -45:
 						break;
 					case 45:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -47:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.PRINT, tokenVal);
+          }
+					case -46:
 						break;
 					case 46:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -48:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.WHILE, tokenVal);
+          }
+					case -47:
 						break;
 					case 47:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -49:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.STRUCT, tokenVal);
+          }
+					case -48:
 						break;
 					case 48:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -50:
-						break;
-					case 49:
-						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -51:
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += yytext().length();
+            return new Symbol(sym.RECEIVE, tokenVal);
+          }
+					case -49:
 						break;
 					case 50:
 						{
@@ -860,28 +803,396 @@ return new Symbol(sym.EOF);
                                                      yytext());
                 CharNum.num += yytext().length();
                 return new Symbol(sym.ID, tokenVal);
-              }
-					case -52:
+             }
+					case -50:
 						break;
 					case 51:
 						{
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
-                                                     CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-              }
-					case -53:
+            ErrMsg.fatal(yyline+1, CharNum.num,
+                         "illegal character ignored: " + yytext());
+            CharNum.num++;
+          }
+					case -51:
 						break;
 					case 52:
+						{
+            ErrMsg.fatal(yyline + 1,
+                         CharNum.num,
+                         "unterminated string literal with bad escaped character ignored");
+          }
+					case -52:
+						break;
+					case 54:
 						{
                 IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
                                                      CharNum.num,
                                                      yytext());
                 CharNum.num += yytext().length();
                 return new Symbol(sym.ID, tokenVal);
-              }
+             }
+					case -53:
+						break;
+					case 55:
+						{
+            ErrMsg.fatal(yyline+1, CharNum.num,
+                         "illegal character ignored: " + yytext());
+            CharNum.num++;
+          }
 					case -54:
+						break;
+					case 56:
+						{
+            ErrMsg.fatal(yyline + 1,
+                         CharNum.num,
+                         "unterminated string literal with bad escaped character ignored");
+          }
+					case -55:
+						break;
+					case 58:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -56:
+						break;
+					case 59:
+						{
+            ErrMsg.fatal(yyline+1, CharNum.num,
+                         "illegal character ignored: " + yytext());
+            CharNum.num++;
+          }
+					case -57:
+						break;
+					case 61:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -58:
+						break;
+					case 62:
+						{
+            ErrMsg.fatal(yyline+1, CharNum.num,
+                         "illegal character ignored: " + yytext());
+            CharNum.num++;
+          }
+					case -59:
+						break;
+					case 64:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -60:
+						break;
+					case 66:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -61:
+						break;
+					case 67:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -62:
+						break;
+					case 68:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -63:
+						break;
+					case 69:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -64:
+						break;
+					case 70:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -65:
+						break;
+					case 71:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -66:
+						break;
+					case 72:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -67:
+						break;
+					case 73:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -68:
+						break;
+					case 74:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -69:
+						break;
+					case 75:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -70:
+						break;
+					case 76:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -71:
+						break;
+					case 77:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -72:
+						break;
+					case 78:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -73:
+						break;
+					case 79:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -74:
+						break;
+					case 80:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -75:
+						break;
+					case 81:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -76:
+						break;
+					case 82:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -77:
+						break;
+					case 83:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -78:
+						break;
+					case 84:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -79:
+						break;
+					case 85:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -80:
+						break;
+					case 86:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -81:
+						break;
+					case 87:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -82:
+						break;
+					case 88:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -83:
+						break;
+					case 89:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -84:
+						break;
+					case 90:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -85:
+						break;
+					case 91:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -86:
+						break;
+					case 92:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -87:
+						break;
+					case 93:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -88:
+						break;
+					case 94:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -89:
+						break;
+					case 95:
+						{
+                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+                                                     CharNum.num,
+                                                     yytext());
+                CharNum.num += yytext().length();
+                return new Symbol(sym.ID, tokenVal);
+             }
+					case -90:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);

@@ -15,16 +15,6 @@ public class P2 {
         private PrintWriter outFile;
 
         public FileHandlers(String fileName) {
-            try {
-                inFile = new FileReader(fileName + ".in");
-                outFile = new PrintWriter(new FileWriter(fileName + ".out"));
-            } catch (FileNotFoundException ex) {
-                System.err.printf("File %s.in not found.\n", fileName);
-                System.exit(-1);
-            } catch (IOException ex) {
-                System.err.printf("%s.out cannot be opened.\n", fileName);
-                System.exit(-1);
-            }
         }
     }
 
@@ -33,30 +23,8 @@ public class P2 {
 
         // test all tokens
         testAllTokens("allTokens");
-        testIntegerLiteral();
-        CharNum.num = 1;
+        testAllTokens("eof");
         // ADD CALLS TO OTHER TEST METHODS HERE
-    }
-
-
-    private static void testIntegerLiteral() throws IOException {
-        testAllTokens("intlit");
-    }
-
-    private static void testBadIntegerLiteral() throws IOException {
-
-    }
-
-    private static void testBadStringLiteral() throws IOException {
-
-    }
-
-    private static void testUnterminatedStringLiteral() throws IOException {
-
-    }
-
-    private static void testIllegalCharacter() throws IOException {
-
     }
 
 
@@ -69,11 +37,23 @@ public class P2 {
      * correctness of the scanner by comparing the input and output files
      * (e.g., using a 'diff' command).
      */
-    private static void testAllTokens(String name) throws IOException {
+    private static void testAllTokens(String fileName) throws IOException {
+        // reset CharNum
+        CharNum.num = 1;
+
         // open input and output files
-        FileHandlers handlers = new FileHandlers(name);
-        FileReader inFile = handlers.inFile;
-        PrintWriter outFile = handlers.outFile;
+        FileReader inFile = null;
+        PrintWriter outFile = null;
+        try {
+            inFile = new FileReader(fileName + ".in");
+            outFile = new PrintWriter(new FileWriter(fileName + ".out"));
+        } catch (FileNotFoundException ex) {
+            System.err.printf("File %s.in not found.\n", fileName);
+            System.exit(-1);
+        } catch (IOException ex) {
+            System.err.printf("%s.out cannot be opened.\n", fileName);
+            System.exit(-1);
+        }
 
         // create and call the scanner
         Yylex my_scanner = new Yylex(inFile);
