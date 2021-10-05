@@ -39,7 +39,9 @@ test:
 	java -cp $(CP) P2 
 	diff allTokens.in allTokens.out
 	diff validIdentifier.in validIdentifier.out
-	diff invalidIdentifier.in invalidIdentifier.out
+	diff validIntegerLiteral.in validIntegerLiteral.out
+	diff validStringLiteral.in validStringLiteral.out
+	diff validSymbols.in validSymbols.out
 
 ###
 # clean up

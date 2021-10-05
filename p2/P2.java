@@ -24,7 +24,16 @@ public class P2 {
         // test all tokens
         testAllTokens("allTokens");
         testAllTokens("validIdentifier");
-        testAllTokens("invalidIdentifier");
+        testAllTokens("validIntegerLiteral");
+        testAllTokens("validStringLiteral");
+        testAllTokens("validSymbols");
+        testAllTokens("validComments");
+
+        testAllTokens("testComments");
+
+        testAllTokens("illegalChar");
+
+        testAllTokens("unterminatedString");
     }
 
     /**
@@ -56,7 +65,13 @@ public class P2 {
 
         // create and call the scanner
         Yylex my_scanner = new Yylex(inFile);
-        Symbol my_token = my_scanner.next_token();
+        Symbol my_token = null;
+        try {
+            my_token = my_scanner.next_token();
+        } catch(ArrayIndexOutOfBoundsException E)  {
+            outFile.close();
+            return;
+        }
         while (my_token.sym != sym.EOF) {
             switch (my_token.sym) {
             case sym.BOOL:
@@ -69,10 +84,10 @@ public class P2 {
                 outFile.println("void");
                 break;
             case sym.TRUE:
-                outFile.println("true"); 
+                outFile.println("tru");
                 break;
             case sym.FALSE:
-                outFile.println("false"); 
+                outFile.println("fls");
                 break;
             case sym.STRUCT:
                 outFile.println("struct"); 
@@ -93,7 +108,7 @@ public class P2 {
                 outFile.println("while");
                 break;
             case sym.RETURN:
-                outFile.println("return");
+                outFile.println("ret");
                 break;
             case sym.ID:
                 outFile.println(((IdTokenVal)my_token.value).idVal);
@@ -183,7 +198,13 @@ public class P2 {
 				outFile.println("UNKNOWN TOKEN");
             } // end switch
 
-            my_token = my_scanner.next_token();
+
+            try {
+                my_token = my_scanner.next_token();
+            } catch(ArrayIndexOutOfBoundsException E)  {
+                break;
+            }
+
         } // end while
         outFile.close();
     }

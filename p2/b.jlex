@@ -63,18 +63,18 @@ IDENTIFIER=   ({LETTER}|_)(_|{LETTER}|{DIGIT})*
 
 INTLIT=       {DIGIT}+
 
-ESCAPEDCHAR=  "\n"|"\t"|"\'"|"\\""|"\?"|\\\\
-STRINGCHAR=   [^\n\"\\{ESCAPEDCHAR}]
+ESCAPEDCHAR=  \\n|\\t|\\'|\\\"|\\?|\\\\
+STRINGCHAR=   [^\n\"\\]|{ESCAPEDCHAR}
 
 STRLIT=       \"({STRINGCHAR})*\"
 
 COMMENT=      (///|###)(.)*
 
-UNTERMSTR=       \"({STRINGCHAR})*\".
+UNTERMSTR=       \"({STRINGCHAR})*
 
 BADESCAPE=       \\[^nt\'\"\\\?]
-BADUNTERMSTR=    \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*\"
-BADSTR=          \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*.
+BADUNTERMSTR=    \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*
+BADSTR=          \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*\"
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -187,19 +187,20 @@ return new Symbol(sym.EOF);
                 return new Symbol(sym.ID, tokenVal);
              }
 
+{BADSTR}  {
+            ErrMsg.fatal(yyline + 1,
+                         CharNum.num,
+                         "unterminated string literal with bad escaped character ignored");
+          }
+
 {STRLIT}  {
+            String str = yytext();
             StrLitTokenVal token = new StrLitTokenVal(yyline +1,
                                                       CharNum.num,
-                                                      yytext());
+                                                      str);
             CharNum.num += yytext().length();
             return new Symbol(sym.STRINGLITERAL, token);
           }
-
-{UNTERMSTR} {
-                ErrMsg.fatal(yyline+1,
-                             CharNum.num,
-                             "unterminated string literal ignored");
-            }
 
 {BADUNTERMSTR} {
                     ErrMsg.fatal(yyline + 1,
@@ -208,10 +209,70 @@ return new Symbol(sym.EOF);
                     CharNum.num += yytext().length();
                }
 
-{BADSTR}  {
-            ErrMsg.fatal(yyline + 1,
-                         CharNum.num,
-                         "unterminated string literal with bad escaped character ignored");
+{UNTERMSTR} {
+                ErrMsg.fatal(yyline+1,
+                             CharNum.num,
+                             "unterminated string literal ignored");
+            }
+
+"<<"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.WRITE, tokenVal);
+          }
+
+">>"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.READ, tokenVal);
+          }
+
+"++"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.PLUSPLUS, tokenVal);
+          }
+
+"--"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.MINUSMINUS, tokenVal);
+          }
+
+"&&"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.AND, tokenVal);
+          }
+
+"||"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.OR, tokenVal);
+          }
+
+"=="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.EQUALS, tokenVal);
+          }
+
+"!="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.NOTEQUALS, tokenVal);
+          }
+
+"<="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.LESSEQ, tokenVal);
+          }
+
+">="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.GREATEREQ, tokenVal);
           }
 
 "+"       {
@@ -287,66 +348,6 @@ return new Symbol(sym.EOF);
 "."       {
             TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
             return new Symbol(sym.DOT, tokenVal);
-          }
-
-"<<"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.WRITE, tokenVal);
-          }
-
-">>"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.READ, tokenVal);
-          }
-
-"++"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.PLUSPLUS, tokenVal);
-          }
-
-"--"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.MINUSMINUS, tokenVal);
-          }
-
-"&&"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.AND, tokenVal);
-          }
-
-"||"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.OR, tokenVal);
-          }
-
-"=="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.EQUALS, tokenVal);
-          }
-
-"!="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.NOTEQUALS, tokenVal);
-          }
-
-"<="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.LESSEQ, tokenVal);
-          }
-
-">="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.GREATEREQ, tokenVal);
           }
 
 {COMMENT} { CharNum.num += yytext().length(); }
