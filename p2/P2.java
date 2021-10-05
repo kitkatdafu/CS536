@@ -22,18 +22,21 @@ public class P2 {
                                            // exception may be thrown by yylex
 
         // test all tokens
-        testAllTokens("allTokens");
-        testAllTokens("validIdentifier");
-        testAllTokens("validIntegerLiteral");
+        // testAllTokens("allTokens");
+        // testAllTokens("validIdentifier");
+        // testAllTokens("validIntegerLiteral");
         testAllTokens("validStringLiteral");
-        testAllTokens("validSymbols");
-        testAllTokens("validComments");
+        // testAllTokens("validSymbols");
+        // testAllTokens("validComments");
 
-        testAllTokens("testComments");
+        // testAllTokens("testComments");
 
-        testAllTokens("illegalChar");
+        // testAllTokens("illegalChar");
 
-        testAllTokens("unterminatedString");
+        // testAllTokens("unterminatedString");
+        // testAllTokens("badUnterminated");
+        // testAllTokens("veryBad");
+        // testAllTokens("test1");
     }
 
     /**

@@ -1,0 +1,8 @@
+int a = 10; int c = 100; ret "Hello World";
+int b = 20; int d = 200; if true else fls
+print("Hello World");
+print("This is not a comment ### Hello World");
+int a = 10; /// This is a comment
+{()} "Unterminated
+[[[[[[                 "illegal \ escape"
+asdf
