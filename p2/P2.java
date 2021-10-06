@@ -27,6 +27,7 @@ public class P2 {
                 "escaped character ignored";
         final String BAD = "string literal with bad escaped character ignored";
         final String UNTERM = "unterminated string literal ignored";
+        final String BADINT = "integer literal too large; using max value";
 
         test("testBadString", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
@@ -61,6 +62,18 @@ public class P2 {
 
         test("eofBad", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
+        });
+
+        test("generalTest", new String[] {
+                "6:6 ***ERROR*** " + UNTERM,
+                "7:1 ***ERROR*** " + "illegal character ignored: [",
+                "7:2 ***ERROR*** " + "illegal character ignored: [",
+                "7:3 ***ERROR*** " + "illegal character ignored: [",
+                "7:4 ***ERROR*** " + "illegal character ignored: [",
+                "7:5 ***ERROR*** " + "illegal character ignored: [",
+                "7:6 ***ERROR*** " + "illegal character ignored: [",
+                "7:24 ***ERROR*** " + BAD,
+                "9:1 ***WARNING*** " + BADINT
         });
     }
 

@@ -6,3 +6,7 @@ int a = 10; /// This is a comment
 {()} "Unterminated
 [[[[[[                 "illegal \ escape"
 asdf
+123333333333333333333333
+-123
+2147483647
+0
