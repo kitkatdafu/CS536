@@ -1,21 +1,53 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            P2
+// Files:            P2.java, b.jlex
+// Semester:         CS536 Fall 2021
+//
+// Author:           Reid Chen
+// Email:            ychen878@wics.edu
+// CS Login:         reid
+// Lecturer's Name:  Aws Albarghouthi
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
+//
+// Pair Partner:     Gaoyi Hu
+// Email:            ghu37@wisc.edu
+// CS Login:         gaoyi
+//
+//////////////////// STUDENTS WHO GET HELP FROM OTHER THAN THEIR PARTNER //////
+//
+// Persons:          (x) 
+//
+// Online sources:   https://tinyurl.com/6spnw3k - redirect stderr
+//                   
+//////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;  // defines Symbol
 
 /**
- * This program is to be used to test the cflat scanner.
- * This version is set up to test all tokens, but more code is needed to test 
- * other aspects of the scanner (e.g., input that causes errors, character 
- * numbers, values associated with tokens).
+ * This program is to be used to test the b scanner.
+ *
+ * @author Reid Chen, Gaoyi Hu
  */
 public class P2 {
 
+    // these fields store the error messages
+    private final String UNTERM_BAD = "unterminated string literal with bad "
+        + "escaped character ignored";
+    private final String BAD = "string literal with bad escaped character " 
+        + "ignored";
+    private final String UNTERM = "unterminated string literal ignored";
+    private final String BADINT = "integer literal too large; using max value";
+
     public static void main(String[] args) throws IOException {
-        // exception may be thrown by yylex
         // test all tokens
         testAllTokens("allTokens");
+        // test basic cases
         basicTests();
 
+        // test if illegal chars can be found
         test("testIllegalChar", new String[] {
                 "5:8 ***ERROR*** illegal character ignored: @",
                 "5:9 ***ERROR*** illegal character ignored: @",
@@ -23,12 +55,8 @@ public class P2 {
                 "5:29 ***ERROR*** illegal character ignored: ^"
         });
 
-        final String UNTERM_BAD = "unterminated string literal with bad " +
-                "escaped character ignored";
-        final String BAD = "string literal with bad escaped character ignored";
-        final String UNTERM = "unterminated string literal ignored";
-        final String BADINT = "integer literal too large; using max value";
 
+        // test if bad strings can be found
         test("testBadString", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
                 "3:1 ***ERROR*** " + UNTERM,
@@ -45,6 +73,7 @@ public class P2 {
                 "17:1 ***ERROR*** " + UNTERM_BAD
         });
 
+        // test if bad strings can be found
         test("testBadString2", new String[] {
                 "1:1 ***ERROR*** " + UNTERM,
                 "2:1 ***ERROR*** " + UNTERM_BAD,
@@ -56,14 +85,17 @@ public class P2 {
                 "10:1 ***ERROR*** " + UNTERM
         });
 
+        // test eof case
         test("eof", new String[] {
                 "1:1 ***ERROR*** " + UNTERM,
         });
 
+        // test eof case
         test("eofBad", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
         });
 
+        // a general test
         test("generalTest", new String[] {
                 "6:6 ***ERROR*** " + UNTERM,
                 "7:1 ***ERROR*** " + "illegal character ignored: [",
@@ -78,42 +110,65 @@ public class P2 {
     }
 
     /**
-     * Tests that do not involve errmsg
+     * Tests that do not prints error messages.
      *
-     * @throws IOException
+     * @throws IOException may be thrown by yylex
      */
     private static void basicTests() throws IOException {
-        String[] files = {"validIdentifier",
-                "validIntegerLiteral",
-                "validStringLiteral",
-                "validSymbols",
-                "testComments"};
+        String[] files = {
+            "validIdentifier",
+            "validIntegerLiteral",
+            "validStringLiteral",
+            "validSymbols",
+            "testComments"
+        };
         for (String file: files) {
             testAllTokens(file);
         }
     }
 
-    private static void test(String fileName, String[] expectedErr) throws IOException {
+    /**
+     * Generate corresponding outputs and compare the error messages to the 
+     * expected error messages.
+     *
+     * The actual output generated in by testAllTokens() are compared with the 
+     * expected output in the Makefile using diff.
+     * 
+     * @param fileName fileName of the corresponding input and output
+     * @param expectedErr expected error messages
+     * @throws IOException may be thrown by yylex
+     */
+    private static void test(String fileName, String[] expectedErr) 
+            throws IOException {
+        // create a custom stream
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
 
+        // store the original stderr
         PrintStream old = System.err;
 
+        // set stderr to the custom stream
         System.setErr(ps);
 
+        // run the scanner
         testAllTokens(fileName);
 
+        // flush buffered data
         System.err.flush();
+        // restore stderr
         System.setErr(old);
 
+        // split actual error message
         String[] err = baos.toString().split("\n");
 
+        // if the number of error messages is not equal to the expected number
         if (err.length != expectedErr.length) {
             System.err.println("Wrong error mesage in " + fileName);
             System.err.println("\t size not same");
             System.err.println(baos.toString());
             return;
         }
+        // check if each error message if equal to the expected error message
         for (int i = 0; i < expectedErr.length; i++) {
             if (err[i].equals(expectedErr[i])) {
                 continue;
@@ -145,7 +200,8 @@ public class P2 {
         PrintWriter outFile = null;
         try {
             inFile = new FileReader("./inputs/" + fileName + ".in");
-            outFile = new PrintWriter(new FileWriter("./outputs/" + fileName + ".out"));
+            outFile = new PrintWriter(new FileWriter("./outputs/" 
+                        + fileName + ".out"));
         } catch (FileNotFoundException ex) {
             System.err.printf("File %s.in not found.\n", fileName);
             System.exit(-1);
@@ -159,7 +215,7 @@ public class P2 {
         Symbol my_token = null;
         try {
             my_token = my_scanner.next_token();
-        } catch(ArrayIndexOutOfBoundsException E)  {
+        } catch(ArrayIndexOutOfBoundsException e)  {
             outFile.close();
             return;
         }
@@ -293,7 +349,7 @@ public class P2 {
 
             try {
                 my_token = my_scanner.next_token();
-            } catch(ArrayIndexOutOfBoundsException E)  {
+            } catch(ArrayIndexOutOfBoundsException e)  {
                 break;
             }
 
