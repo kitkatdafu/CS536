@@ -1,0 +1,12 @@
+bool
+int
+void
+tru
+fls
+struct
+receive
+print
+if
+else
+while
+ret

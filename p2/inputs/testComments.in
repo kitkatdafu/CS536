@@ -1,0 +1,6 @@
+### normal comment
+/// normal comment
+int a /// normal comment
+int b///normal comment                   
+print("Hello World ///") /// ///in print is not a comment
+### but this is a comment print("kkkkkkkkkk")

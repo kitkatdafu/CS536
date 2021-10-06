@@ -12,10 +12,11 @@
 
 # define the java compiler to be used and the flags
 JC = javac
-FLAGS = -g -cp $(CP)
 CP = ./deps:.
+FLAGS = -g -cp $(CP)
 IN = ./inputs
 OUT = ./outputs
+EX = ./expects
 
 
 P2.class: P2.java Yylex.class sym.class
@@ -40,11 +41,18 @@ ErrMsg.class: ErrMsg.java
 ###
 test:
 	java -cp $(CP) P2
-	diff $(IN)/allTokens.in $(OUT)/allTokens.out
-	diff $(IN)/validIdentifier.in $(OUT)/validIdentifier.out
-	diff $(IN)/validIntegerLiteral.in $(OUT)/validIntegerLiteral.out
-	diff $(IN)/validStringLiteral.in $(OUT)/validStringLiteral.out
-	diff $(IN)/validSymbols.in $(OUT)/validSymbols.out
+	diff $(EX)/allTokens.ex $(OUT)/allTokens.out
+	diff $(EX)/validIdentifier.ex $(OUT)/validIdentifier.out
+	diff $(EX)/validIntegerLiteral.ex $(OUT)/validIntegerLiteral.out
+	diff $(EX)/validStringLiteral.ex $(OUT)/validStringLiteral.out
+	diff $(EX)/validSymbols.ex $(OUT)/validSymbols.out
+	diff $(EX)/testComments.ex $(OUT)/testComments.out
+	diff $(EX)/testIllegalChar.ex $(OUT)/testIllegalChar.out
+	diff $(EX)/testBadString.ex $(OUT)/testBadString.out
+	diff $(EX)/testBadString2.ex $(OUT)/testBadString2.out
+	diff $(EX)/eof.ex $(OUT)/eof.out
+	diff $(EX)/eofBad.ex $(OUT)/eofBad.out
+
 
 ###
 # clean up

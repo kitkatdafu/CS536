@@ -1,0 +1,17 @@
+"very bad string \ 
+abc
+"unterminated
+"also unterminated \"
+"backslash followed by space: \ is not allowed"
+"bad escaped character: \a AND not terminated
+""
+"&!88"
+"use \n to denote a newline character"
+"include a quote like this \" and a backslash like this \\"
+"two strings on one line" "yes, this is the other string"
+"two bad strings on one line \ " "the bad string \$"
+"a bad and a very bad string on one line \ " "the very bad string \$
+"a bad and a unterm string on one line \ " "the unterm string
+this_is_an_id "str"
+this_is_an_id "str" "\a\a\a\a\a\
+"\a
