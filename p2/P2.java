@@ -20,24 +20,32 @@ public class P2 {
 
     public static void main(String[] args) throws IOException {
                                            // exception may be thrown by yylex
-
         // test all tokens
-        // testAllTokens("allTokens");
-        // testAllTokens("validIdentifier");
-        // testAllTokens("validIntegerLiteral");
-        testAllTokens("validStringLiteral");
-        // testAllTokens("validSymbols");
-        // testAllTokens("validComments");
+        testAllTokens("allTokens");
 
-        // testAllTokens("testComments");
+        testIdentical();
+   }
 
-        // testAllTokens("illegalChar");
+    /**
+     * .in file generated in the file should be identical (checked by diff
+     * in the Makefile) to the
+     * corresponding .out file
+     *
+     * @throws IOException
+     */
+   private static void testIdentical() throws IOException {
+       String[] files = {"validIdentifier",
+                         "validIntegerLiteral",
+                         "validStringLiteral",
+                         "validSymbols"};
+       for (String file: files) {
+           testAllTokens(file);
+       }
+   }
 
-        // testAllTokens("unterminatedString");
-        // testAllTokens("badUnterminated");
-        // testAllTokens("veryBad");
-        // testAllTokens("test1");
-    }
+   private static void testCorrectCharnum() throws IOException {
+
+   }
 
     /**
      * testAllTokens
@@ -56,8 +64,8 @@ public class P2 {
         FileReader inFile = null;
         PrintWriter outFile = null;
         try {
-            inFile = new FileReader(fileName + ".in");
-            outFile = new PrintWriter(new FileWriter(fileName + ".out"));
+            inFile = new FileReader("./inputs/" + fileName + ".in");
+            outFile = new PrintWriter(new FileWriter("./outputs/" + fileName + ".out"));
         } catch (FileNotFoundException ex) {
             System.err.printf("File %s.in not found.\n", fileName);
             System.exit(-1);
@@ -75,6 +83,7 @@ public class P2 {
             outFile.close();
             return;
         }
+
         while (my_token.sym != sym.EOF) {
             switch (my_token.sym) {
             case sym.BOOL:

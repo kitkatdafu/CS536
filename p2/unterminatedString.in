@@ -1,6 +1,0 @@
-"unterminated
-"ser o no ser
-"this is an unterminated\n string with legal escaped char
-"\n\n\t\t\\\\\?\?
-"also unterminated \"
-"some legal stuff\n\t\t, which should be added to out" "yet another illegal

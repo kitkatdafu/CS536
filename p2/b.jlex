@@ -169,65 +169,6 @@ return new Symbol(sym.EOF);
           }
 
 
-<YYINITIAL>"<<"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.WRITE, tokenVal);
-          }
-
-<YYINITIAL>">>"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.READ, tokenVal);
-          }
-
-<YYINITIAL>"++"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.PLUSPLUS, tokenVal);
-          }
-
-<YYINITIAL>"--"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.MINUSMINUS, tokenVal);
-          }
-
-<YYINITIAL>"&&"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.AND, tokenVal);
-          }
-
-<YYINITIAL>"||"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.OR, tokenVal);
-          }
-
-<YYINITIAL>"=="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.EQUALS, tokenVal);
-          }
-
-"<YYINITIAL>!="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.NOTEQUALS, tokenVal);
-          }
-
-<YYINITIAL>"<="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.LESSEQ, tokenVal);
-          }
-
-<YYINITIAL>">="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.GREATEREQ, tokenVal);
-          }
 
 <YYINITIAL>"+"       {
             TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
@@ -247,11 +188,6 @@ return new Symbol(sym.EOF);
 <YYINITIAL>"/"       {
             TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
             return new Symbol(sym.DIVIDE, tokenVal);
-          }
-
-"<YYINITIAL>="       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.ASSIGN, tokenVal);
           }
 
 <YYINITIAL>"<"       {
@@ -302,6 +238,71 @@ return new Symbol(sym.EOF);
 <YYINITIAL>"."       {
             TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
             return new Symbol(sym.DOT, tokenVal);
+          }
+
+<YYINITIAL>"="       {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+            return new Symbol(sym.ASSIGN, tokenVal);
+          }
+
+<YYINITIAL>"<<"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.WRITE, tokenVal);
+          }
+
+<YYINITIAL>">>"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.READ, tokenVal);
+          }
+
+<YYINITIAL>"++"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.PLUSPLUS, tokenVal);
+          }
+
+<YYINITIAL>"--"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.MINUSMINUS, tokenVal);
+          }
+
+<YYINITIAL>"&&"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.AND, tokenVal);
+          }
+
+<YYINITIAL>"||"      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.OR, tokenVal);
+          }
+
+<YYINITIAL>"=="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.EQUALS, tokenVal);
+          }
+
+<YYINITIAL>"!="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.NOTEQUALS, tokenVal);
+          }
+
+<YYINITIAL>"<="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.LESSEQ, tokenVal);
+          }
+
+<YYINITIAL>">="      {
+            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+            CharNum.num += 2;
+            return new Symbol(sym.GREATEREQ, tokenVal);
           }
 
 <YYINITIAL>{COMMENT} {
