@@ -65,20 +65,7 @@ WHITESPACE=   [\040\t]
 
 IDENTIFIER=   ({LETTER}|_)(_|{LETTER}|{DIGIT})*
 
-INTLIT=       {DIGIT}+
-
-ESCAPEDCHAR=  \\n|\\t|\\'|\\\"|\\?|\\\\
-STRINGCHAR=   [^\n\"\\]|{ESCAPEDCHAR}
-
-STRLIT=       \"({STRINGCHAR})*\"
-
 COMMENT=      (///|###)(.)*
-
-UNTERMSTR=       \"({STRINGCHAR})*
-
-BADESCAPE=       \\[^nt\'\"\\\?]
-BADUNTERMSTR=    \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*
-BADSTR=          \"({STRINGCHAR})*({BADESCAPE})+({STRINGCHAR})*\"
 
 %state OKSTR
 %state BACKSLASH

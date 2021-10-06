@@ -1,0 +1,24 @@
+#+TITLE: P2
+#+AUTHOR: Reid Chen, Gaoyi Hu
+
+* JLex
+  The crux of this project is to come up a way to distinguish the 4 scenarios of
+  string literals. When set a state called =OKSTR= when JLex sees a ="= to indicate that the JLex is
+  currently looking at a legal string literal. We let JLex to match one
+  character at a time. If JLex sees another ="=, then this string is
+  terminated. If JLex sees a =\=, we enter a state called =BACKSLASH=. Now,
+  there are two cases. If JLex sees one of $\{n, t, ?, \backslash, "\}$, then it is a
+  valid escape, so we go back to state =OKSTR=. On the other hand, if the
+  character after =\= is not one of the valid escape character, the JLex enters
+  =BAD_ESCAPED= state, indicating that this string literal now is bad. JLex
+  check if a string literal in =BAD_ESCAPED= is terminated or not using a
+  similar logic as =OKSTR=.
+* Testing
+  We have created 3 directories to store the testing files. =inputs= stores all
+  the inputs. =outputs= stores the standard outputs. =expects= stores the
+  expected standard outputs. The correctness of standard errors, i.e. the
+  message produced by the =ErrMsg= are checked in the main of P2, instead of
+  using =diff= to compare the expected outputs and the actual outputs.
+
+  To standard error (error messages), we redirect `System.Err` to a customized
+  stream. And compare the expected String with the String of the stream.
