@@ -56,7 +56,6 @@ public class P2 {
                 "5:29 ***ERROR*** illegal character ignored: ^"
         });
 
-
         // test if bad strings can be found
         test("testBadString", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
@@ -87,16 +86,20 @@ public class P2 {
         });
 
         // test eof case
+        // test if unterm string end with eof will be captured
         test("eof", new String[] {
                 "1:1 ***ERROR*** " + UNTERM,
         });
 
         // test eof case
+        // test if bad string end with eof will be captured
         test("eofBad", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
         });
 
         // a general test
+        // test integer, illegal char and string, 
+        // and value of correct id and integer
         test("generalTest", new String[] {
                 "6:6 ***ERROR*** " + UNTERM,
                 "7:1 ***ERROR*** " + "illegal character ignored: [",
