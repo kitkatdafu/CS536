@@ -34,12 +34,13 @@ import java_cup.runtime.*;  // defines Symbol
 public class P2 {
 
     // these fields store the error messages
-    private final String UNTERM_BAD = "unterminated string literal with bad "
-        + "escaped character ignored";
-    private final String BAD = "string literal with bad escaped character " 
-        + "ignored";
-    private final String UNTERM = "unterminated string literal ignored";
-    private final String BADINT = "integer literal too large; using max value";
+    private static final String UNTERM_BAD = "unterminated string literal with"
+        + " bad escaped character ignored";
+    private static final String BAD = "string literal with bad escaped"
+        + " character ignored";
+    private static final String UNTERM = "unterminated string literal ignored";
+    private static final String BADINT = "integer literal too large; using max"
+        + " value";
 
     public static void main(String[] args) throws IOException {
         // test all tokens
