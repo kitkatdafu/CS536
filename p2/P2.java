@@ -44,7 +44,7 @@ public class P2 {
 
     public static void main(String[] args) throws IOException {
         // test all tokens
-        testAllTokens("allTokens");
+        testAllTokens("allTokens", null, null);
         // test basic cases
         basicTests();
 
@@ -112,6 +112,64 @@ public class P2 {
                 "7:24 ***ERROR*** " + BAD,
                 "9:1 ***WARNING*** " + BADINT
         });
+
+        // check if charnum and linenum are correct
+        testCharNumLineNum("testCharNumLineNum", new int[] {
+                1, 11, 13, 37,
+                1, 31, 45,
+                1,  3,  5, 11,
+                1, 10, 19, 25, 30, 38,
+                1, 10, 17, 25, 31, 38,
+                1,  8, 15, 22, 29,
+                1,  8, 15, 22, 76,
+                1,  8, 15, 22, 29,
+                1,  8, 15, 22, 29,
+                1,  8, 12, 53, 60, 67
+        }, new int[] {
+                1, 1, 1, 1,
+                2, 2, 2,
+                3, 3, 3, 3,
+                4, 4, 4, 4, 4, 4,
+                5, 5, 5, 5, 5, 5,
+                6, 6, 6, 6, 6,
+                7, 7, 7, 7, 7,
+                8, 8, 8, 8, 8,
+                9, 9, 9, 9, 9,
+                10, 10, 10, 10, 10, 10
+        });
+    }
+
+    /**
+     * This function only checks if char number and line number of each token
+     * matches the expected value. It does not check anything else.
+     *
+     * @param fileName a file name that contains many a characters
+     * @param expectedCharNum expected char number of each token
+     * @param expectedLineNum expected line number of each token
+     * @throws IOException may be thrown by yylex
+     */
+    private static void testCharNumLineNum(
+            String fileName,
+            int[] expectedCharNum,
+            int[] expectedLineNum
+    ) throws IOException {
+        // create a custom stream
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+
+        // store the original stderr
+        PrintStream old = System.err;
+
+        // set stderr to the custom stream
+        System.setErr(ps);
+
+        // run the scanner
+        testAllTokens(fileName, expectedCharNum, expectedLineNum);
+
+        // flush buffered data
+        System.err.flush();
+        // restore stderr
+        System.setErr(old);
     }
 
     /**
@@ -130,7 +188,7 @@ public class P2 {
             "testComments"
         };
         for (String file: files) {
-            testAllTokens(file);
+            testAllTokens(file, null, null);
         }
     }
 
@@ -145,8 +203,10 @@ public class P2 {
      * @param expectedErr expected error messages
      * @throws IOException may be thrown by yylex
      */
-    private static void test(String fileName, String[] expectedErr) 
-            throws IOException {
+    private static void test(
+            String fileName, 
+            String[] expectedErr
+        ) throws IOException {
         // create a custom stream
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
@@ -158,7 +218,7 @@ public class P2 {
         System.setErr(ps);
 
         // run the scanner
-        testAllTokens(fileName);
+        testAllTokens(fileName, null, null);
 
         // flush buffered data
         System.err.flush();
@@ -198,7 +258,11 @@ public class P2 {
      * correctness of the scanner by comparing the input and output files
      * (e.g., using a 'diff' command).
      */
-    private static void testAllTokens(String fileName) throws IOException {
+    private static void testAllTokens(
+            String fileName, 
+            int[] expectedCharNum, 
+            int[] expectedLineNum
+        ) throws IOException {
         // reset CharNum
         CharNum.num = 1;
 
@@ -220,6 +284,7 @@ public class P2 {
         // create and call the scanner
         Yylex my_scanner = new Yylex(inFile);
         Symbol my_token = null;
+        int numTokenScanned = 0;
         try {
             my_token = my_scanner.next_token();
         } catch(ArrayIndexOutOfBoundsException e)  {
@@ -228,6 +293,33 @@ public class P2 {
         }
 
         while (my_token.sym != sym.EOF) {
+
+            int linenum = ((TokenVal)my_token.value).linenum;
+            int charnum = ((TokenVal)my_token.value).charnum;
+
+            // check if linenum and charnum are correct
+            if (expectedLineNum != null) {
+                if (expectedLineNum[numTokenScanned] != linenum) {
+                    System.err.printf("Linenum error:\n");
+                    System.err.printf("\tExpected: %d, Actual: %d\n",
+                            expectedLineNum[numTokenScanned], linenum);
+                    System.err.println("\tnum token scanned: "
+                            + numTokenScanned);
+                    System.exit(-1);
+                }
+            }
+            if (expectedCharNum != null) {
+                if (expectedCharNum[numTokenScanned] != charnum) {
+                    System.err.printf("Charnum error:\n");
+                    System.err.printf("\tExpected: %d, Actual: %d\n",
+                            expectedCharNum[numTokenScanned], charnum);
+                    System.err.println("\tnum token scanned: "
+                            + numTokenScanned);
+                    System.exit(-1);
+                }
+            }
+            numTokenScanned += 1;
+
             switch (my_token.sym) {
                 case sym.BOOL:
                     outFile.println("bool");

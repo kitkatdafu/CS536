@@ -1,0 +1,10 @@
+a         a 12312312317283192378129 tru
+"hello world" "bad string \a" "good string" +
++ - *     10
+bool     int   @@ void  tru  fls     struct
+receive  print  if @@   else  while  ret
+{      }      (      )      ;      
+,      .      <<     >>   "backslash followed by space: \ is not allowed"  ++
+--     +      -      *      / "use \q to denote a newline character
+!      &&     ||     ==     !=
+<      >   "use \n to denote a newline character"   <=     >=     =
