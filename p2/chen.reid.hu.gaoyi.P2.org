@@ -2,7 +2,7 @@
 #+AUTHOR: Reid Chen, Gaoyi Hu
 
 * JLex
-  The crux of this project is to come up a way to distinguish the 4 scenarios of
+  The crux of this project is to come up with a way to distinguish the 4 scenarios of
   string literals. When set a state called =OKSTR= when JLex sees a ="= to indicate that the JLex is
   currently looking at a legal string literal. We let JLex to match one
   character at a time. If JLex sees another ="=, then this string is
