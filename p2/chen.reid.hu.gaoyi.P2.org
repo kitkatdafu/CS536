@@ -17,11 +17,17 @@
   We have created 3 directories to store the testing files. =inputs= stores all
   the inputs, with extension =.in=. =outputs= stores the standard outputs, with
   extension =.out=. =expects= stores the
-  expected standard outputs, with extension =.ex=. The correctness of standard errors, i.e. the
+  expected standard outputs, with extension =.ex=. We keep =allTokens.in= and
+  =eof.txt= in the root of this project, but we did not use them. Test files are
+  located in these 3 directories described above.
+
+  The correctness of standard errors, i.e. the
   message produced by the =ErrMsg= are checked in the main of P2, instead of
   using =diff= to compare the expected standard outputs and the actual standard outputs.
-  The comparision is done using =diff TEST_CASE.out TEST_CASE.ex= in the Makefile.
   To standard error (error messages), we redirect `System.Err` to a customized
   stream. And compare the expected String with the String of the stream.
+
+  The comparision of standard outputs is done using =diff TEST_CASE.out
+  TEST_CASE.ex= in the Makefile.
   
 
