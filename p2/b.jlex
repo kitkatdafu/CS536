@@ -84,374 +84,369 @@ return new Symbol(sym.EOF);
 
 %%
 <YYINITIAL>"bool"    {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.BOOL, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.BOOL, tokenVal);
+}
 
 <YYINITIAL>"int"     {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.INT, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.INT, tokenVal);
+}
 
-"<YYINITIAL>void"    {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.VOID, tokenVal);
-          }
+<YYINITIAL>"void"    {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.VOID, tokenVal);
+}
 
 <YYINITIAL>"tru"     {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.TRUE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.TRUE, tokenVal);
+}
 
 <YYINITIAL>"fls"     {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.FALSE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.FALSE, tokenVal);
+}
 
 <YYINITIAL>"struct"  {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.STRUCT, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.STRUCT, tokenVal);
+}
 
 <YYINITIAL>"receive" {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.RECEIVE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.RECEIVE, tokenVal);
+}
 
 <YYINITIAL>"print"   {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.PRINT, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.PRINT, tokenVal);
+}
 
 <YYINITIAL>"if"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.IF, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.IF, tokenVal);
+}
 
 <YYINITIAL>"else"    {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.ELSE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.ELSE, tokenVal);
+}
 
 <YYINITIAL>"while"   {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.WHILE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.WHILE, tokenVal);
+}
 
 <YYINITIAL>"ret"     {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += yytext().length();
-            return new Symbol(sym.RETURN, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += yytext().length();
+    return new Symbol(sym.RETURN, tokenVal);
+}
 
-
-
-<YYINITIAL>"+"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.PLUS, tokenVal);
-          }
-
-<YYINITIAL>"-"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.MINUS, tokenVal);
-          }
-
-<YYINITIAL>"*"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.TIMES, tokenVal);
-          }
-
-<YYINITIAL>"/"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.DIVIDE, tokenVal);
-          }
-
-<YYINITIAL>"<"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.LESS, tokenVal);
-          }
-
-<YYINITIAL>">"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.GREATER, tokenVal);
-          }
-
-<YYINITIAL>"!"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.NOT, tokenVal);
-          }
-
-<YYINITIAL>"{"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.LCURLY, tokenVal);
-          }
-
-<YYINITIAL>"}"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.RCURLY, tokenVal);
-          }
-
-<YYINITIAL>"("       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.LPAREN, tokenVal);
-          }
-
-<YYINITIAL>")"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.RPAREN, tokenVal);
-          }
-
-<YYINITIAL>";"       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.SEMICOLON, tokenVal);
-          }
-
-<YYINITIAL>","       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.COMMA, tokenVal);
-          }
-
-<YYINITIAL>"."       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.DOT, tokenVal);
-          }
-
-<YYINITIAL>"="       {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
-            return new Symbol(sym.ASSIGN, tokenVal);
-          }
 
 <YYINITIAL>"<<"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.WRITE, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.WRITE, tokenVal);
+}
 
 <YYINITIAL>">>"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.READ, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.READ, tokenVal);
+}
 
 <YYINITIAL>"++"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.PLUSPLUS, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.PLUSPLUS, tokenVal);
+}
 
 <YYINITIAL>"--"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.MINUSMINUS, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.MINUSMINUS, tokenVal);
+}
 
 <YYINITIAL>"&&"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.AND, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.AND, tokenVal);
+}
 
 <YYINITIAL>"||"      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.OR, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.OR, tokenVal);
+}
 
 <YYINITIAL>"=="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.EQUALS, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.EQUALS, tokenVal);
+}
 
 <YYINITIAL>"!="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.NOTEQUALS, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.NOTEQUALS, tokenVal);
+}
 
 <YYINITIAL>"<="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.LESSEQ, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.LESSEQ, tokenVal);
+}
 
 <YYINITIAL>">="      {
-            TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
-            CharNum.num += 2;
-            return new Symbol(sym.GREATEREQ, tokenVal);
-          }
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num);
+    CharNum.num += 2;
+    return new Symbol(sym.GREATEREQ, tokenVal);
+}
+
+<YYINITIAL>"+"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.PLUS, tokenVal);
+}
+
+<YYINITIAL>"-"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.MINUS, tokenVal);
+}
+
+<YYINITIAL>"*"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.TIMES, tokenVal);
+}
+
+<YYINITIAL>"/"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.DIVIDE, tokenVal);
+}
+
+<YYINITIAL>"<"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.LESS, tokenVal);
+}
+
+<YYINITIAL>">"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.GREATER, tokenVal);
+}
+
+<YYINITIAL>"!"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.NOT, tokenVal);
+}
+
+<YYINITIAL>"{"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.LCURLY, tokenVal);
+}
+
+<YYINITIAL>"}"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.RCURLY, tokenVal);
+}
+
+<YYINITIAL>"("       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.LPAREN, tokenVal);
+}
+
+<YYINITIAL>")"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.RPAREN, tokenVal);
+}
+
+<YYINITIAL>";"       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.SEMICOLON, tokenVal);
+}
+
+<YYINITIAL>","       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.COMMA, tokenVal);
+}
+
+<YYINITIAL>"."       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.DOT, tokenVal);
+}
+
+<YYINITIAL>"="       {
+    TokenVal tokenVal = new TokenVal(yyline + 1, CharNum.num++);
+    return new Symbol(sym.ASSIGN, tokenVal);
+}
 
 <YYINITIAL>{COMMENT} {
-                CharNum.num += yytext().length();
-          }
+    CharNum.num += yytext().length();
+}
 
 <YYINITIAL>\n        { CharNum.num = 1; }
 
 <YYINITIAL>{WHITESPACE}+  { CharNum.num += yytext().length(); }
 
-
-<YYINITIAL>{DIGIT}+  {
-            try {
-                int val = (new Integer(yytext())).intValue();
-
-                Symbol S = new Symbol(sym.INTLITERAL,
-                                 new IntLitTokenVal(yyline+1, CharNum.num, val));
-                CharNum.num += yytext().length();
-                return S;
-            } catch (NumberFormatException e) {
-                ErrMsg.warn(yyline + 1,
-                            CharNum.num,
-                            "integer literal too large; using max value");
-                IntLitTokenVal tokenVal = new IntLitTokenVal(yyline + 1,
-                                                             CharNum.num,
-                                                             Integer.MAX_VALUE);
-                CharNum.num += yytext().length();
-                return new Symbol(sym.INTLITERAL, tokenVal);
-            }
-          }
-
-<YYINITIAL>{IDENTIFIER} {
-                IdTokenVal tokenVal = new IdTokenVal(yyline + 1,
+<YYINITIAL>{DIGIT}+           {
+    try {
+        int val = (new Integer(yytext())).intValue();
+        Symbol S = new Symbol(sym.INTLITERAL,
+                         new IntLitTokenVal(yyline+1, CharNum.num, val));
+        CharNum.num += yytext().length();
+        return S;
+    } catch (NumberFormatException e) {
+        ErrMsg.warn(yyline + 1,
+                    CharNum.num,
+                    "integer literal too large; using max value");
+        IntLitTokenVal tokenVal = new IntLitTokenVal(yyline + 1,
                                                      CharNum.num,
-                                                     yytext());
-                CharNum.num += yytext().length();
-                return new Symbol(sym.ID, tokenVal);
-             }
+                                                     Integer.MAX_VALUE);
+        CharNum.num += yytext().length();
+        return new Symbol(sym.INTLITERAL, tokenVal);
+    }
+}
 
-<YYINITIAL>\"        {
-                        yybegin(OKSTR);
-                        MatchedStr.str += yytext();
-                        CharNum.num += 1;
-                     }
+<YYINITIAL>{IDENTIFIER}       {
+    IdTokenVal tokenVal = new IdTokenVal(yyline + 1, CharNum.num, yytext());
+    CharNum.num += yytext().length();
+    return new Symbol(sym.ID, tokenVal);
+}
+
+<YYINITIAL>\"                 {
+    yybegin(OKSTR);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <OKSTR, BAD_ESCAPED>[^\n\"\\] {
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <OKSTR>\\                     {
-                                    yybegin(BACKSLASH);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    yybegin(BACKSLASH);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
+
 <OKSTR>\"                     {
-                                    yybegin(YYINITIAL);
-                                    MatchedStr.str += yytext();
-                                    StrLitTokenVal token = new StrLitTokenVal(yyline +1,
-                                                                       CharNum.num++,
-                                                                       MatchedStr.str);
-                                    MatchedStr.str = "";
-                                    return new Symbol(sym.STRINGLITERAL, token);
-                              }
+    yybegin(YYINITIAL);
+    MatchedStr.str += yytext();
+    StrLitTokenVal token = new StrLitTokenVal(yyline +1,
+                                       CharNum.num++,
+                                       MatchedStr.str);
+    MatchedStr.str = "";
+    return new Symbol(sym.STRINGLITERAL, token);
+}
+
 <OKSTR>\n                    {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <OKSTR>[^\n\"\\]$             {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
-
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <BACKSLASH>[nt\'\"\\\?]       {
-                                    yybegin(OKSTR);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    yybegin(OKSTR);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <BACKSLASH>\n                 {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <BACKSLASH>[^nt\'\"\\\?]      {
-                                    yybegin(BAD_ESCAPED);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    yybegin(BAD_ESCAPED);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <BAD_ESCAPED>\\               {
-                                    yybegin(BAD_BACKSLASH);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    yybegin(BAD_BACKSLASH);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <BAD_BACKSLASH>[nt\'\"\\\?]   {
-                                    yybegin(BAD_ESCAPED);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
+    yybegin(BAD_ESCAPED);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <BAD_BACKSLASH>\n             {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal with bad escaped character ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal with bad escaped character ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <BAD_BACKSLASH>[^nt\'\"\\\?]  {
-                                    yybegin(BAD_ESCAPED);
-                                    MatchedStr.str += yytext();
-                                    CharNum.num += 1;
-                              }
-
+    yybegin(BAD_ESCAPED);
+    MatchedStr.str += yytext();
+    CharNum.num += 1;
+}
 
 <BAD_ESCAPED>\"               {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "string literal with bad escaped character ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num += 1;
-                              }
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "string literal with bad escaped character ignored");
+    MatchedStr.str = "";
+    CharNum.num += 1;
+}
 
 <BAD_ESCAPED>\n               {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal with bad escaped character ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal with bad escaped character ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <BAD_ESCAPED>[^\n\"\\]$       {
-                                    yybegin(YYINITIAL);
-                                    ErrMsg.fatal(yyline + 1,
-                                                 CharNum.num - MatchedStr.str.length(),
-                                                 "unterminated string literal with bad escaped character ignored");
-                                    MatchedStr.str = "";
-                                    CharNum.num = 1;
-                              }
-
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal with bad escaped character ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 .         {
-            ErrMsg.fatal(yyline+1, CharNum.num,
-                         "illegal character ignored: " + yytext());
-            CharNum.num++;
-          }
+    ErrMsg.fatal(yyline+1, 
+                 CharNum.num,
+                "illegal character ignored: " + yytext());
+    CharNum.num++;
+}

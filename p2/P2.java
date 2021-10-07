@@ -48,6 +48,7 @@ public class P2 {
         // test basic cases
         basicTests();
 
+        // the tests below also check charnum and linenum.
         // test if illegal chars can be found
         test("testIllegalChar", new String[] {
                 "5:8 ***ERROR*** illegal character ignored: @",
@@ -121,9 +122,11 @@ public class P2 {
     private static void basicTests() throws IOException {
         String[] files = {
             "validIdentifier",
+            "validReservedWords",
             "validIntegerLiteral",
             "validStringLiteral",
             "validSymbols",
+            "validSymbols2",
             "testComments"
         };
         for (String file: files) {

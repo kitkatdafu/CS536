@@ -46,6 +46,8 @@ test:
 	diff $(EX)/validIntegerLiteral.ex $(OUT)/validIntegerLiteral.out
 	diff $(EX)/validStringLiteral.ex $(OUT)/validStringLiteral.out
 	diff $(EX)/validSymbols.ex $(OUT)/validSymbols.out
+	diff $(EX)/validSymbols2.ex $(OUT)/validSymbols2.out
+	diff $(EX)/validReservedWords.ex $(OUT)/validReservedWords.out
 	diff $(EX)/testComments.ex $(OUT)/testComments.out
 	diff $(EX)/testIllegalChar.ex $(OUT)/testIllegalChar.out
 	diff $(EX)/testBadString.ex $(OUT)/testBadString.out
