@@ -67,9 +67,14 @@ IDENTIFIER=   ({LETTER}|_)(_|{LETTER}|{DIGIT})*
 
 COMMENT=      (///|###)(.)*
 
+// state marks that the string lit read so far is okay
 %state OKSTR
+// state marks that it just read a backslash
 %state BACKSLASH
+// state marks that the string lit read so far contains a bad escaped char
 %state BAD_ESCAPED
+// state marks that it justread a backslash
+// and that it has read a bad escaped char
 %state BAD_BACKSLASH
 
 %implements java_cup.runtime.Scanner
