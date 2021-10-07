@@ -1,4 +1,4 @@
-% Created 2021-10-06 Wed 01:05
+% Created 2021-10-06 Wed 22:06
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,8 +31,8 @@
 
 
 \section{JLex}
-\label{sec:org26c5035}
-The crux of this project is to come up a way to distinguish the 4 scenarios of
+\label{sec:org253db41}
+The crux of this project is to come up with a way to distinguish the 4 scenarios of
 string literals. When set a state called \texttt{OKSTR} when JLex sees a \texttt{"} to indicate that the JLex is
 currently looking at a legal string literal. We let JLex to match one
 character at a time. If JLex sees another \texttt{"}, then this string is
@@ -44,13 +44,14 @@ character after \texttt{\textbackslash{}} is not one of the valid escape charact
 check if a string literal in \texttt{BAD\_ESCAPED} is terminated or not using a
 similar logic as \texttt{OKSTR}.
 \section{Testing}
-\label{sec:org118d62b}
+\label{sec:orgaeb6be1}
 We have created 3 directories to store the testing files. \texttt{inputs} stores all
-the inputs. \texttt{outputs} stores the standard outputs. \texttt{expects} stores the
-expected standard outputs. The correctness of standard errors, i.e. the
+the inputs, with extension \texttt{.in}. \texttt{outputs} stores the standard outputs, with
+extension \texttt{.out}. \texttt{expects} stores the
+expected standard outputs, with extension \texttt{.ex}. The correctness of standard errors, i.e. the
 message produced by the \texttt{ErrMsg} are checked in the main of P2, instead of
-using \texttt{diff} to compare the expected outputs and the actual outputs.
-
+using \texttt{diff} to compare the expected standard outputs and the actual standard outputs.
+The comparision is done using \texttt{diff TEST\_CASE.out TEST\_CASE.ex} in the Makefile.
 To standard error (error messages), we redirect `System.Err` to a customized
 stream. And compare the expected String with the String of the stream.
 \end{document}

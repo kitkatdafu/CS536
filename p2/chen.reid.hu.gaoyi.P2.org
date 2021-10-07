@@ -15,10 +15,13 @@
   similar logic as =OKSTR=.
 * Testing
   We have created 3 directories to store the testing files. =inputs= stores all
-  the inputs. =outputs= stores the standard outputs. =expects= stores the
-  expected standard outputs. The correctness of standard errors, i.e. the
+  the inputs, with extension =.in=. =outputs= stores the standard outputs, with
+  extension =.out=. =expects= stores the
+  expected standard outputs, with extension =.ex=. The correctness of standard errors, i.e. the
   message produced by the =ErrMsg= are checked in the main of P2, instead of
-  using =diff= to compare the expected outputs and the actual outputs.
-
+  using =diff= to compare the expected standard outputs and the actual standard outputs.
+  The comparision is done using =diff TEST_CASE.out TEST_CASE.ex= in the Makefile.
   To standard error (error messages), we redirect `System.Err` to a customized
   stream. And compare the expected String with the String of the stream.
+  
+

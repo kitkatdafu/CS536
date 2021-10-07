@@ -455,9 +455,6 @@ return new Symbol(sym.EOF);
 }
 
 <BAD_ESCAPED>[^\n\"\\]$       {
-    System.out.println("Bad Term:");
-    System.out.println("\t CharNum.num: " + CharNum.num);
-    System.out.println("\t len: " + MatchedStr.str.length());
     yybegin(YYINITIAL);
     ErrMsg.fatal(yyline + 1,
                  CharNum.num - MatchedStr.str.length(),
