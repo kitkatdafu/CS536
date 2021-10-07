@@ -334,6 +334,14 @@ return new Symbol(sym.EOF);
     MatchedStr.str += yytext();
     CharNum.num += 1;
 }
+<OKSTR>\\$                    {
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
 
 <OKSTR>\\                     {
     yybegin(BACKSLASH);
@@ -392,6 +400,15 @@ return new Symbol(sym.EOF);
     CharNum.num += 1;
 }
 
+<BAD_ESCAPED>\\$               {
+    yybegin(YYINITIAL);
+    ErrMsg.fatal(yyline + 1,
+                 CharNum.num - MatchedStr.str.length(),
+                 "unterminated string literal with bad escaped character ignored");
+    MatchedStr.str = "";
+    CharNum.num = 1;
+}
+
 <BAD_ESCAPED>\\               {
     yybegin(BAD_BACKSLASH);
     MatchedStr.str += yytext();
@@ -438,6 +455,9 @@ return new Symbol(sym.EOF);
 }
 
 <BAD_ESCAPED>[^\n\"\\]$       {
+    System.out.println("Bad Term:");
+    System.out.println("\t CharNum.num: " + CharNum.num);
+    System.out.println("\t len: " + MatchedStr.str.length());
     yybegin(YYINITIAL);
     ErrMsg.fatal(yyline + 1,
                  CharNum.num - MatchedStr.str.length(),

@@ -54,6 +54,10 @@ test:
 	diff $(EX)/testBadString2.ex $(OUT)/testBadString2.out
 	diff $(EX)/eof.ex $(OUT)/eof.out
 	diff $(EX)/eofBad.ex $(OUT)/eofBad.out
+	diff $(EX)/eofOk.ex $(OUT)/eofOk.out
+	diff $(EX)/eofBackslash.ex $(OUT)/eofBackslash.out
+	diff $(EX)/eofBadBackslash.ex $(OUT)/eofBadBackslash.out
+	diff $(EX)/eofBadTerm.ex $(OUT)/eofBadTerm.out
 	diff $(EX)/generalTest.ex $(OUT)/generalTest.out
 
 

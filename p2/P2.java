@@ -92,10 +92,28 @@ public class P2 {
                 "1:1 ***ERROR*** " + UNTERM,
         });
 
-        // test eof case
+        // test eof unterm bad case
         // test if bad string end with eof will be captured
         test("eofBad", new String[] {
                 "1:1 ***ERROR*** " + UNTERM_BAD,
+        });
+
+        // test eof unterm end with backslash case
+        // test if bad string end with eof will be captured
+        test("eofBackslash", new String[] {
+                "1:1 ***ERROR*** " + UNTERM,
+        });
+
+        // test eof unterm bad end with backslash case
+        // test if bad string end with eof will be captured
+        test("eofBadBackslash", new String[] {
+                "1:1 ***ERROR*** " + UNTERM_BAD,
+        });
+
+        // test eof unterm bad end with backslash case
+        // test if bad string end with eof will be captured
+        test("eofBadTerm", new String[] {
+                "1:1 ***ERROR*** " + BAD,
         });
 
         // a general test
@@ -185,7 +203,8 @@ public class P2 {
             "validStringLiteral",
             "validSymbols",
             "validSymbols2",
-            "testComments"
+            "testComments",
+            "eofOk"
         };
         for (String file: files) {
             testAllTokens(file, null, null);
