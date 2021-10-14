@@ -1,4 +1,4 @@
-% Created 2021-10-06 Wed 22:37
+% Created 2021-10-07 Thu 13:13
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,7 +31,7 @@
 
 
 \section{JLex}
-\label{sec:org1faa337}
+\label{sec:orgaba6dcb}
 The crux of this project is to come up with a way to distinguish the 4 scenarios of
 string literals. When set a state called \texttt{OKSTR} when JLex sees a \texttt{"} to indicate that the JLex is
 currently looking at a legal string literal. We let JLex to match one
@@ -44,7 +44,7 @@ character after \texttt{\textbackslash{}} is not one of the valid escape charact
 check if a string literal in \texttt{BAD\_ESCAPED} is terminated or not using a
 similar logic as \texttt{OKSTR}.
 \section{Testing}
-\label{sec:orgc5b5393}
+\label{sec:orgc76663f}
 We have created 3 directories to store the testing files. \texttt{inputs} stores all
 the inputs, with extension \texttt{.in}. \texttt{outputs} stores the standard outputs, with
 extension \texttt{.out}. \texttt{expects} stores the
