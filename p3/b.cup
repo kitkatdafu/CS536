@@ -1,4 +1,4 @@
-/**********************************************************************
+/*********************************************************************
  Java CUP specification for a parser for b programs
  **********************************************************************/
 
@@ -79,9 +79,33 @@ non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
 non terminal TypeNode         type;
 non terminal IdNode           id;
- 
+non terminal ExpNode          loc;
+non terminal CallExpNode      fncall;
+
  
 /* NOTE: Add precedence and associativity declarations here */
+/*
+Finall, the assignment operator (=)
+Assignment is right associative.
+*/
+precedence right ASSIGN;
+/*
+Then the logical or operator (||)
+*/
+precedence left OR;
+/* Then the logical and operator (&&) */
+precedence left AND;
+/*
+Then the relational and equality operators
+The relational and equality operators are non-associative:
+*/
+precedence nonassoc EQUALS, NOTEQUALS, LESSEQ, LESS, GREATEREQ, GREATER;
+/* Then addition and subtraction */
+precedence left PLUS, MINUS;
+/* Then multiplication and division */
+precedence left TIMES, DIVIDE;
+/* The unary minus and not (!) operators have the highest precedence */
+precedence nonassoc MINUS, NOT;
 
 
 start with program;
@@ -109,19 +133,118 @@ decl            ::= varDecl:v
                 {: RESULT = v;
                 :}
                 ;
-
+varDeclList     ::= varDeclList varDecl
+                | /* epsilon */
+                ;
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
                 :}
                 ;
+stmt            ::= assignExp SEMICOLON
+                | PLUSPLUS loc SEMICOLON
+                | MINUSMINUS loc SEMICOLON
+                | RECEIVE READ loc SEMICOLON
+                | PRINT WRITE exp SEMICOLON
+                | IF exp LCURLY varDeclList stmtList RCURLY
+                | IF exp LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+                | WHILE exp LCURLY varDeclList stmtList RCURLY
+                | REPEAT exp LCURLY varDeclList stmtList RCURLY
+                | RETURN exp SEMICOLON
+                | RETURN SEMICOLON
+                | fncall SEMICOLON
+                ;
+
+Exp       ::= loc ASSIGN exp
+                ;
+
+exp             ::= assignExp
+                | exp PLUS exp
+                | exp MINUS exp
+                | exp TIMES exp
+                | exp DIVIDE exp
+                | NOT exp
+                | exp AND exp
+                | exp OR exp
+                | exp EQUALS exp
+                | exp NOTEQUALS exp
+                | exp LESS exp
+                | exp GREATER exp
+                | exp LESSEQ exp
+                | exp GREATEREQ exp
+                | MINUS term
+                | term
+                ;
+term            ::= loc
+                {:
+                :}
+                | INTLITERAL
+                {:
+                :}
+                | STRINGLITERAL
+                {:
+                :}
+                | TRUE
+                {:
+                :}
+                | FALSE
+                {:
+                :}
+                | LPAREN exp RPAREN
+                {:
+                :}
+                | fncall
+                {:
+                :}
+                ;
+
+fncall          ::=  id:i LPAREN RPAREN
+                {:
+                    RESULT = new CallExpNode(i);
+                :}
+                | id:i LPAREN actualList:al RPAREN  // with args
+                {:
+                    RESULT = new CallExpNode(i, al);
+                :}
+                ;
+
+actualList      ::= exp:e
+                {:
+                    RESULT = new LinkedList<ExpNode>(e);
+                :}
+                | actialList:al COMMA exp:e
+                {:
+                    al.addLast(e);
+                    RESULT = al;
+                :}
+                ;
 
 type            ::= INT
-                {: RESULT = new IntNode();
+                {:
+                    RESULT = new IntNode();
+                :}
+                | BOOL
+                {:
+                    RESULT = new BoolNode();
+                :}
+                | VOID
+                {:
+                    RESULT = new VoidNode();
+                :}
+                ;
+
+loc             ::= ID:i
+                {:
+                    RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
+                :}
+                |   loc:l DOT id:i
+                {:
+                    RESULT = new DotAccessExpNode(l, i);
                 :}
                 ;
 
 id              ::= ID:i
-                {: RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
+                {:
+                    RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
                 :}
                 ;
 				
