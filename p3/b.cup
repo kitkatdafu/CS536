@@ -96,7 +96,6 @@ non terminal StmtNode stmt;
 non terminal ExpNode Exp; //? log assign
 non terminal ExpNode exp; //experssion
 non terminal ExpNode term;
-non terminal CallExpNode fncall;
 non terminal LinkedList actualList;
 //done
 
@@ -229,20 +228,44 @@ stmtList        ::= stmtList:L stmt:s
 
 //TODO: more implement here.
 stmt            ::= assignExp SEMICOLON
+		{:
+		:}
                 | PLUSPLUS loc SEMICOLON
+		{:
+		:}
                 | MINUSMINUS loc SEMICOLON
+		{:
+		:}
                 | RECEIVE READ loc SEMICOLON
-                | PRINT WRITE exp SEMICOLON
-                | IF exp LCURLY varDeclList stmtList RCURLY
-                | IF exp LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
-                | WHILE exp LCURLY varDeclList stmtList RCURLY
-                | REPEAT exp LCURLY varDeclList stmtList RCURLY
-                | RETURN exp SEMICOLON
-                | RETURN SEMICOLON
-                | fncall SEMICOLON
-                ;
+                {:
+		:}
+		| PRINT WRITE exp SEMICOLON
+                {:
+		:}
+		| IF exp LCURLY varDeclList stmtList RCURLY
+                {:
+		:}
+		| IF exp LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+                {:
+		:}
+		| WHILE exp LCURLY varDeclList stmtList RCURLY
+                {:
+		:}
+		| REPEAT exp LCURLY varDeclList stmtList RCURLY
+                {:
+		:}
+		| RETURN exp SEMICOLON
+                {:
+		:}
+		| RETURN SEMICOLON
+                {:
+		:}
+		| fncall SEMICOLON
+                {:
+		:}
+		;
 
-Exp       ::= loc:l ASSIGN exp:e
+assignExp       ::= loc:l ASSIGN exp:e
 		{:RESULT = new AssignNode(l,e);
 		:}
                 ;
