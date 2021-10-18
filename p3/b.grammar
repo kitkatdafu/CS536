@@ -63,7 +63,7 @@ stmt            ::= assignExp SEMICOLON
                 | fncall SEMICOLON
                 ;
 
-Exp       ::= loc ASSIGN exp
+assignExp       ::= loc ASSIGN exp
                 ;
                 
 exp             ::= assignExp
