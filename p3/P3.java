@@ -1,3 +1,31 @@
+
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            P3
+// Files:            P3.java, b.cup
+// Semester:         CS536 Fall 2021
+//
+// Author:           Reid Chen
+// Email:            ychen878@wics.edu 
+// CS Login:         reid
+// Lecturer's Name:  Aws Albarghouthi
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
+//
+// Pair Partner:     Gaoyi Hu
+// Email:            ghu37@wisc.edu
+// CS Login:         gaoyi
+//
+//////////////////// STUDENTS WHO GET HELP FROM OTHER THAN THEIR PARTNER //////
+//
+// Persons:          (x) 
+//
+// Online sources:   https://tinyurl.com/6spnw3k - redirect stderr
+//                   
+//////////////////////////// 80 columns wide //////////////////////////////////
+
+
+
 import java.io.*;
 import java_cup.runtime.*;
 
