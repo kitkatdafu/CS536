@@ -37,7 +37,7 @@ terminal                PRINT;
 terminal                IF;
 terminal                ELSE;
 terminal                WHILE;
-terminal		        REPEAT;
+terminal		            REPEAT;
 terminal                RETURN;
 terminal IdTokenVal     ID;
 terminal IntLitTokenVal INTLITERAL;
@@ -140,55 +140,81 @@ start with program;
  * NOTE: add more grammar rules below
  */
 program         ::= declList: d
-                {: RESULT = new ProgramNode(new DeclListNode(d));
+                {: 
+                    System.err.println("Beginning of the program");
+                    RESULT = new ProgramNode(new DeclListNode(d));
                 :}
                 ;
 
 declList        ::= declList:dl decl:d
-                {: dl.addLast(d);
-                   RESULT = dl;
+                {: 
+                    dl.addLast(d);
+                    RESULT = dl;
                 :}
-                | /* epsilon */
-                {: RESULT = new LinkedList<DeclNode>();
+                |
+                {: 
+                    RESULT = new LinkedList<DeclNode>();
                 :}
                 ;
 
 decl            ::= varDecl:v
-                {: RESULT = v;
+                {: 
+                    RESULT = v;
+                :}
+                |   fnDecl:f
+                {:
+                    RESULT = f;
+                :}
+                |   structDecl:s
+                {:
+                    RESULT = s;
                 :}
                 ;
+
 varDeclList     ::= varDeclList:vl varDecl:v
-                {: vl.addLast(v);
-                   RESULT = vl;
+                {: 
+                    vl.addLast(v);
+                    RESULT = vl;
                 :}
-                | /* epsilon */
-		{:        RESULT = new LinkedList<VarDeclNode>();
-		:}
+                |		
+                {:
+                    RESULT = new LinkedList<VarDeclNode>();
+		            :}
                 ;
+
 varDecl         ::= type:t id:i SEMICOLON
-                {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
+                {: 
+                    RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
+                :}
+                |   STRUCT id:i1 id:i2 SEMICOLON
+                {:
+                    RESULT = new VarDeclNode(new StructNode(i1), i2, 0);
                 :}
                 ;
-fnDecl		::= type:t id:i formals:f fnBody:body
-		{: RESULT = new FnDeclNode(t,i,f,body);
-		:}
-		;
-structDecl	::= STRUCT id:i LCURLY structBody:sb RCURLY
-		{:
-		    RESULT = new StructDeclNode(i,
-		                                new DeclListNode(sb));
-		:}
-		;
-structBody	::= structBody:sb varDecl:d
-		{:
-		    sb.add(d);
-		    RESULT = sb;
-		:}
-		|varDecl:d
-		{:
-            RESULT = new LinkedList<VarDeclNode>(Arrays.asList(d));
-		:}
-		;
+
+fnDecl		      ::= type:t id:i formals:f fnBody:body
+		            {: 
+                    RESULT = new FnDeclNode(t, i, f, body);
+		            :}
+		            ;
+
+structDecl	    ::= STRUCT id:i LCURLY structBody:sb RCURLY
+		            {:
+		                RESULT = new StructDeclNode(i, new DeclListNode(sb));
+	            	:}
+	            	;
+
+structBody	    ::= structBody:sb varDecl:d
+		            {:
+		                sb.add(d);
+		                RESULT = sb;
+		            :}
+		            |   varDecl:d
+		            {:
+                    RESULT = new LinkedList<VarDeclNode>(Arrays.asList(d));
+		            :}
+		            ;
+
 formals         ::= LPAREN RPAREN
 		{:RESULT = new FormalsListNode(new LinkedList());
 		:}
@@ -401,9 +427,9 @@ type            ::= INT
                 :}
                 ;
 
-loc             ::= ID:i
+loc             ::= id:i
                 {:
-                    RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
+                    RESULT = i;
                 :}
                 |   loc:l DOT id:i
                 {:
