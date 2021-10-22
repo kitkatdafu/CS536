@@ -1,82 +1,56 @@
-//type
-int
-bool
-void
-
-//varDecl && varDeclList
-//decl declList
+int main(void a) {
+///varDecl && varDeclList
 bool x;
-x = True;
 void x;
 int x;
 x = 1;
+}
 
-//formals & formalsList & formalDecl
-()
-(int a=1, int b=2, int c=3)
+///fnDecl
+void func1(int x){x=2;}
+///structDecl
+struct hash { int val; bool next;}
 
-//fnBody
-{int tmp = 1;}
-//fnDecl 
-void fun1(){ int temp = 1;}
-
-//structBody
-{int val=0; bool next=True; void add=0;}
-
-//structDecl
-STRUCT hash{ int val=0; bool next= True;}
-
-random();
-Math.exp(2 + x);
-
-//id
-21323210000;
-wergnojsa;
-True;
-False;
--1;
-2 + (x + 1);
-2*(x+1);
-1*-1
-Math.exp(3);
-
-//assignExp
-int l = 5 + 7; 
-
-//exp
-x = 1;
-1 + 2;
-5 - 1;
-not True;
-1 & 0;
-1 == 1;
-1 != 0;
-4 < 2;
-4 > 7;
-5 <= 3;
-3 >= 1;
--5;
-3;
-
-//stmt
-l = x;
-l++2;
-l--3;
-if(){}
-if(){}else{}
+///stmtlist && stmt
+int main2(void e){
+int l;
+void e;
+l = 3;
+++l;
+--l;
 read("file.txt");
 write("file.txt");
-System.out.print("nice");
-return "done";
-return ;
+print<<"nice";
+if x == 1{ ++x; }else{--x;}
+while x==1 { ++x; }
+repeat x>1 { ++x; }
+ret -1;
+ret ;
+e =0;
+func1(e);
 
-//stmtlist?
+///exp
+x = 1;
+x= x+l;
+x = 5 - 1;
+x = ! x;
+x = x && l;
+x = (1 == 1);
+x = (1 != 0);
+x = (4 < 2);
+x = (4 > 7);
+x = (5 <= 3);
+x = (3 >= 1);
 
-{read(); write();}
-bool right
-bool c = True;
-int func(){int x=1; return x;}
-bool c = False, int x= -1;
-
-//dncall
-fun1();
+///term
+x = 2132;
+x = wergnojsa;
+x = True;
+x = False;
+x = -1;
+x = 2 + (x + 1);
+x = 2*(x+1);
+x = 1*-1;
+x = -1;
+ret 0;
+}
