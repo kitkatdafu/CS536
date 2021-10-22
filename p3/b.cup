@@ -375,12 +375,12 @@ term            ::= loc:l
                 {:RESULT = new StringLitNode(s.linenum, s.charnum, s.strVal);
                 :}
                 | TRUE:t
-                {:RESULT = new TrueNode(((TokenVal)((Symbol)t).value)
-                .linenum, ((TokenVal)((Symbol)t).value).charnum);
+                {:
+                    RESULT = new TrueNode(((TokenVal) t).linenum, ((TokenVal) t).charnum);
                 :}
                 | FALSE:f
-                {:RESULT = new FalseNode(((TokenVal)((Symbol)f).value)
-                .linenum, ((TokenVal)((Symbol)f).value).charnum);
+                {:
+                    RESULT = new FalseNode(((TokenVal) f).linenum, ((TokenVal) f).charnum);
                 :}
                 | LPAREN exp:e RPAREN
                 {:RESULT = e;
