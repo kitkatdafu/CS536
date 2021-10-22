@@ -11,6 +11,8 @@ void complatected(){ while(x == 1){ int b; b = -1; ++b; if b == 0 {x = 2;}} }
 
 void com2(){if(b == 0) {x = 4 + 3 *5 -y; while (c) {y=y*2 + x;}} else {x = 0;}  }
 
+bool final1() {ret ;}
+///bool final(){ret fls;}
 
 
 
