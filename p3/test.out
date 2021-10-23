@@ -92,6 +92,7 @@ void com2(){
 	x = -"dasd"; 
 	x=- fls; 
 	x=- (x+4);  
+	ret foo();
 }
 
 
