@@ -8,9 +8,13 @@ void func1(int x, int y) {
     x = 2;
     y = 4;
 }
+struct new {
+    int num1;
+}
 struct hash {
     int val;
     bool next;
+    struct new a;
 }
 int test() {
     void x;
