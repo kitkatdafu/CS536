@@ -469,7 +469,9 @@ class IfStmtNode extends StmtNode {
         this.addIndent(p, indent);
         p.print("if ");
 
+        p.print("(")
         this.myExp.unparse(p, indent + 4);
+        p.print(")")
 
         p.print(" {\n");
 
@@ -501,7 +503,9 @@ class IfElseStmtNode extends StmtNode {
         this.addIndent(p, indent);
         p.print("if ");
 
+        p.print("(")
         this.myExp.unparse(p, indent);
+        p.print(")")
 
         p.print(" {\n");
 
@@ -542,7 +546,9 @@ class WhileStmtNode extends StmtNode {
         this.addIndent(p, indent);
         p.print("while ");
 
+        p.print("(")
         this.myExp.unparse(p, indent);
+        p.print(")")
 
         p.print(" {\n");
 
@@ -569,7 +575,11 @@ class RepeatStmtNode extends StmtNode {
     public void unparse(PrintWriter p, int indent) {
         this.addIndent(p, indent);
         p.print("repeat ");
+
+        p.print("(")
         this.myExp.unparse(p, indent);
+        p.print(")")
+
         p.print(" {\n");
 
         this.myDeclList.unparse(p, indent + 4);
