@@ -141,7 +141,6 @@ start with program;
  */
 program         ::= declList: d
                 {: 
-                    System.err.println("Beginning of the program");
                     RESULT = new ProgramNode(new DeclListNode(d));
                 :}
                 ;
