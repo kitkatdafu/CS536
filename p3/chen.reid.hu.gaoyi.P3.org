@@ -1,4 +1,5 @@
 #+TITLE: P3
+#+AUTHOR: Gaoyi Hu, Reid Chen
 We basically implement the b.cup under the guide of b.grammar. Generally, we convert the input code: loc to term, id, variable and function name.
 
 For a struct, we define the STRUCT and its name, using the structbod to fill in its content. Formals are the part we will put the input arguments. Similiarly, for a function, we define the function name, input and using the funcbody to fill it. 
