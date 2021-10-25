@@ -129,7 +129,7 @@ precedence left PLUS, MINUS;
 /* Then multiplication and division */
 precedence left TIMES, DIVIDE;
 /* The unary minus and not (!) operators have the highest precedence */
-precedence nonassoc MINUS, NOT;
+precedence nonassoc NOT;
 
 
 start with program;
