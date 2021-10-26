@@ -1,22 +1,22 @@
-void test1(void a) {
+void testdecl(void a) {
     bool x;
     void x;
     int x;
     x = 1;
 }
-void func1(int x, int y) {
+void testfunc1(int x, int y) {
     x = 2;
     y = 4;
 }
-struct new {
+struct testStruct {
     int num1;
 }
-struct hash {
+struct testDoubleStruct {
     int val;
     bool next;
-    struct new a;
+    struct testStruct a;
 }
-int test() {
+int exp() {
     void x;
     x = 2132;
     x = wergnojsa;
@@ -29,11 +29,11 @@ int test() {
     x = (-1);
     ret x;
 }
-void foo1() {
+void testinvoke() {
     func1(2, 3);
     hash.next = 3;
 }
-bool foo() {
+bool testterm() {
     int x;
     int l;
     l = 1;
@@ -50,42 +50,43 @@ bool foo() {
     ++l;
     --l;
     read("file.txt");
-    write("file.txt");
+    receive >> test;
     print << "nice";
-    if (x == 1) {
+    if ((x == 1)) {
         ++x;
 
     }
     else {
         --x;
     }
-    while (x == 1) {
+    while ((x == 1)) {
         ++x;
     }
-    repeat (x > 1) {
+    repeat ((x > 1)) {
         ++x;
     }
     e = 0;
     func1(e);
     ret fls;
 }
-int foo() {
+int testreturn() {
     ret 1;
+    ret;
 }
 void complatected() {
-    while (x == 1) {
+    while ((x == 1)) {
         int b;
         b = (-1);
         ++b;
-        if (b == 0) {
+        if ((b == 0)) {
             x = 2;
         }
     }
 }
-void com2() {
-    if (b == 0) {
-        x = (4 + (3 * (5 - y)));
-        while c {
+void others() {
+    if ((b == 0)) {
+        x = ((4 + (3 * 5)) - y);
+        while (c) {
             y = ((y * 2) + x);
         }
 
