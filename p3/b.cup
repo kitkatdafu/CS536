@@ -109,7 +109,7 @@ non terminal CallExpNode      fncall;
  
 /* NOTE: Add precedence and associativity declarations here */
 /*
-Finall, the assignment operator (=)
+Finally, the assignment operator (=)
 Assignment is right associative.
 */
 precedence right ASSIGN;
