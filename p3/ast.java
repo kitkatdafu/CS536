@@ -762,9 +762,14 @@ class CallExpNode extends ExpNode {
     // ** unparse **
     public void unparse(PrintWriter p, int indent) {
         myId.unparse(p, indent);
-        p.print("(");
-        this.myExpList.unparse(p, indent);
-        p.print(")");
+        if (this.myExpList != null) {
+            p.print("(");
+            this.myExpList.unparse(p, indent);
+            p.print(")");
+        } else {
+            p.print("(");
+            p.print(")");
+        }
     }
 
     // 2 kids
