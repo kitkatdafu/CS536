@@ -1,5 +1,5 @@
 #+TITLE: P3
-#+AUTHOR: Gaoyi Hu
+#+AUTHOR: Gaoyi Hu, Reid Chen
 
 We basically implement the b.cup under the guide of b.grammar.
 
@@ -9,3 +9,5 @@ On the other side, we add all variables into a list so we are able to manage the
 For normal structres such as if, while and read, we use the stmt and stmtlist to implement them. As for the expressions, we use the exp and assign Exp to represnet them. Also, terms for bool, string and some other type. 
 
 We use the constructor =public CallExpNode(IdNode name)= in case of function call has no parameters.
+
+In the unparse part, each time an indent is needed, we add 4 to the indent value and pass this value to the corresponding node's unparse function.
