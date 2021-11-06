@@ -38,10 +38,10 @@ sym.java: b.cup
 ErrMsg.class: ErrMsg.java
 	$(JC) $(FLAGS) -cp $(CP) ErrMsg.java
 
-Sym.class: Sym.java
-	$(JC) $(FLAGS) -cp $(CP) Sym.java
+Symb.class: Symb.java
+	$(JC) $(FLAGS) -cp $(CP) Symb.java
 
-SymTable.class: SymTable.java Sym.class DuplicateSymException.class WrongArgumentException.class EmptySymTableException.class
+SymTable.class: SymTable.java Symb.class DuplicateSymException.class WrongArgumentException.class EmptySymTableException.class
 	$(JC) $(FLAGS) -cp $(CP) SymTable.java
 
 DuplicateSymException.class: DuplicateSymException.java

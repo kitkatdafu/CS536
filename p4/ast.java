@@ -115,6 +115,65 @@ abstract class ASTnode {
     protected void addIndent(PrintWriter p, int indent) {
         for (int k = 0; k < indent; k++) p.print(" ");
     }
+
+    /**
+     * More than one declaration of an identiﬁer in a given scope
+     * (note: includes identiﬁer associated with a struct deﬁnition)
+     * */
+    public void MultiplyDeclaredIdentifier(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Multiply declared identifier");
+    }
+
+    /**
+     * Use of an undeclared identiﬁer
+     * */
+    public void UndeclaredIdentifier(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Undeclared identifier");
+    }
+
+    /**
+     * Bad struct access
+     * (LHS of dot-access is not of a struct type)
+     * */
+    public void DotAccessOfNonStructType(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Dot-access of non-struct type");
+    }
+
+    /**
+     * Bad struct access
+     * (RHS of dot-access is not a ﬁeld of the appropriate a struct)
+     * */
+    public void InvalidStructFieldName(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Invalid struct field name");
+    }
+
+    /**
+     * Bad declaration
+     * (variable or parameter of type void)
+     * */
+    public void NonFunctionDeclaredVoid(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Non-function declared void");
+    }
+
+    /**
+     * Bad declaration
+     * (attempt to declare variable of a bad struct type)
+     * */
+    public void InvalidNameOfStructType(int lineNum, int charNum) {
+        ErrMsg.fatal(lineNum,
+                     charNum,
+                     "Invalid name of struct type");
+    }
 }
 
 // **********************************************************************
@@ -125,14 +184,25 @@ abstract class ASTnode {
 class ProgramNode extends ASTnode {
     public ProgramNode(DeclListNode L) {
         myDeclList = L;
+        this.table = new SymTable();
     }
 
     public void unparse(PrintWriter p, int indent) {
         myDeclList.unparse(p, indent);
     }
 
+    /**
+     * Name analyzer
+     **/
+    public void analyze() {
+        this.myDeclList.analyze(this.table);
+    }
+
     // 1 kid
     private DeclListNode myDeclList;
+    private SymTable table;
+
+
 }
 
 class DeclListNode extends ASTnode {
@@ -149,6 +219,12 @@ class DeclListNode extends ASTnode {
         } catch (NoSuchElementException ex) {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
+        }
+    }
+
+    public void analyze(SymTable table) {
+        for (DeclNode decl: myDecls) {
+            decl.analyze(table);
         }
     }
 
@@ -172,6 +248,12 @@ class FormalsListNode extends ASTnode {
         } 
     }
 
+    public void analyze(SymTable table) {
+        for (FormalDeclNode formal: myFormals) {
+            formal.analyze(table);
+        }
+    }
+
     // list of kids (FormalDeclNodes)
     private List<FormalDeclNode> myFormals;
 }
@@ -185,6 +267,11 @@ class FnBodyNode extends ASTnode {
     public void unparse(PrintWriter p, int indent) {
         myDeclList.unparse(p, indent);
         myStmtList.unparse(p, indent);
+    }
+
+    public void analyze(SymTable table) {
+        myDeclList.analyze(table);
+        myStmtList.analyze(table);
     }
 
     // 2 kids
@@ -201,6 +288,12 @@ class StmtListNode extends ASTnode {
         Iterator<StmtNode> it = myStmts.iterator();
         while (it.hasNext()) {
             it.next().unparse(p, indent);
+        }
+    }
+
+    public void analyze(SymTable table) {
+        for (StmtNode stmt: myStmts) {
+            stmt.analyze(table);
         }
     }
 
@@ -224,6 +317,12 @@ class ExpListNode extends ASTnode {
         } 
     }
 
+    public void analyze(SymTable table) {
+        for (ExpNode exp: myExps) {
+            exp.analyze(table);
+        }
+    }
+
     // list of kids (ExpNodes)
     private List<ExpNode> myExps;
 }
@@ -233,6 +332,25 @@ class ExpListNode extends ASTnode {
 // **********************************************************************
 
 abstract class DeclNode extends ASTnode {
+    abstract IdNode getId();
+    abstract String getType();
+    abstract boolean isValid(SymTable table);
+    abstract void handleNext(SymTable table);
+
+    public String getName() {
+        return this.getId().getName();
+    }
+
+    public void analyze(SymTable table) {
+        // add THIS declaration to the symbol table
+        String name = getName();
+        String type = getType();
+        Symb sym = new Symb(type);
+        table.addDecl(name, sym);
+
+        // handle next: THIS declaration may have substructures
+        handleNext();
+    }
 }
 
 class VarDeclNode extends DeclNode {
@@ -250,9 +368,37 @@ class VarDeclNode extends DeclNode {
         p.println(";");
     }
 
+    /**
+     * Check if this Variable Declaration is valid or not:
+     *
+     * 1. Check if type is void
+     * 2. Check if multiply declared
+     * */
+    public boolean isValid(SymTable table) {
+        // check if type is void
+        if (this.getType().equals(TypeNode.VOID)) {
+            return false;
+        }
+        // check if this variable has been declared in this scope or not
+        return table.lookupLocal(this.getName()) == null;
+    }
+
+    /**
+     * Do nothing
+     * */
+    public void handleNext(SymTable table) {}
+
+    public String getType() {
+        return this.myType.getType();
+    }
+
+    public IdNode getId() {
+        return this.myId;
+    }
+
     // 3 kids
-    private TypeNode myType;
     private IdNode myId;
+    private TypeNode myType;
     private int mySize;  // use value NOT_STRUCT if this is not a struct type
 
     public static int NOT_STRUCT = -1;
@@ -281,9 +427,45 @@ class FnDeclNode extends DeclNode {
         p.println("}\n");
     }
 
+    /**
+     * Check if this Function Declaration is valid or not:
+     *
+     * 1. check if this function has been declared or not
+     * */
+    public boolean isValid(SymTable table) {
+        // check if this function has been declared in this scope or not
+        return table.lookupLocal(this.getName()) == null;
+    }
+
+    /**
+     * THIS function's formals and body are in a NEW scope
+     *
+     * 1. create a new scope
+     * 2. handle internals
+     * 3. remove the newly added scope
+     *
+     * */
+    public void handleNext(SymTable table) {
+        // enter a new scope
+        table.addScope();
+        // handling
+        this.myFormalsList.analyze(table);
+        this.myBody.analyze(table);
+        // exiting the new scope
+        table.removeScope();
+    }
+
+    public String getType() {
+        return this.myType.getType();
+    }
+
+    public IdNode getId() {
+        return this.myId;
+    }
+
     // 4 kids
-    private TypeNode myType;
     private IdNode myId;
+    private TypeNode myType;
     private FormalsListNode myFormalsList;
     private FnBodyNode myBody;
 }
@@ -300,9 +482,32 @@ class FormalDeclNode extends DeclNode {
         myId.unparse(p, 0);
     }
 
-    // 2 kids
-    private TypeNode myType;
+
+    /**
+     * Check if this Formal Declaration is valid or not:
+     *
+     * 1. check if this formal has been declared or not
+     * */
+    public boolean isValid(SymTable table) {
+        // check if this formal has been declared in this scope or not
+        return table.lookupLocal(this.getName()) == null;
+    }
+
+    /**
+     * Do nothing
+     *  */
+    public void handleNext(SymTable table) {}
+
+    public String getType() {
+        return this.myType.getType();
+    }
+
+    public IdNode getId() {
+        return this.myId;
+    }
+
     private IdNode myId;
+    private TypeNode myType;
 }
 
 class StructDeclNode extends DeclNode {
@@ -322,7 +527,34 @@ class StructDeclNode extends DeclNode {
 
     }
 
-    // 2 kids
+
+    /**
+     * Check if this Formal Declaration is valid or not:
+     *
+     * 1. check if this formal has been declared or not
+     * */
+    public boolean isValid(SymTable table) {
+        // check if this formal has been declared in this scope or not
+        return table.lookupLocal(this.getName()) == null;
+    }
+
+    /**
+     * Entering a new scope
+     *  */
+    public void handleNext(SymTable table) {
+        table.addScope();
+        this.myDeclList.analyze(table);
+        table.removeScope();
+    }
+
+    public String getType() {
+        return "struct";
+    }
+
+    public IdNode getId() {
+        return this.myId;
+    }
+
     private IdNode myId;
     private DeclListNode myDeclList;
 }
@@ -332,6 +564,12 @@ class StructDeclNode extends DeclNode {
 // **********************************************************************
 
 abstract class TypeNode extends ASTnode {
+    abstract String getType();
+
+    public static String INT = "int";
+    public static String BOOL = "bool";
+    public static String VOID = "void";
+    public static String STRUCT = "struct";
 }
 
 class IntNode extends TypeNode {
@@ -340,6 +578,10 @@ class IntNode extends TypeNode {
 
     public void unparse(PrintWriter p, int indent) {
         p.print("int");
+    }
+
+    public String getType() {
+        return "int";
     }
 }
 
@@ -350,6 +592,10 @@ class BoolNode extends TypeNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("bool");
     }
+
+    public String getType() {
+        return "bool";
+    }
 }
 
 class VoidNode extends TypeNode {
@@ -358,6 +604,10 @@ class VoidNode extends TypeNode {
 
     public void unparse(PrintWriter p, int indent) {
         p.print("void");
+    }
+
+    public String getType() {
+        return "void";
     }
 }
 
@@ -373,6 +623,10 @@ class StructNode extends TypeNode {
     
     // 1 kid
     private IdNode myId;
+
+    public String getType() {
+        return myId.getName();
+    }
 }
 
 // **********************************************************************
@@ -675,15 +929,30 @@ class IdNode extends ExpNode {
         myLineNum = lineNum;
         myCharNum = charNum;
         myStrVal = strVal;
+        link = null;
     }
 
     public void unparse(PrintWriter p, int indent) {
         p.print(myStrVal);
     }
 
+    public String getName() {
+        return this.myStrVal;
+    }
+
+    public void setLink(Symb link) {
+        this.link = link;
+    }
+
+    public Symb getLink(Symb link) {
+        return this.link;
+    }
+
     private int myLineNum;
     private int myCharNum;
     private String myStrVal;
+    // add a "link" to the corresponding symbol-table entry.
+    private Symb link;
 }
 
 class DotAccessExpNode extends ExpNode {

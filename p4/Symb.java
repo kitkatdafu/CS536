@@ -1,7 +1,9 @@
-public class Sym {
+public class Symb {
     private String type;
+
+    public static boolean TRIGGERED = false;
     
-    public Sym(String type) {
+    public Symb(String type) {
         this.type = type;
     }
     
