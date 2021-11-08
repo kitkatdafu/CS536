@@ -660,10 +660,6 @@ class StructNode extends TypeNode {
 
 abstract class StmtNode extends ASTnode {
     abstract void analyze(SymTable table);
-
-    abstract boolean isValid(SymTable table);
-
-    abstract void handleNext(SymTable table);
 }
 
 class AssignStmtNode extends StmtNode {
@@ -674,16 +670,6 @@ class AssignStmtNode extends StmtNode {
 
     public void analyze(SymTable table) {
         myAssign.analyze(table);
-    }
-
-    public boolean isValid(SymTable table) {
-        return myAssign.isValid(table);
-    }
-
-    /**
-     * Nothing to be done
-     */
-    public void handleNext(SymTable table) {
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -712,16 +698,6 @@ class PreIncStmtNode extends StmtNode {
         myExp.analyze(table);
     }
 
-    public boolean isValid(SymTable table) {
-        return myExp.isValid(table);
-    }
-
-    /**
-     * Nothing to be done
-     */
-    public void handleNext(SymTable table) {
-    }
-
     // 1 kid
     private ExpNode myExp;
 }
@@ -733,16 +709,6 @@ class PreDecStmtNode extends StmtNode {
 
     public void analyze(SymTable table) {
         myExp.analyze(table);
-    }
-
-    public boolean isValid(SymTable table) {
-        return myExp.isValid(table);
-    }
-
-    /**
-     * Nothing to be done
-     */
-    public void handleNext(SymTable table) {
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -772,16 +738,6 @@ class ReceiveStmtNode extends StmtNode {
         myExp.analyze(table);
     }
 
-    public boolean isValid(SymTable table) {
-        return myExp.isValid(table);
-    }
-
-    /**
-     * Nothing to be done
-     */
-    public void handleNext(SymTable table) {
-    }
-
     // 1 kid (actually can only be an IdNode or an ArrayExpNode)
     private ExpNode myExp;
 }
@@ -793,16 +749,6 @@ class PrintStmtNode extends StmtNode {
 
     public void analyze(SymTable table) {
         myExp.analyze(table);
-    }
-
-    public boolean isValid(SymTable table) {
-        return myExp.isValid(table);
-    }
-
-    /**
-     * Nothing to be done
-     */
-    public void handleNext(SymTable table) {
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -836,30 +782,16 @@ class IfStmtNode extends StmtNode {
 
     public void analyze(SymTable table) {
         myExp.analyze(table);
-    }
-
-    public boolean isValid(SymTable table) {
-        myExp.isValid(table);
-    }
-
-    public void handleNext(SymTable table) {
-        table.addScope();
-        myDeclList.analyze(table);
-        try {
-            table.removeScope();
-        } catch (EmptySymTableException e) {
-            System.err.println("Fatal Error");
-            System.exit(-1);
-        }
 
         table.addScope();
+
         myDeclList.analyze(table);
+        myStmtList.analyze(table);
+
         try {
             table.removeScope();
-        } catch (EmptySymTableException e) {
-            System.err.println("Fatal Error");
-            System.exit(-1);
-
+        } catch (Exception e) {
+            System.err.println("Fatal: " + e.toString());
         }
     }
 
@@ -877,6 +809,32 @@ class IfElseStmtNode extends StmtNode {
         myThenStmtList = slist1;
         myElseDeclList = dlist2;
         myElseStmtList = slist2;
+    }
+
+    public void analyze(SymTable table) {
+        this.myExp.analyze(table);
+
+        table.addScope();
+
+        myThenDeclList.analyze(table);
+        myThenStmtList.analyze(table);
+
+        try {
+            table.removeScope();
+        } catch (Exception e) {
+            System.err.println("Fatal: " + e.toString());
+        }
+
+        table.addScope();
+
+        myElseDeclList.analyze(table);
+        myElseStmtList.analyze(table);
+
+        try {
+            table.removeScope();
+        } catch (Exception e) {
+            System.err.println("Fatal: " + e.toString());
+        }
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -911,6 +869,21 @@ class WhileStmtNode extends StmtNode {
         myStmtList = slist;
     }
 
+    public void analyze(SymTable table) {
+        this.myExp.analyze(table);
+
+        table.addScope();
+
+        this.myDeclList.analyze(table);
+        this.myStmtList.analyze(table);
+
+        try {
+            table.removeScope();
+        } catch (Exception e) {
+            System.err.println("Fatal: " + e.toString());
+        }
+    }
+
     public void unparse(PrintWriter p, int indent) {
         addIndent(p, indent);
         p.print("while (");
@@ -935,6 +908,21 @@ class RepeatStmtNode extends StmtNode {
         myStmtList = slist;
     }
 
+    public void analyze(SymTable table) {
+        this.myExp.analyze(table);
+
+        table.addScope();
+
+        this.myDeclList.analyze(table);
+        this.myStmtList.analyze(table);
+
+        try {
+            table.removeScope();
+        } catch (Exception e) {
+            System.err.println("Fatal: " + e.toString());
+        }
+    }
+
     public void unparse(PrintWriter p, int indent) {
         addIndent(p, indent);
         p.print("repeat (");
@@ -957,6 +945,10 @@ class CallStmtNode extends StmtNode {
         myCall = call;
     }
 
+    public void analyze(SymTable table) {
+        this.myCall.analyze(table);
+    }
+
     public void unparse(PrintWriter p, int indent) {
         addIndent(p, indent);
         myCall.unparse(p, indent);
@@ -970,6 +962,10 @@ class CallStmtNode extends StmtNode {
 class ReturnStmtNode extends StmtNode {
     public ReturnStmtNode(ExpNode exp) {
         myExp = exp;
+    }
+
+    public void analyze(SymTable table) {
+        this.myExp.analyze(table);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -992,10 +988,6 @@ class ReturnStmtNode extends StmtNode {
 
 abstract class ExpNode extends ASTnode {
     abstract void analyze(SymTable table);
-
-    abstract void isValid(SymTable table);
-
-    abstract void handleNext(SymTable table);
 }
 
 class IntLitNode extends ExpNode {
@@ -1288,6 +1280,11 @@ class AssignNode extends ExpNode {
         myExp.unparse(p, 0);
         if (indent != -1)
             p.print(")");
+    }
+
+    public void analyze(SymTable table) {
+        this.myLhs.analyze(table);
+        this.myExp.analyze(table);
     }
 
     // 2 kids
