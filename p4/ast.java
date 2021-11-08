@@ -207,6 +207,17 @@ class DeclListNode extends ASTnode {
         }
     }
 
+    public boolean contains(String name) {
+        boolean doesContain = false;
+        for (DeclNode decl : myDecls) {
+            if (decl.getName().equals(name)) {
+                doesContain = true;
+                break;
+            }
+        }
+        return doesContain;
+    }
+
     /**
      * Analyze each declaration
      */
@@ -360,23 +371,32 @@ class VarDeclNode extends DeclNode {
 
     public void analyze(SymTable table) {
         // check if type is struct or other types
+        boolean shouldAdd = true;
         if (this.mySize == VarDeclNode.NOT_STRUCT) {
             // not a struct
+            // check if the variable type is void (bad declaration)
+            //
+            if (this.myId.checkNonFunctionDeclaredVoid(this.myType)) {
+                shouldAdd = false;
+            }
             // check if the variable has been declared or not
             this.myId.checkMultiplyDeclared(table);
-            // check if the variable type is void (bad declaration)
-            this.myId.checkNonFunctionDeclaredVoid(this.myType);
         } else {
             // struct
-            // check if the variable has been declared or not
-            this.myId.checkMultiplyDeclared(table);
             // check the name of the struct type has been previousely declared and is
             // actually he name of a struct type
-            ((StructNode) this.myType).checkInvalidNameOfStructType(table);
+            if (((StructNode) this.myType).checkInvalidNameOfStructType(table)) {
+                shouldAdd = false;
+            }
+            // check if the variable has been declared or not
+            this.myId.checkMultiplyDeclared(table);
         }
 
         try {
-            table.addDecl(this.getName(), new Symb(this.getType(), Symb.VAR));
+            // bad declartion, should not add anything to the symbol table
+            if (shouldAdd) {
+                table.addDecl(this.getName(), new Symb(this.getType(), Symb.VAR));
+            }
         } catch (DuplicateSymException e) {
             /**
              * Do not add duplicated symbol
@@ -994,19 +1014,7 @@ class IntLitNode extends ExpNode {
 
     public void analyze(SymTable table) {
         /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void isValid(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void handleNext(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
+         * Literal, nothing to be analyzed
          */
     }
 
@@ -1029,19 +1037,7 @@ class StringLitNode extends ExpNode {
 
     public void analyze(SymTable table) {
         /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void isValid(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void handleNext(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
+         * Literal, nothing to be analyzed
          */
     }
 
@@ -1064,19 +1060,7 @@ class TrueNode extends ExpNode {
 
     public void analyze(SymTable table) {
         /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void isValid(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void handleNext(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
+         * Literal, nothing to be analyzed
          */
     }
 
@@ -1097,19 +1081,7 @@ class FalseNode extends ExpNode {
 
     public void analyze(SymTable table) {
         /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void isValid(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
-         */
-    }
-
-    public void handleNext(SymTable table) {
-        /**
-         * Literals, nothing to be analyzed
+         * Literal, nothing to be analyzed
          */
     }
 
@@ -1133,29 +1105,13 @@ class IdNode extends ExpNode {
      * corresponding symbol-table entry.
      */
     public void analyze(SymTable table) {
-        // check if this identifier has been declared or not
-        isValid(table);
-
-        // add a link to the corresponding symbol-table entry
-        Symb sym = table.lookupLocal(getName());
-        if (sym != null) {
-            this.setLink(sym);
+        Symb symb = table.lookupGlobal(this.getName());
+        if (symb == null) {
+            ASTnode.undeclaredIdentifier(this.getLineNum(), this.getCharNum());
+        } else {
+            // add link only when it is declared
+            this.setLink(symb);
         }
-    }
-
-    /**
-     * Check the uses of undeclared names
-     */
-    public void isValid(SymTable table) {
-        if (table.lookupLocal(getName()) == null) {
-            ASTnode.UndeclaredIdentifier(myLineNum, myCharNum);
-        }
-    }
-
-    public void handleNext(SymTable table) {
-        /**
-         * No substructures, nothing to be done here
-         */
     }
 
     public IdNode(int lineNum, int charNum, String strVal) {
@@ -1231,22 +1187,27 @@ class DotAccessExpNode extends ExpNode {
     /**
      */
     public void analyze(SymTable table) {
-        myLoc.analyze(table);
-        myId.analyze(table);
-        isValid(table);
-    }
+        // base case: myLoc is an id
+        IdNode loc;
+        if (myLoc instanceof IdNode) {
+            loc = (IdNode) myLoc;
+        } else {
+            myLoc.analyze(table);
+            loc = ((DotAccessExpNode) this.myLoc).getIdNode();
+        }
 
-    /**
-     * A bad struct access happens when either the left-hand side of the dot-access
-     * is not a name already declared to be of a struct type or the right-hand side
-     * of the dot-access is not the name of a ﬁeld for the appropriate type of
-     * struct.
-     */
-    public void isValid(SymTable table) {
-        // check if myLoc has been declared
-    }
-
-    public void handleNext(SymTable table) {
+        Symb sym = table.lookupGlobal(loc.getName());
+        if (sym == null) {
+            ASTnode.undeclaredIdentifier(loc.getLineNum(), loc.getCharNum());
+        } else if (!sym.getKind().equals(Symb.STRUCT)) {
+            ASTnode.dotAccessOfNonStructType(loc.getLineNum(), loc.getCharNum());
+            ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
+        } else {
+            StructSymb structSymb = (StructSymb) sym;
+            if (!structSymb.containsField(this.myId)) {
+                ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
+            }
+        }
     }
 
     public DotAccessExpNode(ExpNode loc, IdNode id) {
@@ -1259,6 +1220,10 @@ class DotAccessExpNode extends ExpNode {
         myLoc.unparse(p, 0);
         p.print(").");
         myId.unparse(p, 0);
+    }
+
+    public IdNode getIdNode() {
+        return this.myId;
     }
 
     // 2 kids
@@ -1303,6 +1268,14 @@ class CallExpNode extends ExpNode {
         myExpList = new ExpListNode(new LinkedList<ExpNode>());
     }
 
+    public void analyze(SymTable table) {
+        Symb sym = table.lookupGlobal(this.myId.getName());
+        if (sym == null) {
+            ASTnode.undeclaredIdentifier(this.myId.getLineNum(), this.myId.getCharNum());
+        }
+        this.myExpList.analyze(table);
+    }
+
     // ** unparse **
     public void unparse(PrintWriter p, int indent) {
         myId.unparse(p, 0);
@@ -1327,12 +1300,6 @@ abstract class UnaryExpNode extends ExpNode {
         this.myExp.analyze(table);
     }
 
-    public void isValid(SymTable table) {
-    }
-
-    public void handleNext(SymTable table) {
-    }
-
     // one child
     protected ExpNode myExp;
 }
@@ -1346,12 +1313,6 @@ abstract class BinaryExpNode extends ExpNode {
     public void analyze(SymTable table) {
         this.myExp1.analyze(table);
         this.myExp2.analyze(table);
-    }
-
-    public void isValid(SymTable table) {
-    }
-
-    public void handleNext(SymTable table) {
     }
 
     // two kids
