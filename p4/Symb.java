@@ -67,4 +67,9 @@ class StructSymb extends Symb {
         this.structName = structName;
         this.structFields = structFields;
     }
+
+    public boolean containsField(IdNode fieldIdNode) {
+        return this.structFields.contains(fieldIdNode.getName());
+    }
+
 }
