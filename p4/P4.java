@@ -50,7 +50,12 @@ public class P4 {
         }
 
         // ADD NAME ANALYSIS PART HERE
-        ((ASTnode) root.value).unparse(outFile, 0);
+        SymTable table = new SymTable();
+        ((ASTnode) root.value).analyze(table);
+        // check if exits error
+        if (!ErrMsg.TRIGGERED) {
+            ((ASTnode) root.value).unparse(outFile, 0);
+        }
         outFile.close();
 
         return;
