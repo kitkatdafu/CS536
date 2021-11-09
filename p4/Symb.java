@@ -63,7 +63,7 @@ class StructSymb extends Symb {
     private DeclListNode structFields;
 
     public StructSymb(String type, String structName, DeclListNode structFields) {
-        super(type, Symb.STRUCT)；
+        super(type, Symb.STRUCT);
         this.structName = structName;
         this.structFields = structFields;
     }
