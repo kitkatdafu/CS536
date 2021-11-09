@@ -111,6 +111,8 @@ abstract class ASTnode {
     // every subclass must provide an unparse operation
     public abstract void unparse(PrintWriter p, int indent);
 
+    public abstract void analyze(SymTable table);
+
     // this method can be used by the unparse methods to do indenting
     protected void addIndent(PrintWriter p, int indent) {
         for (int k = 0; k < indent; k++)
@@ -170,8 +172,6 @@ abstract class ASTnode {
 class ProgramNode extends ASTnode {
     public ProgramNode(DeclListNode L) {
         myDeclList = L;
-        // build sym table
-        this.table = new SymTable();
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -181,13 +181,12 @@ class ProgramNode extends ASTnode {
     /**
      * Name analyzer
      **/
-    public void analyze() {
-        this.myDeclList.analyze(this.table);
+    public void analyze(SymTable table) {
+        this.myDeclList.analyze(table);
     }
 
     // 1 kid
     private DeclListNode myDeclList;
-    private SymTable table;
 }
 
 class DeclListNode extends ASTnode {
@@ -347,8 +346,6 @@ abstract class DeclNode extends ASTnode {
 
     abstract String getType();
 
-    abstract void analyze(SymTable table);
-
     public String getName() {
         return this.getId().getName();
     }
@@ -385,7 +382,8 @@ class VarDeclNode extends DeclNode {
             // struct
             // check the name of the struct type has been previousely declared and is
             // actually he name of a struct type
-            if (((StructNode) this.myType).checkInvalidNameOfStructType(table)) {
+            Symb symb = table.lookupGlobal(this.getType());
+            if (!(symb instanceof StructSymb)) {
                 shouldAdd = false;
             }
             // check if the variable has been declared or not
@@ -395,7 +393,8 @@ class VarDeclNode extends DeclNode {
         try {
             // bad declartion, should not add anything to the symbol table
             if (shouldAdd) {
-                table.addDecl(this.getName(), new Symb(this.getType(), Symb.VAR));
+                table.addDecl(this.getName(),
+                        new Symb(this.getType(), (this.mySize == VarDeclNode.NOT_STRUCT) ? Symb.VAR : Symb.STRUCT));
             }
         } catch (DuplicateSymException e) {
             /**
@@ -608,7 +607,14 @@ abstract class TypeNode extends ASTnode {
 }
 
 class IntNode extends TypeNode {
+
     public IntNode() {
+    }
+
+    public void analyze(SymTable table) {
+        /**
+         * Literal, nothing to be analyzed
+         */
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -624,6 +630,12 @@ class BoolNode extends TypeNode {
     public BoolNode() {
     }
 
+    public void analyze(SymTable table) {
+        /**
+         * Literal, nothing to be analyzed
+         */
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("bool");
     }
@@ -635,6 +647,12 @@ class BoolNode extends TypeNode {
 
 class VoidNode extends TypeNode {
     public VoidNode() {
+    }
+
+    public void analyze(SymTable table) {
+        /**
+         * Literal, nothing to be analyzed
+         */
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -651,19 +669,15 @@ class StructNode extends TypeNode {
         myId = id;
     }
 
+    public void analyze(SymTable table) {
+        /**
+         * Literal, nothing to be analyzed
+         */
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("struct ");
         myId.unparse(p, 0);
-    }
-
-    public boolean checkInvalidNameOfStructType(SymTable table) {
-        Symb sym = table.lookupGlobal(this.myId.getName());
-        if (sym == null || !sym.isStruct()) {
-            ASTnode.invalidNameOfStructType(myId.getLineNum(), myId.getCharNum());
-            return false;
-        } else {
-            return true;
-        }
     }
 
     // 1 kid
@@ -679,7 +693,6 @@ class StructNode extends TypeNode {
 // **********************************************************************
 
 abstract class StmtNode extends ASTnode {
-    abstract void analyze(SymTable table);
 }
 
 class AssignStmtNode extends StmtNode {
@@ -985,7 +998,9 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void analyze(SymTable table) {
-        this.myExp.analyze(table);
+        if (this.myExp != null) {
+            this.myExp.analyze(table);
+        }
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -1007,7 +1022,6 @@ class ReturnStmtNode extends StmtNode {
 // **********************************************************************
 
 abstract class ExpNode extends ASTnode {
-    abstract void analyze(SymTable table);
 }
 
 class IntLitNode extends ExpNode {
@@ -1189,10 +1203,10 @@ class DotAccessExpNode extends ExpNode {
     public void analyze(SymTable table) {
         // base case: myLoc is an id
         IdNode loc;
-        if (myLoc instanceof IdNode) {
-            loc = (IdNode) myLoc;
+        if (this.myLoc instanceof IdNode) {
+            loc = (IdNode) this.myLoc;
         } else {
-            myLoc.analyze(table);
+            this.myLoc.analyze(table);
             loc = ((DotAccessExpNode) this.myLoc).getIdNode();
         }
 
@@ -1203,7 +1217,7 @@ class DotAccessExpNode extends ExpNode {
             ASTnode.dotAccessOfNonStructType(loc.getLineNum(), loc.getCharNum());
             ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
         } else {
-            StructSymb structSymb = (StructSymb) sym;
+            StructSymb structSymb = (StructSymb) table.lookupGlobal(sym.getType());
             if (!structSymb.containsField(this.myId)) {
                 ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
             }
