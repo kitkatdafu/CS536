@@ -566,14 +566,17 @@ class StructDeclNode extends DeclNode {
         if (myId.checkMultiplyDeclared(table)) {
             return;
         }
+        StructSymb structSymb = new StructSymb(getName(), getName(), this.myDeclList);
         try {
-            table.addDecl(this.getName(), new StructSymb(TypeNode.STRUCT, getName(), this.myDeclList));
+            table.addDecl(this.getName(), structSymb);
         } catch (Exception e) {
             System.err.print(e.toString());
         }
 
         table.addScope();
         this.myDeclList.analyze(table);
+        structSymb.setFields(table.getTop());
+
         try {
             table.removeScope();
         } catch (Exception e) {
@@ -1136,7 +1139,11 @@ class IdNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        p.print(myStrVal);
+        if (this.getLink() != null) {
+            p.print(myStrVal + "(" + this.getLink().toString() + ")");
+        } else {
+            p.print(myStrVal);
+        }
     }
 
     public String getName() {
@@ -1203,24 +1210,32 @@ class DotAccessExpNode extends ExpNode {
     public void analyze(SymTable table) {
         // base case: myLoc is an id
         IdNode loc;
+        Symb sym;
         if (this.myLoc instanceof IdNode) {
             loc = (IdNode) this.myLoc;
+            sym = table.lookupGlobal(loc.getName());
+
         } else {
             this.myLoc.analyze(table);
             loc = ((DotAccessExpNode) this.myLoc).getIdNode();
+            sym = table.lookupGlobal(loc.getLink().getType());
         }
 
-        Symb sym = table.lookupGlobal(loc.getName());
+
+
+
         if (sym == null) {
             ASTnode.undeclaredIdentifier(loc.getLineNum(), loc.getCharNum());
         } else if (!sym.getKind().equals(Symb.STRUCT)) {
             ASTnode.dotAccessOfNonStructType(loc.getLineNum(), loc.getCharNum());
             ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
         } else {
+            loc.setLink(sym);
             StructSymb structSymb = (StructSymb) table.lookupGlobal(sym.getType());
             if (!structSymb.containsField(this.myId)) {
                 ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
             }
+            myId.setLink(structSymb.getField(this.myId.getName()));
         }
     }
 
@@ -1286,6 +1301,8 @@ class CallExpNode extends ExpNode {
         Symb sym = table.lookupGlobal(this.myId.getName());
         if (sym == null) {
             ASTnode.undeclaredIdentifier(this.myId.getLineNum(), this.myId.getCharNum());
+        } else {
+            this.myId.setLink(sym);
         }
         this.myExpList.analyze(table);
     }

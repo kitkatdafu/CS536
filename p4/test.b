@@ -51,6 +51,8 @@ int main(int argc, int argv) {
     point.y = point.y / 2;
     rect.upperLeft = point;
     rect.downRight = point;
+    rect.upperLeft.x = 100;
+    rect.downRight.y = 1000;
 
     repeat (point.x > point.y) {
         int _b;

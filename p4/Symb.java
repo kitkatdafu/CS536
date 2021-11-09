@@ -45,12 +45,9 @@ class FnSymb extends Symb {
     public String toString() {
         StringBuilder bld = new StringBuilder();
 
-        bld.append(this.fnName);
-        bld.append("(");
         bld.append(this.formals.toString());
         bld.append("->");
         bld.append(this.getType());
-        bld.append(")");
 
         return bld.toString();
 
@@ -61,15 +58,24 @@ class StructSymb extends Symb {
 
     private String structName;
     private DeclListNode structFields;
+    private HashMap<String, Symb> fields;
 
     public StructSymb(String type, String structName, DeclListNode structFields) {
         super(type, Symb.STRUCT);
         this.structName = structName;
         this.structFields = structFields;
+        this.fields = null;
+    }
+
+    public void setFields(HashMap<String, Symb> fields) {
+        this.fields = fields;
+    }
+
+    public Symb getField(String name) {
+        return this.fields.get(name);
     }
 
     public boolean containsField(IdNode fieldIdNode) {
         return this.structFields.contains(fieldIdNode.getName());
     }
-
 }

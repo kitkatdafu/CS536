@@ -53,6 +53,10 @@ public class SymTable {
         return null;
     }
 
+    public HashMap<String, Symb> getTop() {
+        return this.list.get(0);
+    }
+
     public void removeScope() throws EmptySymTableException {
         if (list.isEmpty())
             throw new EmptySymTableException();
