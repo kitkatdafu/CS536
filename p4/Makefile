@@ -8,7 +8,7 @@
 ###
 
 JC = javac
-FLAGS = -g  
+
 CP = ./deps:.
 
 P4.class: P4.java parser.class Yylex.class ASTnode.class
@@ -39,6 +39,7 @@ ErrMsg.class: ErrMsg.java
 	$(JC) $(FLAGS) -cp $(CP) ErrMsg.java
 
 Symb.class: Symb.java
+	$(JC) $(FLAGS) -cp $(CP) ast.java
 	$(JC) $(FLAGS) -cp $(CP) Symb.java
 
 SymTable.class: SymTable.java Symb.class DuplicateSymException.class WrongArgumentException.class EmptySymTableException.class
