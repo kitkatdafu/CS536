@@ -26,26 +26,24 @@ int euclideanDistance(int x, int y, int z) {
 void area(int a, int a, int b, int b, int b, bool verbose) {
     bool verbose;
     bool verbose;
-    verbose = true；
     bool shouldDo;
     bool shouldDo;
     struct Lambda lambda;
     struct Point point;
     struct Circ circ;
 
-    lambda.true.false;
-    point.a;
-    point.x;
-    point.y;
-    point.x.y;
+    a = lambda.true.false;
+    a = point.x;
+    a = point.y;
+    b = point.x.y;
 
-    circ.r;
-    circ.r.b;
-    circ.point.x;
-    circ.point.y;
-    circ.point.z;
-    circ.point.x.y;
-    circ.point.z.z;
+    a = circ.r;
+    b = circ.r.b;
+    b = circ.point.x;
+    b = circ.point.y;
+    b = circ.point.z;
+    verbose = circ.point.x.y;
+    verbose = circ.point.z.z;
 }
 
 void main() {
@@ -58,7 +56,7 @@ void main() {
     dist1 = euclideanDistance(x, y, z);
     dist2 = euclideanDistance(x, y, z);
 }
+
 struct main {
    int a; 
 }
-

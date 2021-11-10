@@ -385,6 +385,7 @@ class VarDeclNode extends DeclNode {
             Symb symb = table.lookupGlobal(this.getType());
             if (!(symb instanceof StructSymb)) {
                 shouldAdd = false;
+                ASTnode.invalidNameOfStructType(this.getId().getLineNum(), this.getId().getCharNum());
             }
             // check if the variable has been declared or not
             this.myId.checkMultiplyDeclared(table);
@@ -460,7 +461,7 @@ class FnDeclNode extends DeclNode {
                 // illegal. In this case, do not
                 // create a SymTable entry for the function. However, continue processing the
                 // body of the function .
-                shouldProcessFormals = false;
+                shouldProcessFormals = true;
                 shouldProcessBody = true;
             }
         } else {
@@ -1126,8 +1127,12 @@ class IdNode extends ExpNode {
         if (symb == null) {
             ASTnode.undeclaredIdentifier(this.getLineNum(), this.getCharNum());
         } else {
-            // add link only when it is declared
-            this.setLink(symb);
+            if (symb instanceof StructSymb) {
+                ASTnode.undeclaredIdentifier(this.getLineNum(), this.getCharNum());
+            } else {
+                // add link only when it is declared
+                this.setLink(symb);
+            }
         }
     }
 
@@ -1209,33 +1214,47 @@ class DotAccessExpNode extends ExpNode {
      */
     public void analyze(SymTable table) {
         // base case: myLoc is an id
-        IdNode loc;
-        Symb sym;
         if (this.myLoc instanceof IdNode) {
-            loc = (IdNode) this.myLoc;
-            sym = table.lookupGlobal(loc.getName());
-
-        } else {
-            this.myLoc.analyze(table);
-            loc = ((DotAccessExpNode) this.myLoc).getIdNode();
-            sym = table.lookupGlobal(loc.getLink().getType());
-        }
-
-
-
-
-        if (sym == null) {
-            ASTnode.undeclaredIdentifier(loc.getLineNum(), loc.getCharNum());
-        } else if (!sym.getKind().equals(Symb.STRUCT)) {
-            ASTnode.dotAccessOfNonStructType(loc.getLineNum(), loc.getCharNum());
-            ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
-        } else {
-            loc.setLink(sym);
-            StructSymb structSymb = (StructSymb) table.lookupGlobal(sym.getType());
-            if (!structSymb.containsField(this.myId)) {
-                ASTnode.invalidStructFieldName(loc.getLineNum(), loc.getCharNum());
+            IdNode leftIdNode = (IdNode) this.myLoc;
+            Symb leftSymb = table.lookupGlobal(leftIdNode.getName());
+            if (leftSymb == null) {
+                ASTnode.undeclaredIdentifier(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+            } else if (leftSymb instanceof StructSymb) {
+                ASTnode.undeclaredIdentifier(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+            } else if (!leftSymb.getKind().equals(Symb.STRUCT)) {
+                ASTnode.dotAccessOfNonStructType(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+            } else {
+                leftIdNode.setLink(leftSymb);
+                leftSymb = table.lookupGlobal(leftSymb.getType());
+                if (!((StructSymb) leftSymb).containsField(this.myId)) {
+                    ASTnode.invalidStructFieldName(this.myId.getLineNum(), this.myId.getCharNum());
+                } else {
+                    Symb rightSymb = ((StructSymb) leftSymb).getField(this.myId);
+                    this.myId.setLink(rightSymb);
+                }
             }
-            myId.setLink(structSymb.getField(this.myId.getName()));
+        } else {
+            // recursive case, myLoc is myLoc.id
+            this.myLoc.analyze(table);
+            IdNode leftIdNode = ((DotAccessExpNode) this.myLoc).getIdNode();
+            if (leftIdNode.getLink() == null) {
+                ASTnode.undeclaredIdentifier(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+            } else {
+                Symb leftSymb = leftIdNode.getLink();
+                if (leftSymb instanceof StructSymb) {
+                    ASTnode.undeclaredIdentifier(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+                } else if (!leftSymb.getKind().equals(Symb.STRUCT)) {
+                    ASTnode.dotAccessOfNonStructType(leftIdNode.getLineNum(), leftIdNode.getCharNum());
+                } else {
+                    leftSymb = table.lookupGlobal(leftSymb.getType());
+                    if (!((StructSymb) leftSymb).containsField(this.myId)) {
+                        ASTnode.invalidStructFieldName(this.myId.getLineNum(), this.myId.getCharNum());
+                    } else {
+                        Symb rightSymb = ((StructSymb) leftSymb).getField(this.myId);
+                        this.myId.setLink(rightSymb);
+                    }
+                }
+            }
         }
     }
 

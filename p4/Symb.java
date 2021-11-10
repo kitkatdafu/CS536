@@ -71,8 +71,8 @@ class StructSymb extends Symb {
         this.fields = fields;
     }
 
-    public Symb getField(String name) {
-        return this.fields.get(name);
+    public Symb getField(IdNode fileIdNode) {
+        return this.fields.get(fileIdNode.getName());
     }
 
     public boolean containsField(IdNode fieldIdNode) {

@@ -1,0 +1,134 @@
+bool GLOBAL_LOCK;
+int COUNTER;
+struct Point{
+    int x;
+    int y;
+};
+
+struct Circ{
+    int r;
+    struct Point center;
+};
+
+struct Rect{
+    struct Point upperLeft;
+    struct Point downRight;
+};
+
+int main(int argc, int argv) {
+    int numberOfPoints;
+    int numberOfCircs;
+    int _b;
+    bool shouldExit;
+    struct Point point;
+    struct Rect rect;
+    struct Circ circ;
+    numberOfCircs(int) = 10;
+    numberOfPoints(int) = 0;
+    shouldExit(bool) = false;
+    while ((!shouldExit(bool))) {
+        int _a;
+        if ((numberOfCircs(int) > numberOfPoints(int))) {
+            int _a;
+            --numberOfCircs(int);
+            ++numberOfPoints(int);
+        }
+        else {
+            int _a;
+            shouldExit(bool) = true;
+        }
+        COUNTER(int) = (COUNTER(int) + 10);
+    }
+    (point(Point)).x(int) = 0;
+    (point(Point)).y(int) = 10;
+    (circ(Circ)).r(int) = 10;
+    (circ(Circ)).center(Point) = point(Point);
+    (point(Point)).x(int) = ((point(Point)).x(int) * 2);
+    (point(Point)).y(int) = ((point(Point)).y(int) / 2);
+    (rect(Rect)).upperLeft(Point) = point(Point);
+    (rect(Rect)).downRight(Point) = point(Point);
+    ((rect(Rect)).upperLeft(Point)).x(int) = 100;
+    ((rect(Rect)).downRight(Point)).y(int) = 1000;
+    repeat (((point(Point)).x(int) > (point(Point)).y(int))) {
+        int _b;
+        GLOBAL_LOCK(bool) = true;
+    }
+}
+
+int arithmetic(int x, int y, bool verbose) {
+    int result;
+    ++x(int);
+    --y(int);
+    result(int) = (x(int) + y(int));
+    result(int) = (x(int) - y(int));
+    result(int) = (x(int) * y(int));
+    result(int) = (x(int) / y(int));
+    result(int) = (-x(int));
+    verbose(bool) = (!verbose(bool));
+    verbose(bool) = (verbose(bool) && (!verbose(bool)));
+    verbose(bool) = (verbose(bool) || (!verbose(bool)));
+    COUNTER(int) = 10;
+    x(int) = 10;
+    y(int) = 20;
+    if ((x(int) == y(int))) {
+        int x;
+        int y;
+        bool verbose;
+        int c;
+        verbose(bool) = (((x(int) + (y(int) * c(int))) == 10) || verbose(bool));
+    }
+    else {
+        int x;
+        int y;
+        int d;
+        bool verbose;
+    }
+    x(int) = 20;
+    y(int) = 20;
+    if ((x(int) != y(int))) {
+    }
+    if (((x(int) > y(int)) && (x(int) < y(int)))) {
+    }
+    else {
+    }
+    if (((x(int) >= y(int)) && (x(int) <= y(int)))) {
+    }
+    else {
+    }
+    while (verbose(bool)) {
+        int a;
+        int b;
+        int c;
+        a(int) = 10;
+        b(int) = 20;
+        c(int) = 30;
+        repeat ((!verbose(bool))) {
+            int a;
+            int b;
+            int d;
+            d(int) = ((a(int) + b(int)) + c(int));
+            receive >> d(int);
+            print << ("counter = " + COUNTER(int));
+        }
+    }
+    return;
+    return (result(int) + 1);
+}
+
+int caller() {
+    int result;
+    int x;
+    int y;
+    int verbose;
+    arithmetic(int,int,bool->int)(10, 20, true);
+    result(int) = arithmetic(int,int,bool->int)(10, 20, true);
+    x(int) = 10;
+    y(int) = 40;
+    verbose(int) = true;
+    arithmetic(int,int,bool->int)(x(int), y(int), verbose(int));
+    x(int) = 30;
+    y(int) = 20;
+    verbose(int) = false;
+    arithmetic(int,int,bool->int)(x(int), y(int), verbose(int));
+}
+
