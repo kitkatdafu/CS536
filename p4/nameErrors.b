@@ -17,6 +17,7 @@ struct Rect {
 struct Circ {
     int r;
     struct Point point;
+    struct Point Point;
 }
 
 int euclideanDistance(int x, int y, int z) {
@@ -59,4 +60,17 @@ void main() {
 
 struct main {
    int a; 
+}
+
+void another_main() {
+    struct Point point;
+    int a;
+
+    a = Point.x;
+    a = point.x;
+}
+
+void yet_another_main() {
+    int a;
+    void a;
 }
