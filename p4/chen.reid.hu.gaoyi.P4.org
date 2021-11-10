@@ -1,6 +1,7 @@
 #+TITLE: P4
 #+AUTHOR: Reid Chen, Gaoyi Hu
 
+
 * =Symb=
 This class is used to store variables. The =kind= field is used to indicate the kind of declaration:
 - =struct=
@@ -11,6 +12,7 @@ This class is used to store functions. The =formals= field is used to store the 
 * =StructSymb=
 This class is used to store the definitions of =struct=. It stores the fields that the =struct=. The =containsField= method can be used to check if an =id= is of this struct or not.
 * =ASTnode=
-A various of static methods have been declared in this class for displaying the =ErrMsg=.
+- A various of static methods have been declared in this class for displaying the =ErrMsg=.
+- A =analyze= method has been added to each subclass of =ASTnode=. The symbol table =table= is passed along the ast to achieve the name analysis.
 * =ErrMsg=
 The field =TRIGGERED= is set to true if and only if the =fatal= method has been called. This =TRIGGERED= is checked in =P4= after name analyzing phase to decide if =unparse= should be called or not.

@@ -1,4 +1,4 @@
-% Created 2021-11-10 Wed 08:44
+% Created 2021-11-10 Wed 13:34
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -20,7 +20,7 @@
  pdftitle={P4},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode 9.5)}, 
+ pdfcreator={Emacs 28.0.60 (Org mode 9.5)}, 
  pdflang={English}}
 \begin{document}
 
@@ -30,7 +30,7 @@
 
 
 \section{\texttt{Symb}}
-\label{sec:org95908c0}
+\label{sec:org6b2ec5d}
 This class is used to store variables. The \texttt{kind} field is used to indicate the kind of declaration:
 \begin{itemize}
 \item \texttt{struct}
@@ -38,18 +38,18 @@ This class is used to store variables. The \texttt{kind} field is used to indica
 \item \texttt{var}
 \end{itemize}
 \section{\texttt{FnSymb}}
-\label{sec:org7634e91}
+\label{sec:org1ea01ea}
 This class is used to store functions. The \texttt{formals} field is used to store the function's parameters. The \texttt{toString} method reveals the type of this function.
 \section{\texttt{StructSymb}}
-\label{sec:orgc3f72ff}
+\label{sec:orgd07dd50}
 This class is used to store the definitions of \texttt{struct}. It stores the fields that the \texttt{struct}. The \texttt{containsField} method can be used to check if an \texttt{id} is of this struct or not.
 \section{\texttt{ASTnode}}
-\label{sec:orgd754bb8}
+\label{sec:org68d99ac}
 \begin{itemize}
 \item A various of static methods have been declared in this class for displaying the \texttt{ErrMsg}.
 \item A \texttt{analyze} method has been added to each subclass of \texttt{ASTnode}. The symbol table \texttt{table} is passed along the ast to achieve the name analysis.
 \end{itemize}
 \section{\texttt{ErrMsg}}
-\label{sec:orgbe0bccc}
+\label{sec:org3cddc0d}
 The field \texttt{TRIGGERED} is set to true if and only if the \texttt{fatal} method has been called. This \texttt{TRIGGERED} is checked in \texttt{P4} after name analyzing phase to decide if \texttt{unparse} should be called or not.
 \end{document}
