@@ -1,4 +1,4 @@
-% Created 2021-10-31 Sun 10:18
+% Created 2021-11-10 Wed 08:44
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -27,4 +27,29 @@
 \maketitle
 \tableofcontents
 
+
+
+\section{\texttt{Symb}}
+\label{sec:org95908c0}
+This class is used to store variables. The \texttt{kind} field is used to indicate the kind of declaration:
+\begin{itemize}
+\item \texttt{struct}
+\item \texttt{func}
+\item \texttt{var}
+\end{itemize}
+\section{\texttt{FnSymb}}
+\label{sec:org7634e91}
+This class is used to store functions. The \texttt{formals} field is used to store the function's parameters. The \texttt{toString} method reveals the type of this function.
+\section{\texttt{StructSymb}}
+\label{sec:orgc3f72ff}
+This class is used to store the definitions of \texttt{struct}. It stores the fields that the \texttt{struct}. The \texttt{containsField} method can be used to check if an \texttt{id} is of this struct or not.
+\section{\texttt{ASTnode}}
+\label{sec:orgd754bb8}
+\begin{itemize}
+\item A various of static methods have been declared in this class for displaying the \texttt{ErrMsg}.
+\item A \texttt{analyze} method has been added to each subclass of \texttt{ASTnode}. The symbol table \texttt{table} is passed along the ast to achieve the name analysis.
+\end{itemize}
+\section{\texttt{ErrMsg}}
+\label{sec:orgbe0bccc}
+The field \texttt{TRIGGERED} is set to true if and only if the \texttt{fatal} method has been called. This \texttt{TRIGGERED} is checked in \texttt{P4} after name analyzing phase to decide if \texttt{unparse} should be called or not.
 \end{document}
