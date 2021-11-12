@@ -56,6 +56,9 @@ void main() {
 
     dist1 = euclideanDistance(x, y, z);
     dist2 = euclideanDistance(x, y, z);
+
+    read("hello");
+    write("world");
 }
 
 struct main {

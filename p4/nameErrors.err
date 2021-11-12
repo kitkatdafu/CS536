@@ -22,7 +22,9 @@
 57:37 ***ERROR*** Undeclared identifier
 58:5 ***ERROR*** Undeclared identifier
 58:37 ***ERROR*** Undeclared identifier
-61:8 ***ERROR*** Multiply declared identifier
-69:9 ***ERROR*** Undeclared identifier
-75:10 ***ERROR*** Non-function declared void
-75:10 ***ERROR*** Multiply declared identifier
+60:5 ***ERROR*** Undeclared identifier
+61:5 ***ERROR*** Undeclared identifier
+64:8 ***ERROR*** Multiply declared identifier
+72:9 ***ERROR*** Undeclared identifier
+78:10 ***ERROR*** Non-function declared void
+78:10 ***ERROR*** Multiply declared identifier

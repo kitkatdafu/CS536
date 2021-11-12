@@ -53,6 +53,8 @@ int main(int argc, int argv) {
     rect.downRight = point;
     rect.upperLeft.x = 100;
     rect.downRight.y = 1000;
+    ++rect.downRight.y;
+    --rect.upperLeft.x;
 
     repeat (point.x > point.y) {
         int _b;

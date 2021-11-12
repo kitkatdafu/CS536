@@ -49,6 +49,8 @@ int main(int argc, int argv) {
     (rect(Rect)).downRight(Point) = point(Point);
     ((rect(Rect)).upperLeft(Point)).x(int) = 100;
     ((rect(Rect)).downRight(Point)).y(int) = 1000;
+    ++((rect(Rect)).downRight(Point)).y(int);
+    --((rect(Rect)).upperLeft(Point)).x(int);
     repeat (((point(Point)).x(int) > (point(Point)).y(int))) {
         int _b;
         GLOBAL_LOCK(bool) = true;
