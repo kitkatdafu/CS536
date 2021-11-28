@@ -116,6 +116,11 @@ import java.util.*;
 // ASTnode class (base class for all other kinds of nodes)
 // *#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 
+String [7] key = {"int","bool","void","strings","struct","function"};
+//function shall be explicted other place?
+String [7][] values ={{"ari","eql","rel","ass"},{"log","eql","ass"},{"ret"},{"ari","eql","rel","ass"},{"ret","rec","ass"},{}};
+
+
 abstract class ASTnode {
     // every subclass must provide an unparse operation
     abstract public void unparse(PrintWriter p, int indent);
@@ -124,6 +129,9 @@ abstract class ASTnode {
     protected void addIndent(PrintWriter p, int indent) {
         for (int k=0; k<indent; k++) p.print(" ");
     }
+	
+
+
 }
 
 // *#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
