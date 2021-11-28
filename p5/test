@@ -1,6 +1,11 @@
 struct e{
 	int f;
+	bool g;
 }
+
+int func1(int num, bool boo){}
+bool func2(struct e){}
+void func3(){}
 
 int main(){
 	int a;
@@ -52,10 +57,66 @@ int main(){
 	while(e){};
 
 	repeat();
+	///ari and rel
+	a = a + a1;
+	b = b + a;
+	c = c + b;
+	d = d - a;
+	e.f = a + e.f;
+
+	a = a < a1;
+	b = a > a1;
+	c = a <= a1;
+	d = d < b1;
+	e.f = a >= a1;
+
+	///eql
+	a == a1;
+	b == b1;
+	c != b1;
+	d == d1;
+	e.f != e.f;
+	e.f == b1;
 
 
+	///ass
+	a = 1;
+	b = fls;
+	a = fls;
+	c = 1;
+	d = "yes";
+	e.f = "no";
 
+	///print and rece
+	print << a;
+	print << b;
+	print << c;
+	print << d;
+	print << e;
+	print << e.f;
 
+	receive << a;
+	receive << b;
+	receive << c;
+	receive << d;
+	receive << e;
+	receive << e.f;
+	receive << e.g;
 
+	///func call
+	func1(a,b);
+	func2(e);
+	func3();
+	
+	func1(a,c);
+	func2();
+	func3(d);
 
+	///func returns
+	c = func3();
+
+	a = func1(a,b);
+	b = func1(a,b)		
+	b = func2(e);
+	a = func2(e);
 }
