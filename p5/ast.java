@@ -118,7 +118,13 @@ import java.util.*;
 
 String [7] key = {"int","bool","void","strings","struct","function"};
 //function shall be explicted other place?
-String [7][] values ={{"ari","eql","rel","ass"},{"log","eql","ass"},{"ret"},{"ari","eql","rel","ass"},{"ret","rec","ass"},{}};
+String [7][] values ={{ari,eql,rel,"ass"},{log, eql,"ass"},{"ret"},{ari, eql, rel,"ass"},{"ret","rec","ass"},{}};
+
+//ass, ret and rec?
+String [] log = {"not","and","or"};
+String [] ari= {"+","-","*","/"};
+String [] eql= {"=", "!="};
+String [] rel= {"<",">","<=",">="};
 
 
 abstract class ASTnode {
