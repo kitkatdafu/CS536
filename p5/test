@@ -1,11 +1,17 @@
-struct e{
+struct atp {
 	int f;
 	bool g;
 }
 
-int func1(int num, bool boo){}
-bool func2(struct e){}
+int func1(int num, bool boo){
+	ret 1;
+}
+bool func2(struct e){
+	ret fls;
+}
 void func3(){}
+
+string func4(){}
 
 int main(){
 	int a;
@@ -20,7 +26,7 @@ int main(){
 	string d;
 	string d1;
 
-	struct e;
+	struct atp e;
 
 	///logical oper
 	a and a1;
@@ -56,7 +62,12 @@ int main(){
 	while(d){};
 	while(e){};
 
-	repeat();
+	repeat a>1 {};
+	repeat b {};
+	repeat c {};
+	repeat d>1 {};
+	repeat e {};
+
 	///ari and rel
 	a = a + a1;
 	b = b + a;
@@ -119,4 +130,16 @@ int main(){
 	b = func1(a,b)		
 	b = func2(e);
 	a = func2(e);
+	
+	print << func1(a,b);
+	print << atp;	
+	print << e;
+	print << func3();
+	
+	receive >> fun1(a,b);
+	receive >> atp;
+	receive >> e;
+	
+	a();
+	func4();	
 }
