@@ -165,6 +165,9 @@ class ProgramNode extends ASTnode {
      */
     public void typeCheck() {
         // TODO: Implement a type checking method for this node and its children.
+
+		this.myDeclList.typeCheck();
+
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -216,6 +219,13 @@ class DeclListNode extends ASTnode {
         }
     }
 
+    public void typeCheck(){
+    
+    	for(DeclNode decl : myDecls){
+	
+		decl.typeCheck();
+	}
+    }
     // list of kids (DeclNodes)
     private List<DeclNode> myDecls;
 }
@@ -260,6 +270,14 @@ class FormalsListNode extends ASTnode {
             }
         }
     }
+    public void typeCheck(){
+    	for(FormalDeclNode formal: myFormals)
+	{
+		formal.typeCheck();
+	}
+    
+    }
+
 
     // list of kids (FormalDeclNodes)
     private List<FormalDeclNode> myFormals;
@@ -288,6 +306,13 @@ class FnBodyNode extends ASTnode {
     }
 
     // 2 kids
+    public void typeCheck(){
+   	myDeclList.typeCheck();
+        myStmtList.typeCheck();	
+    }
+
+
+
     private DeclListNode myDeclList;
     private StmtListNode myStmtList;
 }
@@ -313,7 +338,13 @@ class StmtListNode extends ASTnode {
             it.next().unparse(p, indent);
         }
     }
-
+	
+    public void typeCheck(){
+    	for(StmtNode stmt : myStmts){
+		stmt.typeCheck();
+	}
+    
+    }
     // list of kids (StmtNodes)
     private List<StmtNode> myStmts;
 }
@@ -344,6 +375,12 @@ class ExpListNode extends ASTnode {
         }
     }
 
+    public void typeCheck(){
+    	for(ExpNode exp: myExps){
+		exp.typeCheck();
+	}
+    
+    }
     // list of kids (ExpNodes)
     private List<ExpNode> myExps;
 }
