@@ -1,0 +1,80 @@
+26:7 ***ERROR*** Non-function declared void
+27:7 ***ERROR*** Non-function declared void
+38:11 ***ERROR*** Undeclared identifier
+45:11 ***ERROR*** Undeclared identifier
+52:8 ***ERROR*** Undeclared identifier
+58:5 ***ERROR*** Undeclared identifier
+65:8 ***ERROR*** Undeclared identifier
+71:9 ***ERROR*** Undeclared identifier
+78:2 ***ERROR*** Undeclared identifier
+78:6 ***ERROR*** Undeclared identifier
+83:11 ***ERROR*** Undeclared identifier
+90:6 ***ERROR*** Undeclared identifier
+100:2 ***ERROR*** Undeclared identifier
+107:11 ***ERROR*** Undeclared identifier
+115:13 ***ERROR*** Undeclared identifier
+126:10 ***ERROR*** Undeclared identifier
+131:2 ***ERROR*** Undeclared identifier
+148:2 ***ERROR*** Undeclared identifier
+12:18 ***ERROR*** Bad return value
+13:18 ***ERROR*** Return with value in void function
+36:6 ***ERROR*** Logical operator applied to non-bool operand
+36:11 ***ERROR*** Logical operator applied to non-bool operand
+37:6 ***ERROR*** Logical operator applied to non-bool operand
+39:6 ***ERROR*** Logical operator applied to non-bool operand
+40:6 ***ERROR*** Logical operator applied to non-bool operand
+40:11 ***ERROR*** Logical operator applied to non-bool operand
+43:6 ***ERROR*** Logical operator applied to non-bool operand
+43:11 ***ERROR*** Logical operator applied to non-bool operand
+44:6 ***ERROR*** Logical operator applied to non-bool operand
+46:6 ***ERROR*** Logical operator applied to non-bool operand
+47:6 ***ERROR*** Logical operator applied to non-bool operand
+47:11 ***ERROR*** Logical operator applied to non-bool operand
+50:8 ***ERROR*** Logical operator applied to non-bool operand
+54:8 ***ERROR*** Logical operator applied to non-bool operand
+56:5 ***ERROR*** Non-bool expression used as if condition
+60:5 ***ERROR*** Non-bool expression used as if condition
+63:8 ***ERROR*** Non-bool expression used as while condition
+67:8 ***ERROR*** Non-bool expression used as while condition
+70:9 ***ERROR*** Non-integer expression used as repeat clause
+72:9 ***ERROR*** Non-integer expression used as repeat clause
+73:9 ***ERROR*** Non-integer expression used as repeat clause
+77:6 ***ERROR*** Arithmetic operator applied to non-numeric operand
+79:6 ***ERROR*** Arithmetic operator applied to non-numeric operand
+80:14 ***ERROR*** Arithmetic operator applied to non-numeric operand
+81:2 ***ERROR*** Type mismatch
+84:6 ***ERROR*** Relational operator applied to non-numeric operand
+84:10 ***ERROR*** Relational operator applied to non-numeric operand
+85:4 ***ERROR*** Type mismatch
+92:8 ***ERROR*** Equality operator applied to struct variables
+93:8 ***ERROR*** Type mismatch
+99:2 ***ERROR*** Type mismatch
+101:2 ***ERROR*** Type mismatch
+102:4 ***ERROR*** Type mismatch
+109:11 ***ERROR*** Attempt to write struct variable
+110:13 ***ERROR*** Attempt to write struct variable
+117:13 ***ERROR*** Attempt to read struct variable
+118:15 ***ERROR*** Attempt to read struct variable
+119:15 ***ERROR*** Attempt to read struct variable
+126:10 ***ERROR*** Type of actual does not match type of formal
+127:2 ***ERROR*** Function call with wrong number of args
+133:2 ***ERROR*** Type mismatch
+134:2 ***ERROR*** Type mismatch
+135:2 ***ERROR*** Type mismatch
+136:2 ***ERROR*** Type mismatch
+138:11 ***ERROR*** Attempt to write function
+139:11 ***ERROR*** Attempt to write struct name
+140:11 ***ERROR*** Attempt to write struct variable
+141:11 ***ERROR*** Attempt to write function
+143:13 ***ERROR*** Attempt to read function
+144:13 ***ERROR*** Attempt to read struct name
+145:13 ***ERROR*** Attempt to read struct variable
+147:7 ***ERROR*** Equality operator applied to functions
+148:7 ***ERROR*** Function call with wrong number of args
+148:18 ***ERROR*** Function call with wrong number of args
+149:10 ***ERROR*** Function call with wrong number of args
+150:2 ***ERROR*** Function assignment
+152:7 ***ERROR*** Equality operator applied to struct variables
+153:2 ***ERROR*** Struct name assignment
+154:2 ***ERROR*** Struct variable assignment
+155:2 ***ERROR*** Attempt to call non-function
