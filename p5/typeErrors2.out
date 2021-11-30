@@ -1,0 +1,8 @@
+int main() {
+    bool b;
+    b(bool) = ((tru - tru) - tru);
+    while ((1 < b(bool))) {
+        b(bool) = tru;
+    }
+}
+

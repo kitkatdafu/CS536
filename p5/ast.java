@@ -2145,17 +2145,17 @@ class PlusNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new IntType();
     }
@@ -2177,17 +2177,17 @@ class MinusNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new IntType();
     }
@@ -2209,17 +2209,17 @@ class TimesNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new IntType();
     }
@@ -2241,17 +2241,17 @@ class DivideNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new IntType();
     }
@@ -2273,17 +2273,17 @@ class AndNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isBoolType()) {
+        if (!type1.isErrorType() && !type1.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isBoolType()) {
+        if (!type2.isErrorType() && !type2.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }
@@ -2305,17 +2305,17 @@ class OrNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isBoolType()) {
+        if (!type1.isErrorType() && !type1.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isBoolType()) {
+        if (!type2.isErrorType() && !type2.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }
@@ -2415,17 +2415,17 @@ class LessNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }
@@ -2447,17 +2447,17 @@ class GreaterNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }
@@ -2479,17 +2479,17 @@ class LessEqNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }
@@ -2511,17 +2511,17 @@ class GreaterEqNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        if (type1.isErrorType() || type2.isErrorType()) {
-            return new ErrorType();
-        }
         boolean hasError = false;
-        if (!type1.isIntType()) {
+        if (!type1.isErrorType() && !type1.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp1);
             hasError = true;
         }
-        if (!type2.isIntType()) {
+        if (!type2.isErrorType() && !type2.isIntType()) {
             relationalOperatorAppliedToNonNumericOperand(myExp2);
             hasError = true;
+        }
+        if (type1.isErrorType() || type2.isErrorType()) {
+            return new ErrorType();
         }
         return hasError ? new ErrorType() : new BoolType();
     }

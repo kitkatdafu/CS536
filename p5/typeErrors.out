@@ -120,7 +120,7 @@ int main() {
     receive >> atp(struct);
     receive >> e(atp);
     d1(bool) = (func3(->void)() == func5(->void)());
-    d(bool) = (func1(int,bool->int)(a(int), b(bool)) == func2(int->bool)(a(int)));
+    d(bool) = (func1(int,bool->int) == func3(->void));
     func1(int,bool->int) = func2(int->bool)();
     func1(int,bool->int) = func2(int->bool);
     d1(bool) = (e1(set) == e(atp));

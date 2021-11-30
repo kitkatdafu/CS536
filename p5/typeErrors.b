@@ -129,7 +129,7 @@ int main(){
     receive >> e;
 
     d1 = func3() == func5();
-    d = func1(a,b) == func2(a);
+    d = func1 == func3;
     func1 = func2();
     func1 = func2;
 
