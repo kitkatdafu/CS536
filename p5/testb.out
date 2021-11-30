@@ -2,12 +2,11 @@
 12,20 Bad return value
 13,18 Return with value in void function
  
-35,9 Logical operator applied to non-bool operand
 36,9 Logical operator applied to non-bool operand
 37,9 Logical operator applied to non-bool operand
 38,9 Logical operator applied to non-bool operand
 39,9 Logical operator applied to non-bool operand
-
+40,9 Logical operator applied to non-bool operand
 
 43,9 Logical operator applied to non-bool operand
 44,9 Logical operator applied to non-bool operand
@@ -16,7 +15,7 @@
 47,9 Logical operator applied to non-bool operand
 
 
-51,9 Logical operator applied to non-bool operand
+50,9 Logical operator applied to non-bool operand
 52,9 Logical operator applied to non-bool operand
 53,9 Logical operator applied to non-bool operand
 54,9 Logical operator applied to non-bool operand
@@ -29,7 +28,6 @@
 
 
 63,16 Non-bool expression used as while condition
-64,16 Non-bool expression used as while condition
 65,16 Non-bool expression used as while condition
 66,16 Non-bool expression used as while condition
 67,16 Non-bool expression used as while condition
@@ -39,17 +37,17 @@
 71,16 Non-integer expression used as repeat clause
 72,16 Non-integer expression used as repeat clause
 73,16 Non-integer expression used as repeat clause
-74,16 Non-integer expression used as repeat clause
 
 77,9 Arithmetic operator applied to non-numeric operand
 78,9 Arithmetic operator applied to non-numeric operand 
 79,9 Arithmetic operator applied to non-numeric operand
 
-83,9
-84,9
+
+81,9 Relational operator applied to non-numeric operand
+83,9 Relational operator applied to non-numeric operand
+84,9 Relational operator applied to non-numeric operand
 ///only bool receive the result of relational 
 85,13 Relational operator applied to non-numeric operand
-
 
 91,14 Type mismatch
 94,16 Type mismatch

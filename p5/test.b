@@ -66,10 +66,10 @@ int main(){
 	while(d){};
 	while(e){};
 
-	repeat a>1 {};
+	repeat a {};
 	repeat b {};
 	repeat c {};
-	repeat d>1 {};
+	repeat d {};
 	repeat e {};
 
 	///ari and rel
@@ -80,8 +80,8 @@ int main(){
 	e.f = a + e.f;
 	a = a < a1;
 	b = a > a1;
-	c = a <= a1;
-	d = d < b1;
+	b = a <= c;
+	b = d < b1;
 	e.f = a >= a1;
 
 	///eql
