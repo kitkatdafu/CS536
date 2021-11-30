@@ -9,7 +9,7 @@ bool func2(struct e){
 	ret fls;
 }
 void func3(){}
-string func4(){}
+string func4(){ret 0;}
 void func5(){ret 1;}
 struct set{
 	int h;
@@ -30,6 +30,7 @@ int main(){
 	string d1;
 
 	struct atp e;
+
 
 	///logical oper
 	a && a1;
@@ -77,7 +78,6 @@ int main(){
 	c = c + b;
 	d = d - a;
 	e.f = a + e.f;
-
 	a = a < a1;
 	b = a > a1;
 	c = a <= a1;

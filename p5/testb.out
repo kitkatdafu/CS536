@@ -1,11 +1,12 @@
 0,0 Missing return value
-12,0 Bad return value
-16,0 Return with value in void function
+12,20 Bad return value
+13,18 Return with value in void function
  
+35,9 Logical operator applied to non-bool operand
+36,9 Logical operator applied to non-bool operand
 37,9 Logical operator applied to non-bool operand
 38,9 Logical operator applied to non-bool operand
 39,9 Logical operator applied to non-bool operand
-40,9 Logical operator applied to non-bool operand
 
 
 43,9 Logical operator applied to non-bool operand
