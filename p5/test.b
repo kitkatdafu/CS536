@@ -68,7 +68,7 @@ int main(){
 	b = b + a;
 	d = d - a;
 	e.f = a + e.f;
-	a = a < a1;
+        a = a < a1;
 	b = a > a1;
 	b = d < b1;
 	e.f = a >= a1;
