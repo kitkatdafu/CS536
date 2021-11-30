@@ -357,14 +357,7 @@ class ProgramNode extends ASTnode {
      * typeCheck
      */
     public void typeCheck() {
-<<<<<<< HEAD
         this.myDeclList.typeCheck();
-=======
-        // TODO: Implement a type checking method for this node and its children.
-
-		this.myDeclList.typeCheck();
-
->>>>>>> 4707e2e7713626d7674b751e22f0ad104cbdc329
     }
 
     public void unparse(PrintWriter p, int indent) {
