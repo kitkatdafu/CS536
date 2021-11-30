@@ -5,11 +5,11 @@ struct atp {
 int func1(int num, bool boo){
 	ret 1;
 }
-bool func2(struct e){
+bool func2(int e){
 	ret fls;
 }
 void func3(){}
-string func4(){ret 0;}
+bool func4(){ret 0;}
 void func5(){ret 1;}
 struct set{
 	int h;
@@ -26,51 +26,51 @@ int main(){
 	void c;
 	void c1;
 
-	string d;
-	string d1;
+	bool d;
+	bool d1;
 
 	struct atp e;
-
+	struct set e1;
 
 	///logical oper
-	a && a1;
-	a && b;
-	a && c;
-	a && d;
-	a && e;
-	b && b;	
+	d = a && a1;
+	d = a && b;
+	d = a && c;
+	d = a && d;
+	d = a && e;
+	d = b && b;	
 
-	a || a1;
-	a || b;
-	a || c;
-	a || d;
-	a || e;
-	b || b;	
+	d = a || a1;
+	d = a || b;
+	d = a || c;
+	d = a || d;
+	d = a || e;
+	d = b || b;	
 
-	! a;
-	! b;
-	! c;
-	! d;
-	! e;
+	d = ! a;
+	d = ! b;
+	d = ! c;
+	d = ! d;
+	d = ! e;
 
-	if(a){};
-	if(b){};
-	if(c){};
-	if(d){};
-	if(e){};
+	if(a){}
+	if(b){}
+	if(c){}
+	if(d){}
+	if(e){}
 
 
-	while(a){};
-	while(b){};
-	while(c){};
-	while(d){};
-	while(e){};
+	while(a){}
+	while(b){}
+	while(c){}
+	while(d){}
+	while(e){}
 
-	repeat a {};
-	repeat b {};
-	repeat c {};
-	repeat d {};
-	repeat e {};
+	repeat a {}
+	repeat b {}
+	repeat c {}
+	repeat d {}
+	repeat e {}
 
 	///ari and rel
 	a = a + a1;
@@ -85,12 +85,12 @@ int main(){
 	e.f = a >= a1;
 
 	///eql
-	a == a1;
-	b == b1;
-	c != b1;
-	d == d1;
-	e.f != e.f;
-	e.f == b1;
+	d = a == a1;
+	d = b == b1;
+	d = c != b1;
+	d = d == d1;
+	d = e.f != e.f;
+	d = e.f == b1;
 
 
 	///ass
@@ -108,18 +108,19 @@ int main(){
 	print << d;
 	print << e;
 	print << e.f;
+	print << "Hello World";
 
-	receive << a;
-	receive << b;
-	receive << c;
-	receive << d;
-	receive << e;
-	receive << e.f;
-	receive << e.g;
+	receive >> a;
+	receive >> b;
+	receive >> c;
+	receive >> d;
+	receive >> e;
+	receive >> e.f;
+	receive >> e.g;
 
 	///func call
 	func1(a,b);
-	func2(e);
+	func2(a);
 	func3();
 	
 	func1(a,c);
@@ -130,24 +131,25 @@ int main(){
 	c = func3();
 
 	a = func1(a,b);
-	b = func1(a,b)		
-	b = func2(e);
-	a = func2(e);
+	b = func1(a,b);
+	b = func2(a);
+	a = func2(a);
 	
 	print << func1(a,b);
 	print << atp;	
 	print << e;
 	print << func3();
 	
-	receive >> fun1(a,b);
+	receive >> func1;
 	receive >> atp;
 	receive >> e;
 
-	func3() == func5();
-	func1() == func2();
-	func1() = func2();
-	struct set e1;
-	e1 == e;
+	d1 = func3() == func5();
+	d2 = func1() == func2();
+	func1 = func2();
+	func1 = func2;
+
+	d1 = e1 == e;
 	atp = set;
 	e1 = e;
 	a();
