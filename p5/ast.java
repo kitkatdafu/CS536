@@ -216,6 +216,18 @@ abstract class ASTnode {
             DotAccessExpNode node = (DotAccessExpNode) expNode;
             lineNum = node.IdNode().lineNum();
             charNum = node.IdNode().charNum();
+        } else if (expNode instanceof AssignNode) {
+            AssignNode node = (AssignNode) expNode;
+            return getLineAndCharNum(node.myLhs());
+        } else if (expNode instanceof CallExpNode) {
+            CallExpNode node = (CallExpNode) expNode;
+            return getLineAndCharNum(node.myId());
+        } else if (expNode instanceof UnaryExpNode) {
+            UnaryExpNode node = (UnaryExpNode) expNode;
+            return getLineAndCharNum(node.myExp());
+        } else if (expNode instanceof BinaryExpNode) {
+            BinaryExpNode node = (BinaryExpNode) expNode;
+            return getLineAndCharNum(node.myExp1());
         } else {
             System.err.println("I did not expect this");
             System.exit(-1);
@@ -234,11 +246,17 @@ abstract class ASTnode {
         ErrMsg.fatal(0, 0, "Missing return value");
     }
 
-    protected static void returnWithValueInVoidFunction(int lineNum, int charNum) {
+    protected static void returnWithValueInVoidFunction(ExpNode expNode) {
+        int[] nums = getLineAndCharNum(expNode);
+        int lineNum = nums[0];
+        int charNum = nums[1];
         ErrMsg.fatal(lineNum, charNum, "Return with value in void function");
     }
 
-    protected static void badReturnValue(int lineNum, int charNum) {
+    protected static void badReturnValue(ExpNode expNode) {
+        int[] nums = getLineAndCharNum(expNode);
+        int lineNum = nums[0];
+        int charNum = nums[1];
         ErrMsg.fatal(lineNum, charNum, "Bad return value");
     }
 
@@ -490,9 +508,9 @@ class FnBodyNode extends ASTnode {
         myStmtList.nameAnalysis(symTab);
     }
 
-    public void typeCheck() {
+    public void typeCheck(Type t) {
         // only need to type check statements
-        myStmtList.typeCheck();
+        myStmtList.typeCheck(t);
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -520,9 +538,19 @@ class StmtListNode extends ASTnode {
         }
     }
 
+    public void typeCheck(Type t) {
+        for (StmtNode stmtNode : myStmts) {
+            if (stmtNode instanceof ReturnStmtNode) {
+                ((ReturnStmtNode) stmtNode).typeCheck(t);
+            } else {
+                stmtNode.typeCheck();
+            }
+        }
+    }
+
     public void typeCheck() {
-        for (StmtNode node : myStmts) {
-            node.typeCheck();
+        for (StmtNode stmtNode : myStmts) {
+            stmtNode.typeCheck();
         }
     }
 
@@ -713,7 +741,7 @@ class FnDeclNode extends DeclNode {
     }
 
     public void typeCheck() {
-        myBody.typeCheck();
+        myBody.typeCheck(((FnSym) myId.sym()).getReturnType());
     }
 
     /**
@@ -1487,7 +1515,24 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void typeCheck() {
-        myExp.typeCheck();
+        // DO NOTHING
+    }
+
+    public void typeCheck(Type t) {
+        Type myExpType = myExp == null ? null : myExp.typeCheck();
+        System.out.println(">>>" + t.toString());
+        if (t.isVoidType()) {
+            returnWithValueInVoidFunction(myExp);
+            return;
+        }
+        if (!t.isVoidType() && myExp == null) {
+            missingReturnValue();
+            return;
+        }
+        if (!t.isVoidType() && !myExpType.equals(t)) {
+            badReturnValue(myExp);
+            return;
+        }
     }
 
     // 1 kid
@@ -1860,7 +1905,7 @@ class AssignNode extends ExpNode {
         } else if (rightType.isFnType() && leftType.isFnType()) {
             functionAssignment(left.lineNum(), left.charNum());
             return new ErrorType();
-        } else if (rightType.isStructType() && leftType.isStringType()) {
+        } else if (rightType.isStructType() && leftType.isStructType()) {
             structVariableAssignment(left.lineNum(), left.charNum());
             return new ErrorType();
         } else if (rightType.isStructDefType() && leftType.isStructDefType()) {
@@ -1892,6 +1937,10 @@ class AssignNode extends ExpNode {
         myExp.unparse(p, 0);
         if (indent != -1)
             p.print(")");
+    }
+
+    public ExpNode myLhs() {
+        return myLhs;
     }
 
     // 2 kids
@@ -1965,6 +2014,10 @@ class CallExpNode extends ExpNode {
         }
     }
 
+    public IdNode myId() {
+        return myId;
+    }
+
     // 2 kids
     private IdNode myId;
     private ExpListNode myExpList; // possibly null
@@ -1983,6 +2036,10 @@ abstract class UnaryExpNode extends ExpNode {
         myExp.nameAnalysis(symTab);
     }
 
+    public ExpNode myExp() {
+        return myExp;
+    }
+
     // one child
     protected ExpNode myExp;
 }
@@ -1991,6 +2048,10 @@ abstract class BinaryExpNode extends ExpNode {
     public BinaryExpNode(ExpNode exp1, ExpNode exp2) {
         myExp1 = exp1;
         myExp2 = exp2;
+    }
+
+    public ExpNode myExp1() {
+        return myExp1;
     }
 
     /**
@@ -2047,11 +2108,11 @@ class NotNode extends UnaryExpNode {
         if (type.isErrorType()) {
             return new ErrorType();
         }
-        if (!type.isIntType()) {
+        if (!type.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(this.myExp);
             return new ErrorType();
         } else {
-            return type;
+            return new BoolType();
         }
     }
 
@@ -2085,15 +2146,16 @@ class PlusNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isIntType()) {
+            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new IntType();
     }
 }
 
@@ -2116,15 +2178,16 @@ class MinusNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isIntType()) {
+            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new IntType();
     }
 }
 
@@ -2147,15 +2210,16 @@ class TimesNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isIntType()) {
+            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new IntType();
     }
 }
 
@@ -2178,15 +2242,16 @@ class DivideNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isIntType()) {
             arithmeticOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isIntType()) {
+            arithmeticOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new IntType();
     }
 }
 
@@ -2209,15 +2274,16 @@ class AndNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isBoolType()) {
-            logicalOperatorAppliedToNonBoolOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isBoolType()) {
+            logicalOperatorAppliedToNonBoolOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
 
@@ -2240,15 +2306,16 @@ class OrNode extends BinaryExpNode {
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
+        boolean hasError = false;
         if (!type1.isBoolType()) {
             logicalOperatorAppliedToNonBoolOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isBoolType()) {
-            logicalOperatorAppliedToNonBoolOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return type1;
+            hasError = true;
         }
+        if (!type2.isBoolType()) {
+            logicalOperatorAppliedToNonBoolOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
 
