@@ -60,6 +60,8 @@ EmptySymTableException.class: EmptySymTableException.java
 # test
 #
 test:
+	java -cp $(CP) P5 example.b example.out 2> example.myerr
+	diff example.myerr example.err
 	java -cp $(CP) P5 test.b test.out
 
 ###

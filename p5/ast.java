@@ -1870,12 +1870,7 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public Type typeCheck() {
-        if (myLoc instanceof IdNode) {
-            IdNode myLocIdNode = (IdNode) myLoc;
-            return myLocIdNode.typeCheck();
-        } else {
-            return myLoc.typeCheck();
-        }
+        return myId.typeCheck();
     }
 
     public IdNode IdNode() {
@@ -2150,6 +2145,10 @@ class PlusNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
+        System.out.println("==================");
+        System.out.println(">>> left" + type1);
+        System.out.println(">>> right" + type2);
+        System.out.println("==================");
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
