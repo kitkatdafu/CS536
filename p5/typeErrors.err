@@ -1,0 +1,53 @@
+12:18 ***ERROR*** Bad return value
+33:9 ***ERROR*** Logical operator applied to non-bool operand
+33:14 ***ERROR*** Logical operator applied to non-bool operand
+34:9 ***ERROR*** Logical operator applied to non-bool operand
+35:9 ***ERROR*** Logical operator applied to non-bool operand
+36:9 ***ERROR*** Logical operator applied to non-bool operand
+36:14 ***ERROR*** Logical operator applied to non-bool operand
+39:9 ***ERROR*** Logical operator applied to non-bool operand
+39:14 ***ERROR*** Logical operator applied to non-bool operand
+40:9 ***ERROR*** Logical operator applied to non-bool operand
+41:9 ***ERROR*** Logical operator applied to non-bool operand
+42:9 ***ERROR*** Logical operator applied to non-bool operand
+42:14 ***ERROR*** Logical operator applied to non-bool operand
+45:11 ***ERROR*** Logical operator applied to non-bool operand
+48:11 ***ERROR*** Logical operator applied to non-bool operand
+50:8 ***ERROR*** Non-bool expression used as if condition
+53:8 ***ERROR*** Non-bool expression used as if condition
+56:11 ***ERROR*** Non-bool expression used as while condition
+59:11 ***ERROR*** Non-bool expression used as while condition
+62:12 ***ERROR*** Non-integer expression used as repeat clause
+63:12 ***ERROR*** Non-integer expression used as repeat clause
+64:12 ***ERROR*** Non-integer expression used as repeat clause
+68:9 ***ERROR*** Arithmetic operator applied to non-numeric operand
+69:9 ***ERROR*** Arithmetic operator applied to non-numeric operand
+71:5 ***ERROR*** Type mismatch
+73:9 ***ERROR*** Relational operator applied to non-numeric operand
+73:13 ***ERROR*** Relational operator applied to non-numeric operand
+74:7 ***ERROR*** Type mismatch
+81:11 ***ERROR*** Type mismatch
+87:5 ***ERROR*** Type mismatch
+88:5 ***ERROR*** Type mismatch
+89:7 ***ERROR*** Type mismatch
+95:14 ***ERROR*** Attempt to write struct variable
+102:16 ***ERROR*** Attempt to read struct variable
+111:11 ***ERROR*** Type of actual does not match type of formal
+111:13 ***ERROR*** Type of actual does not match type of formal
+112:5 ***ERROR*** Function call with wrong number of args
+118:5 ***ERROR*** Type mismatch
+120:5 ***ERROR*** Type mismatch
+123:14 ***ERROR*** Attempt to write struct name
+124:14 ***ERROR*** Attempt to write struct variable
+125:14 ***ERROR*** Attempt to write function
+127:16 ***ERROR*** Attempt to read function
+128:16 ***ERROR*** Attempt to read struct name
+129:16 ***ERROR*** Attempt to read struct variable
+131:10 ***ERROR*** Equality operator applied to void functions
+132:9 ***ERROR*** Equality operator applied to functions
+133:13 ***ERROR*** Function call with wrong number of args
+134:5 ***ERROR*** Function assignment
+136:10 ***ERROR*** Equality operator applied to struct variables
+137:5 ***ERROR*** Struct name assignment
+138:5 ***ERROR*** Struct variable assignment
+139:5 ***ERROR*** Attempt to call non-function
