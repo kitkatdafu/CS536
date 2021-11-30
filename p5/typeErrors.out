@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 struct atp{
     int f;
     bool g;
@@ -134,3 +135,5 @@ int main() {
     func4(->bool)();
 }
 
+=======
+>>>>>>> e81a2833dbf9ad68dc84ab1fe1491353b8428aad
