@@ -1,0 +1,78 @@
+0,0 Missing return value
+12,20 Bad return value
+13,18 Return with value in void function
+ 
+36,9 Logical operator applied to non-bool operand
+37,9 Logical operator applied to non-bool operand
+38,9 Logical operator applied to non-bool operand
+39,9 Logical operator applied to non-bool operand
+40,9 Logical operator applied to non-bool operand
+
+43,9 Logical operator applied to non-bool operand
+44,9 Logical operator applied to non-bool operand
+45,9 Logical operator applied to non-bool operand
+46,9 Logical operator applied to non-bool operand
+47,9 Logical operator applied to non-bool operand
+
+
+50,9 Logical operator applied to non-bool operand
+52,9 Logical operator applied to non-bool operand
+53,9 Logical operator applied to non-bool operand
+54,9 Logical operator applied to non-bool operand
+
+
+56,12 Non-bool expression used as if condition
+58,12 Non-bool expression used as if condition
+59,12 Non-bool expression used as if condition
+60,12 Non-bool expression used as if condition
+
+
+63,16 Non-bool expression used as while condition
+65,16 Non-bool expression used as while condition
+66,16 Non-bool expression used as while condition
+67,16 Non-bool expression used as while condition
+///non-int?
+
+70,16 Non-integer expression used as repeat clause
+71,16 Non-integer expression used as repeat clause
+72,16 Non-integer expression used as repeat clause
+73,16 Non-integer expression used as repeat clause
+
+77,9 Arithmetic operator applied to non-numeric operand
+78,9 Arithmetic operator applied to non-numeric operand 
+79,9 Arithmetic operator applied to non-numeric operand
+
+
+81,9 Relational operator applied to non-numeric operand
+83,18 Relational operator applied to non-numeric operand
+84,13 Relational operator applied to non-numeric operand
+85,9 Relational operator applied to non-numeric operand
+
+90,14 Type mismatch
+94,16 Type mismatch
+99,13 Type mismatch
+100,13 Type mismatch
+102,15 Type mismatch
+
+125,15 Type of actual does not match type of formal
+126,9 Function call with wrong number of args
+
+137,18 Attempt to write function
+138,18 Attempt to write struct name
+139,18 Attempt to write struct variable
+140,18 Attempt to write void
+
+142,20 Attempt to read function
+143,20 Attempt to read struct name
+144,20 Attempt to read struct variable
+
+146,9 Equality operator applied to void functions
+147,9 Equality operator applied to functions
+148,9 Function assignment
+150,9 Equality operator applied to struct variables
+151,9 Struct variable assignment
+152,9 Struct name assignment
+
+153,9 Attempt to call non-function
+
+
