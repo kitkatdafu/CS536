@@ -2010,7 +2010,7 @@ class CallExpNode extends ExpNode {
         }
         // type of this function call
         if (allGood) {
-            return myId.sym().getType();
+            return ((FnSym) myId.sym()).getReturnType();
         } else {
             return new ErrorType();
         }
@@ -2145,10 +2145,6 @@ class PlusNode extends BinaryExpNode {
     public Type typeCheck() {
         Type type1 = myExp1.typeCheck();
         Type type2 = myExp2.typeCheck();
-        System.out.println("==================");
-        System.out.println(">>> left" + type1);
-        System.out.println(">>> right" + type2);
-        System.out.println("==================");
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
         }
@@ -2343,6 +2339,9 @@ class EqualsNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
+        } else if (type1.isVoidType() && type2.isVoidType()) {
+            equalityOperatorAppliedToVoidFunctions(type1.isVoidType() ? myExp1 : myExp2);
+            return new ErrorType();
         } else if (type1.isFnType() && type2.isFnType()) {
             equalityOperatorAppliedToFunctions(type1.isFnType() ? myExp1 : myExp2);
             return new ErrorType();
@@ -2351,9 +2350,6 @@ class EqualsNode extends BinaryExpNode {
             return new ErrorType();
         } else if (type1.isStructDefType() && type2.isStructDefType()) {
             equalityOperatorAppliedToStructNames(type1.isStructDefType() ? myExp1 : myExp2);
-            return new ErrorType();
-        } else if (type1.isVoidType() && type2.isVoidType()) {
-            equalityOperatorAppliedToVoidFunctions(type1.isVoidType() ? myExp1 : myExp2);
             return new ErrorType();
         } else if (!type1.equals(type2)) {
             typeMismatch(myExp1);
@@ -2382,6 +2378,9 @@ class NotEqualsNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
+        } else if (type1.isVoidType() && type2.isVoidType()) {
+            equalityOperatorAppliedToVoidFunctions(type1.isVoidType() ? myExp1 : myExp2);
+            return new ErrorType();
         } else if (type1.isFnType() && type2.isFnType()) {
             equalityOperatorAppliedToFunctions(type1.isFnType() ? myExp1 : myExp2);
             return new ErrorType();
@@ -2390,9 +2389,6 @@ class NotEqualsNode extends BinaryExpNode {
             return new ErrorType();
         } else if (type1.isStructDefType() && type2.isStructDefType()) {
             equalityOperatorAppliedToStructNames(type1.isStructDefType() ? myExp1 : myExp2);
-            return new ErrorType();
-        } else if (type1.isVoidType() && type2.isVoidType()) {
-            equalityOperatorAppliedToVoidFunctions(type1.isVoidType() ? myExp1 : myExp2);
             return new ErrorType();
         } else if (!type1.equals(type2)) {
             typeMismatch(myExp1);
