@@ -23,9 +23,6 @@ int main(){
 	bool b;
 	bool b1;
 
-	void c;
-	void c1;
-
 	bool d;
 	bool d1;
 
@@ -35,59 +32,50 @@ int main(){
 	///logical oper
 	d = a && a1;
 	d = a && b;
-	d = a && c;
 	d = a && d;
 	d = a && e;
 	d = b && b;	
 
 	d = a || a1;
 	d = a || b;
-	d = a || c;
 	d = a || d;
 	d = a || e;
 	d = b || b;	
 
 	d = ! a;
 	d = ! b;
-	d = ! c;
 	d = ! d;
 	d = ! e;
 
 	if(a){}
 	if(b){}
-	if(c){}
 	if(d){}
 	if(e){}
 
 
 	while(a){}
 	while(b){}
-	while(c){}
 	while(d){}
 	while(e){}
 
 	repeat a {}
 	repeat b {}
-	repeat c {}
 	repeat d {}
 	repeat e {}
 
 	///ari and rel
 	a = a + a1;
 	b = b + a;
-	c = c + b;
 	d = d - a;
 	e.f = a + e.f;
 	a = a < a1;
 	b = a > a1;
-	b = a <= c;
 	b = d < b1;
 	e.f = a >= a1;
 
 	///eql
 	d = a == a1;
 	d = b == b1;
-	d = c != b1;
 	d = d == d1;
 	d = e.f != e.f;
 	d = e.f == b1;
@@ -97,14 +85,12 @@ int main(){
 	a = 1;
 	b = fls;
 	a = fls;
-	c = 1;
 	d = "yes";
 	e.f = "no";
 
 	///print and rece
 	print << a;
 	print << b;
-	print << c;
 	print << d;
 	print << e;
 	print << e.f;
@@ -112,7 +98,6 @@ int main(){
 
 	receive >> a;
 	receive >> b;
-	receive >> c;
 	receive >> d;
 	receive >> e;
 	receive >> e.f;
@@ -123,12 +108,11 @@ int main(){
 	func2(a);
 	func3();
 	
-	func1(a,c);
+	func1(b,a);
 	func2();
 	func3();
 
 	///func returns
-	c = func3();
 
 	a = func1(a,b);
 	b = func1(a,b);
@@ -145,7 +129,7 @@ int main(){
 	receive >> e;
 
 	d1 = func3() == func5();
-	d2 = func1() == func2();
+	d = func1() == func2();
 	func1 = func2();
 	func1 = func2;
 
