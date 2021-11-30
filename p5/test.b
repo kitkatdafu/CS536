@@ -10,7 +10,7 @@ bool func2(int e){
 }
 void func3(){}
 bool func4(){ret 0;}
-void func5(){ret 1;}
+void func5(){}
 struct set{
     int h;
 }
@@ -129,7 +129,7 @@ int main(){
     receive >> e;
 
     d1 = func3() == func5();
-    d = func1() == func2();
+    d = func1(a,b) == func2(a);
     func1 = func2();
     func1 = func2;
 
