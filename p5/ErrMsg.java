@@ -32,6 +32,20 @@ class ErrMsg {
      * Returns the err flag.
      */
     static boolean getErr() {
-	return err;
+	    return err;
+    }
+
+    /**
+     * Returns the typeErr flag.
+     */
+    static boolean getTypeErr() {
+	    return typeErr;
+    }
+
+    /**
+     * Returns the typeErr flag.
+     */
+    static void setTypeErr() {
+        typeErr = true;
     }
 }

@@ -150,12 +150,12 @@ public class P5 {
 		}
 
 		astRoot.nameAnalysis(); // perform name analysis
-		if (ErrMsg.err) {
-			return P5.RESULT_OTHER_ERROR
+		if (ErrMsg.getErr()) {
+			return P5.RESULT_OTHER_ERROR;
 		}
 
 		astRoot.typeCheck(); // perform type check
-		if (ErrMsg.typeErr) {
+		if (ErrMsg.getTypeErr()) {
 			return P5.RESULT_TYPE_ERROR;
 		}
 
