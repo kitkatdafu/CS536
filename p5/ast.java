@@ -424,14 +424,6 @@ class DeclListNode extends ASTnode {
         }
     }
 
-    public void typeCheck() {
-
-        for (DeclNode decl : myDecls) {
-
-            decl.typeCheck();
-        }
-    }
-
     // list of kids (DeclNodes)
     private List<DeclNode> myDecls;
 }
@@ -477,13 +469,6 @@ class FormalsListNode extends ASTnode {
         }
     }
 
-    public void typeCheck() {
-        for (FormalDeclNode formal : myFormals) {
-            formal.typeCheck();
-        }
-
-    }
-
     // list of kids (FormalDeclNodes)
     private List<FormalDeclNode> myFormals;
 }
@@ -516,11 +501,6 @@ class FnBodyNode extends ASTnode {
     }
 
     // 2 kids
-    public void typeCheck() {
-        myDeclList.typeCheck();
-        myStmtList.typeCheck();
-    }
-
     private DeclListNode myDeclList;
     private StmtListNode myStmtList;
 }
@@ -553,13 +533,6 @@ class StmtListNode extends ASTnode {
         }
     }
 
-    public void typeCheck() {
-        for (StmtNode stmt : myStmts) {
-            stmt.typeCheck();
-        }
-
-    }
-
     // list of kids (StmtNodes)
     private List<StmtNode> myStmts;
 }
@@ -585,9 +558,9 @@ class ExpListNode extends ASTnode {
     }
 
     public List<Type> typeChecks() {
-        List<Type> types = new ArrayList<>(this.myExps.size());
+        List<Type> types = new ArrayList<>();
         for (int i = 0; i < this.myExps.size(); i++) {
-            types.set(i, myExps.get(i).typeCheck());
+            types.add(myExps.get(i).typeCheck());
         }
         return types;
     }
@@ -609,13 +582,6 @@ class ExpListNode extends ASTnode {
                 it.next().unparse(p, indent);
             }
         }
-    }
-
-    public void typeCheck() {
-        for (ExpNode exp : myExps) {
-            exp.typeCheck();
-        }
-
     }
 
     // list of kids (ExpNodes)
@@ -1593,6 +1559,7 @@ class StringLitNode extends ExpNode {
         return myCharNum;
     }
 
+    private String myStrVal;
     private int myLineNum;
     private int myCharNum;
 }
@@ -1888,7 +1855,7 @@ class AssignNode extends ExpNode {
         Type rightType = myExp.typeCheck();
 
         IdNode left = (IdNode) myLhs;
-        if (leftType.isErrorType() && rightType.isErrorType()) {
+        if (leftType.isErrorType() || rightType.isErrorType()) {
             return new ErrorType();
         } else if (rightType.isFnType() && leftType.isFnType()) {
             functionAssignment(left.lineNum(), left.charNum());
@@ -1972,13 +1939,13 @@ class CallExpNode extends ExpNode {
     public Type typeCheck() {
         // check if myId is of type function
         if (!myId.sym().getType().isFnType()) {
-            attemptToCallNonFunction(myId.lineNum(), myId.charNum());
+            attemptToCallNonFunction((ExpNode) myId);
             return new ErrorType();
         }
         FnSym myIdFnSym = (FnSym) myId.sym();
         // check the number of actuals match the number of formals
         if (myExpList.length() != myIdFnSym.getNumParams()) {
-            functionCallWithWrongNumberOfArgs(myId.lineNum(), myId.charNum());
+            functionCallWithWrongNumberOfArgs((ExpNode) myId);
             return new ErrorType();
         }
         // check the type of each actual
@@ -2381,15 +2348,17 @@ class LessNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
-        } else if (!type1.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return new BoolType();
         }
+        boolean hasError = false;
+        if (!type1.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp1);
+            hasError = true;
+        }
+        if (!type2.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
 
@@ -2411,15 +2380,17 @@ class GreaterNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
-        } else if (!type1.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return new BoolType();
         }
+        boolean hasError = false;
+        if (!type1.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp1);
+            hasError = true;
+        }
+        if (!type2.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
 
@@ -2441,15 +2412,17 @@ class LessEqNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
-        } else if (!type1.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return new BoolType();
         }
+        boolean hasError = false;
+        if (!type1.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp1);
+            hasError = true;
+        }
+        if (!type2.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
 
@@ -2471,14 +2444,16 @@ class GreaterEqNode extends BinaryExpNode {
         Type type2 = myExp2.typeCheck();
         if (type1.isErrorType() || type2.isErrorType()) {
             return new ErrorType();
-        } else if (!type1.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp1);
-            return new ErrorType();
-        } else if (!type2.isIntType()) {
-            relationalOperatorAppliedToNonNumericOperand(myExp2);
-            return new ErrorType();
-        } else {
-            return new BoolType();
         }
+        boolean hasError = false;
+        if (!type1.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp1);
+            hasError = true;
+        }
+        if (!type2.isIntType()) {
+            relationalOperatorAppliedToNonNumericOperand(myExp2);
+            hasError = true;
+        }
+        return hasError ? new ErrorType() : new BoolType();
     }
 }
