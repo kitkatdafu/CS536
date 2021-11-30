@@ -44,15 +44,17 @@
 
 
 81,9 Relational operator applied to non-numeric operand
-83,9 Relational operator applied to non-numeric operand
-84,9 Relational operator applied to non-numeric operand
-///only bool receive the result of relational 
-85,13 Relational operator applied to non-numeric operand
+83,18 Relational operator applied to non-numeric operand
+84,13 Relational operator applied to non-numeric operand
+85,9 Relational operator applied to non-numeric operand
 
-91,14 Type mismatch
+90,14 Type mismatch
 94,16 Type mismatch
+99,13 Type mismatch
+100,13 Type mismatch
+102,15 Type mismatch
 
-125,9 Type of actual does not match type of formal
+125,15 Type of actual does not match type of formal
 126,9 Function call with wrong number of args
 
 137,18 Attempt to write function
