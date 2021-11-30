@@ -337,15 +337,24 @@ abstract class ASTnode {
         ErrMsg.fatal(lineNum, charNum, "Equality operator applied to struct variables");
     }
 
-    protected static void functionAssignment(int lineNum, int charNum) {
+    protected static void functionAssignment(ExpNode expNode) {
+        int[] nums = getLineAndCharNum(expNode);
+        int lineNum = nums[0];
+        int charNum = nums[1];
         ErrMsg.fatal(lineNum, charNum, "Function assignment");
     }
 
-    protected static void structNameAssignment(int lineNum, int charNum) {
+    protected static void structNameAssignment(ExpNode expNode) {
+        int[] nums = getLineAndCharNum(expNode);
+        int lineNum = nums[0];
+        int charNum = nums[1];
         ErrMsg.fatal(lineNum, charNum, "Struct name assignment");
     }
 
-    protected static void structVariableAssignment(int lineNum, int charNum) {
+    protected static void structVariableAssignment(ExpNode expNode) {
+        int[] nums = getLineAndCharNum(expNode);
+        int lineNum = nums[0];
+        int charNum = nums[1];
         ErrMsg.fatal(lineNum, charNum, "Struct variable assignment");
     }
 
@@ -1520,7 +1529,6 @@ class ReturnStmtNode extends StmtNode {
 
     public void typeCheck(Type t) {
         Type myExpType = myExp == null ? null : myExp.typeCheck();
-        System.out.println(">>>" + t.toString());
         if (t.isVoidType()) {
             returnWithValueInVoidFunction(myExp);
             return;
@@ -1726,7 +1734,7 @@ class IdNode extends ExpNode {
     }
 
     public Type typeCheck() {
-        return mySym.getType();
+        return mySym != null ? mySym.getType() : new ErrorType();
     }
 
     private int myLineNum;
@@ -1899,17 +1907,16 @@ class AssignNode extends ExpNode {
         Type leftType = myLhs.typeCheck();
         Type rightType = myExp.typeCheck();
 
-        IdNode left = (IdNode) myLhs;
         if (leftType.isErrorType() || rightType.isErrorType()) {
             return new ErrorType();
         } else if (rightType.isFnType() && leftType.isFnType()) {
-            functionAssignment(left.lineNum(), left.charNum());
+            functionAssignment(myLhs);
             return new ErrorType();
         } else if (rightType.isStructType() && leftType.isStructType()) {
-            structVariableAssignment(left.lineNum(), left.charNum());
+            structVariableAssignment(myLhs);
             return new ErrorType();
         } else if (rightType.isStructDefType() && leftType.isStructDefType()) {
-            structNameAssignment(left.lineNum(), left.charNum());
+            structNameAssignment(myLhs);
             return new ErrorType();
         } else if (!leftType.equals(rightType)) {
             typeMismatch(myLhs);
