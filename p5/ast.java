@@ -190,6 +190,7 @@ abstract class ASTnode {
     }
 
     private static int[] getLineAndCharNum(ExpNode expNode) {
+        ErrMsg.typeErr = true;
         int lineNum = -1;
         int charNum = -1;
         if (expNode instanceof IntLitNode) {
@@ -236,6 +237,7 @@ abstract class ASTnode {
     }
 
     protected static void typeOfActualDoesNotMatchTypeOfFormal(ExpNode expNode) {
+        ErrMsg.typeErr = true;
         int[] nums = getLineAndCharNum(expNode);
         int lineNum = nums[0];
         int charNum = nums[1];
