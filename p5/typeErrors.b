@@ -11,10 +11,10 @@ bool func2(int e){
 void func3(){}
 bool func4(){ret 0;}
 void func5(){}
+void func6(){ret 1;}
 struct set{
     int h;
 }
-
 
 int main(){
     int a;

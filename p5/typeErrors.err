@@ -1,4 +1,5 @@
 12:18 ***ERROR*** Bad return value
+14:18 ***ERROR*** Return with value in void function
 33:9 ***ERROR*** Logical operator applied to non-bool operand
 33:14 ***ERROR*** Logical operator applied to non-bool operand
 34:9 ***ERROR*** Logical operator applied to non-bool operand

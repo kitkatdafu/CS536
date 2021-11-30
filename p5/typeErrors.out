@@ -21,6 +21,10 @@ bool func4() {
 void func5() {
 }
 
+void func6() {
+    ret 1;
+}
+
 struct set{
     int h;
 }
