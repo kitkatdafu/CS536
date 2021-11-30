@@ -5,6 +5,7 @@
  */
 class ErrMsg {
 	private static boolean err = false;
+    private static boolean typeErr = false;
 	
     /**
      * Generates a fatal error message.
