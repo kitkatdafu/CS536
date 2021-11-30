@@ -2,7 +2,6 @@ struct atp {
 	int f;
 	bool g;
 }
-
 int func1(int num, bool boo){
 	ret 1;
 }
@@ -10,8 +9,12 @@ bool func2(struct e){
 	ret fls;
 }
 void func3(){}
-
 string func4(){}
+void func5(){ret 1;}
+struct set{
+	int h;
+}
+
 
 int main(){
 	int a;
@@ -29,25 +32,25 @@ int main(){
 	struct atp e;
 
 	///logical oper
-	a and a1;
-	a and b;
-	a and c;
-	a and d;
-	a and e;
-	b and b;	
+	a && a1;
+	a && b;
+	a && c;
+	a && d;
+	a && e;
+	b && b;	
 
-	a or a1;
-	a or b;
-	a or c;
-	a or d;
-	a or e;
-	b or b;	
+	a || a1;
+	a || b;
+	a || c;
+	a || d;
+	a || e;
+	b || b;	
 
-	not a;
-	not b;
-	not c;
-	not d;
-	not e;
+	! a;
+	! b;
+	! c;
+	! d;
+	! e;
 
 	if(a){};
 	if(b){};
@@ -121,7 +124,7 @@ int main(){
 	
 	func1(a,c);
 	func2();
-	func3(d);
+	func3();
 
 	///func returns
 	c = func3();
@@ -139,7 +142,14 @@ int main(){
 	receive >> fun1(a,b);
 	receive >> atp;
 	receive >> e;
-	
+
+	func3() == func5();
+	func1() == func2();
+	func1() = func2();
+	struct set e1;
+	e1 == e;
+	atp = set;
+	e1 = e;
 	a();
 	func4();	
 }
