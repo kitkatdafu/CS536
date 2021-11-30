@@ -60,10 +60,12 @@ EmptySymTableException.class: EmptySymTableException.java
 # test
 #
 test:
+	java -cp $(CP) P5 test.b test.out 2> test.err
+	java -cp $(CP) P5 typeErrors.b typeErrors.out 2> typeErrors.err || echo "Testing"
+	diff test.err test.exp
+	diff typeErrors.err typeErrors.exp
 	rm -f test.err
 	rm -f typeErrors.err 
-	java -cp $(CP) P5 test.b test.out 2> test.err && 
-	java -cp $(CP) P5 typeErrors.b typeErrors.out 2> typeErrors.err
 	
 ###
 # clean
