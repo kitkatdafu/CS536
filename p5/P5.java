@@ -159,7 +159,7 @@ public class P5 {
 		
 		switch(resultCode){
 		case RESULT_SYNTAX_ERROR:
-			pukeAndDie("Syntax error", resultCode);
+			s("Syntax error", resultCode);
 		case RESULT_TYPE_ERROR:
 			pukeAndDie("Type checking error", resultCode);
 		default:
