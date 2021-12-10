@@ -135,6 +135,10 @@ class ProgramNode extends ASTnode {
     public void nameAnalysis() {
         SymTable symTab = new SymTable();
         myDeclList.nameAnalysis(symTab);
+        if(symTab.lookupGlobal("main") == null){
+            ErrMsg.fatal(0,0,
+                    "No main function");
+        }
     }
     
     /**
@@ -528,7 +532,6 @@ class FnDeclNode extends DeclNode {
             ErrMsg.fatal(myId.lineNum(), myId.charNum(),
                          "Multiply declared identifier");
         }
-        
         else { // add function name to local symbol table
             try {
                 sym = new FnSymb(myType.type(), myFormalsList.length());
@@ -558,7 +561,13 @@ class FnDeclNode extends DeclNode {
         }
         
         myBody.nameAnalysis(symTab); // process the function body
-        
+
+
+
+
+
+
+
         try {
             symTab.removeScope();  // exit scope
         } catch (EmptySymTableException ex) {
