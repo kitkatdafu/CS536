@@ -1,0 +1,156 @@
+% Created 2021-12-09 Thu 20:05
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Reid Chen}
+\date{\textit{<2021-12-09 Thu>}}
+\title{CS536 Final Exam Review}
+\hypersetup{
+ pdfauthor={Reid Chen},
+ pdftitle={CS536 Final Exam Review},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Code generation \footnote{Notes from \href{https://pages.cs.wisc.edu/\~aws/courses/cs536/readings/codegen.html}{CS536 Lecture Notes on Codegen}}}
+\label{sec:org9a67eca}
+\subsection{\texttt{Spim}}
+\label{sec:orgb9d4291}
+Special Registers in Spim
+\begin{center}
+\begin{tabular}{ll}
+Register & Purpose\\
+\hline
+\texttt{\$sp} & stack pointer\\
+\texttt{\$fp} & frame pointer\\
+\texttt{\$ra} & return address\\
+\texttt{\$v0} & used for system calls, return \texttt{int} from function calls\\
+\texttt{\$f0} & used for return \texttt{double} from function calls\\
+\texttt{\$a0} & used for output of \texttt{int} and \texttt{string}\\
+\texttt{\$f12} & used for output of \texttt{double}\\
+\texttt{\$t0 - \$t7} & registers for \texttt{int}\\
+\texttt{\$f0 - \$f30} & registers for \texttt{double}\\
+\end{tabular}
+\end{center}
+\subsection{Code Generation for Global Variable Declarations}
+\label{sec:org6076987}
+Let \texttt{N} denote the size of the global variable in bytes. For each global variable \texttt{\_v}, we
+generate the following code snippet:
+\begin{verbatim}
+    .data     # in static data area
+    .align 2  # align on a word boundary
+_v: .space N  # label N bytes area with name _v
+\end{verbatim}
+\subsection{Code Generation for Functions}
+\label{sec:org7675030}
+Need to generate the following 4 parts in order:
+\begin{enumerate}
+\item preamble
+\item entry
+\item body
+\item exit
+\end{enumerate}
+\subsubsection{Generating Function Preamble}
+\label{sec:org93ebb39}
+For the \texttt{main} function,
+\begin{verbatim}
+    .text
+    .globl main
+main:
+\end{verbatim}
+For all other functions,
+\begin{verbatim}
+.text
+_<functionName>:
+\end{verbatim}
+where \texttt{<functionName>} is a placeholder for the function called \texttt{functinoName}.
+The \texttt{.text} indicates the assembler that the instructions below should be stored in the text area.
+\subsubsection{Generating Function Entry}
+\label{sec:org0778189}
+We do not need to worry about the actual parameters because the caller of this function has
+already pushed them on the stack.
+We need to do the following 4 things in order:
+\begin{enumerate}
+\item push the return address
+\begin{verbatim}
+sw   $ra, 0($sp)
+subu $sp, $sp, 4
+\end{verbatim}
+\item push the control link
+\begin{verbatim}
+sw   $fp, 0($sp)
+subu $sp, $sp, 4
+\end{verbatim}
+\item set the \texttt{\$fp}
+\begin{verbatim}
+addu $fp, $sp, 8
+\end{verbatim}
+\item push space for local variables
+\begin{verbatim}
+subu $sp, $sp, <size of locals in bytes>
+\end{verbatim}
+where \texttt{size of locals in bytes} can be calculated during semantic analysis.
+\end{enumerate}
+\subsubsection{Generating Function Body}
+\label{sec:org6290ab8}
+No need to generate code for declarations, but need to generate code for each statement.
+\begin{enumerate}
+\item Write Statement
+\label{sec:org3250abb}
+\begin{enumerate}
+\item Call the \texttt{codeGen} of the expressions in the write statement so that the value to be written
+will be placed on the top of the stack.
+\begin{verbatim}
+myExp.codeGen();
+\end{verbatim}
+\item Generate code that pop the value one the top of the stack into \texttt{\$a0}
+\begin{verbatim}
+genPop(a0, 4);
+\end{verbatim}
+\item Set \texttt{\$v0} to 1
+\begin{verbatim}
+generate("li", v0, 1);
+\end{verbatim}
+\item Make a system call
+\begin{verbatim}
+generate("syscall");
+\end{verbatim}
+\end{enumerate}
+\end{enumerate}
+
+
+\subsubsection{Generating Function Exit}
+\label{sec:org462538a}
+Want to pop off this function's AR. Then jump to the address that stored in the return address
+field of this function's AR. Popping off this function's AR means to restore the \texttt{\$sp} and \texttt{\$fp}
+to its caller' values. However, instead of simply setting \texttt{\$sp} to \texttt{\$fp}, we want to store \texttt{\$fp}
+to a temporary register. Then restore \texttt{\$fp} using the value stored in the control link
+field. Lastly, we restore \texttt{\$sp} using the value stored in that temporary register. We restore
+\texttt{\$sp} because a system interrupt may happen and use the stack. If we restore \texttt{\$sp} at the
+beginning, the system interrupt may overwrite data we need.
+\begin{verbatim}
+lw   $ra, 0($fp)
+move $t0, $fp
+lw   $fp, -4($fp) 
+move $sp, $t0 
+jr   $ra
+\end{verbatim}
+\end{document}
