@@ -6,7 +6,9 @@ import java.util.*;
  */
 public class Symb {
     private Type type;
-    
+
+    private int offset;
+
     public Symb(Type type) {
         this.type = type;
     }
@@ -30,11 +32,13 @@ class FnSymb extends Symb {
     private Type returnType;
     private int numParams;
     private List<Type> paramTypes;
-    
+
+
     public FnSymb(Type type, int numparams) {
         super(new FnType());
         returnType = type;
         numParams = numparams;
+        offset = 4* numparams;
     }
 
     public void addFormals(List<Type> L) {
@@ -89,7 +93,7 @@ class StructSymb extends Symb {
         return structType;
     }    
 }
-
+:wq
 /**
  * The StructDefSymb class is a subclass of the Symb class just for the 
  * definition of a struct type. 
