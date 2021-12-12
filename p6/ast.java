@@ -384,6 +384,16 @@ class ExpListNode extends ASTnode {
         return myExps.size();
     }
 
+    public void codeGen() {
+        for (ExpNode expNode : myExps) {
+            if (expNode instanceof IdNode) {
+                ((IdNode) expNode).codeGenForExp();
+            } else {
+                expNode.codeGen();
+            }
+        }
+    }
+
     /**
      * nameAnalysis
      * Given a symbol table symTab, process each exp in the list.
@@ -594,6 +604,7 @@ class FnDeclNode extends DeclNode {
         if (myId.name().equals("main")) {
             codeGenMain();
         } else {
+            codeGenNoneMain();
         }
     }
 
@@ -604,9 +615,11 @@ class FnDeclNode extends DeclNode {
         genExit();
     }
 
-    public void codeGen() {
+    public void codeGenNoneMain() {
         genPreamble(false);
+        genEntry();
         genBody();
+        genExit();
     }
 
     private void genPreamble(boolean isMain) {
@@ -1332,6 +1345,22 @@ class IfElseStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        if (myExp instanceof IdNode) {
+            ((IdNode) myExp).codeGenForExp();
+        } else {
+            myExp.codeGen();
+        }
+        String elseLabel = Codegen.nextLabel();
+        String exitLabel = Codegen.nextLabel();
+
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("li", Codegen.T1, 0);
+        Codegen.generateWithComment("beq", "Jump to else if false", Codegen.T0, Codegen.T1, elseLabel);
+        myThenStmtList.codeGen();
+        Codegen.generateWithComment("jr", "Jump to exit of IfThenElse", exitLabel);
+        Codegen.genLabel(elseLabel);
+        myElseStmtList.codeGen();
+        Codegen.genLabel(exitLabel);
     }
 
     /**
@@ -1418,6 +1447,23 @@ class WhileStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        String loopStartLabel = Codegen.nextLabel();
+        String endLoopLabel = Codegen.nextLabel();
+        Codegen.genLabel(loopStartLabel, "Begin While");
+
+        if (myExp instanceof IdNode) {
+            ((IdNode) myExp).codeGenForExp();
+        } else {
+            myExp.codeGen();
+        }
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("li", Codegen.T1, 0);
+        Codegen.generate("beq", Codegen.T0, Codegen.T1, endLoopLabel);
+
+        myStmtList.codeGen();
+
+        Codegen.generateWithComment("jr", "Back to Beginning", loopStartLabel);
+        Codegen.genLabel(endLoopLabel, "End of While");
     }
 
     /**
@@ -1482,6 +1528,7 @@ class RepeatStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        // no need to do this
     }
 
     /**
@@ -1544,6 +1591,8 @@ class CallStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        myCall.codeGen();
+        Codegen.genPop(Codegen.T0);
     }
 
     /**
@@ -1578,6 +1627,27 @@ class ReturnStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        // get return value, if exist
+        if (myExp != null) {
+            if (myExp instanceof IdNode) {
+                ((IdNode) myExp).codeGenForExp();
+            } else {
+                myExp.codeGen();
+            }
+            Codegen.genPop(Codegen.V0);
+        }
+
+        // Pop AR
+        // load return address
+        Codegen.generateIndexed("lw", Codegen.RA, Codegen.FP, 0);
+        // save $sp temporarily
+        Codegen.generate("move", Codegen.T0, Codegen.FP);
+        // restore $fp
+        Codegen.generateIndexed("lw", Codegen.FP, Codegen.FP, -4);
+        // restore $sp
+        Codegen.generate("move", Codegen.SP, Codegen.T0);
+        // return
+        Codegen.generateWithComment("jr", "RETURN", Codegen.RA);
     }
 
     /**
@@ -2196,6 +2266,14 @@ class CallExpNode extends ExpNode {
 
     @Override
     public void codeGen() {
+        // evaluate each actual parameter, push the values onto the stack
+        if (myExpList != null) {
+            myExpList.codeGen();
+        }
+        // jump and link
+        myId.codeGenForJump();
+        // push the returned value into $v0
+        Codegen.genPush(Codegen.V0);
     }
 
     /**
