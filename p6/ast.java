@@ -1113,6 +1113,13 @@ class ReceiveStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        // read
+        Codegen.generate("li", Codegen.V0, "5");
+        Codegen.generate("syscall");
+
+        ((IdNode) myExp).codeGenForAssignment();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generateIndexed("sw", Codegen.V0, Codegen.T0, 0);
     }
 
     /**
@@ -1143,6 +1150,8 @@ class ReceiveStmtNode extends StmtNode {
             ErrMsg.fatal(myExp.lineNum(), myExp.charNum(),
                     "Attempt to read a struct variable");
         }
+
+        typeOfExp = type;
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -1152,8 +1161,13 @@ class ReceiveStmtNode extends StmtNode {
         p.println(";");
     }
 
+    public Type getTypeOfExp() {
+        return typeOfExp;
+    }
+
     // 1 kid (actually can only be an IdNode or an ArrayExpNode)
     private ExpNode myExp;
+    private Type typeOfExp;
 }
 
 class PrintStmtNode extends StmtNode {
