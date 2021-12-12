@@ -6,7 +6,7 @@ import java.util.*;
  */
 public class Symb {
     private Type type;
-    private boolean isLocal;
+    private boolean isLocal = true;
     private int offset = -1;
 
     public Symb(Type type) {

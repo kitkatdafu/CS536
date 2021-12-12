@@ -112,6 +112,8 @@ abstract class ASTnode {
     // every subclass must provide an unparse operation
     abstract public void unparse(PrintWriter p, int indent);
 
+    public static int declOffsetCounter = 0;
+
     // this method can be used by the unparse methods to do indenting
     protected void addIndent(PrintWriter p, int indent) {
         for (int k = 0; k < indent; k++)
@@ -200,7 +202,6 @@ class DeclListNode extends ASTnode {
      * decls in the list.
      */
     public void nameAnalysis(SymTable symTab, SymTable globalTab) {
-        int i = 0;
         for (DeclNode node : myDecls) {
             Symb sym = null;
             if (node instanceof VarDeclNode) {
@@ -209,9 +210,8 @@ class DeclListNode extends ASTnode {
                 sym = node.nameAnalysis(symTab);
             }
             if (sym != null) {
-                sym.setOffset(-1 * (8 + i * 4));
+                sym.setOffset(-1 * (8 + (ASTnode.declOffsetCounter++) * 4));
             }
-            i++;
         }
     }
 
@@ -467,9 +467,8 @@ class VarDeclNode extends DeclNode {
      */
     public void codeGen(boolean isGlobal) {
         if (isGlobal) {
+            myId.sym().setIsLocal(false);
             codeGenGlobal();
-        } else {
-            codeGenLocal();
         }
     }
 
@@ -480,13 +479,6 @@ class VarDeclNode extends DeclNode {
         Codegen.generate(".data");
         Codegen.generate(".align 2");
         Codegen.generateLabeled("_" + myId.name(), ".space 4", "", "");
-    }
-
-    /**
-     * Generate code if the variable is local variable (of a function)
-     */
-    private void codeGenLocal() {
-
     }
 
     /**
@@ -672,6 +664,7 @@ class FnDeclNode extends DeclNode {
     public Symb nameAnalysis(SymTable symTab) {
         String name = myId.name();
         FnSymb sym = null;
+        ASTnode.declOffsetCounter = 0;
 
         if (symTab.lookupLocal(name) != null) {
             ErrMsg.fatal(myId.lineNum(), myId.charNum(),
@@ -1257,6 +1250,20 @@ class IfStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        // evaluate the condition
+        if (myExp instanceof IdNode) {
+            ((IdNode) myExp).codeGen();
+        } else {
+            myExp.codeGen();
+        }
+
+        String falseLabel = Codegen.nextLabel();
+
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("li", Codegen.T1, 0);
+        Codegen.generateWithComment("beq", "Jump to FalseLabel", Codegen.T0, Codegen.T1, falseLabel);
+        myStmtList.codeGen();
+        Codegen.genLabel(falseLabel);
     }
 
     /**
@@ -1898,8 +1905,6 @@ class IdNode extends ExpNode {
         if (sym == null) {
             ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
         } else {
-            // determine if this is null or not
-            sym.setIsLocal(symTab.lookupLocal(myStrVal) != null);
             link(sym);
         }
     }
@@ -2686,6 +2691,7 @@ class AndNode extends LogicalExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
+        // TODO: Short circuit
         p.print("(");
         myExp1.unparse(p, 0);
         p.print(" && ");
@@ -2705,6 +2711,7 @@ class OrNode extends LogicalExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
+        // TODO: Short circuit
         p.print("(");
         myExp1.unparse(p, 0);
         p.print(" || ");
