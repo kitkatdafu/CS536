@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.IDN;
 import java.util.*;
 
 // **********************************************************************
@@ -1024,6 +1025,11 @@ class PreIncStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        ((IdNode) myExp).codeGenForAssignment();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generateIndexed("lw", Codegen.T1, Codegen.T0, 0, "PreInc: Get value at Id");
+        Codegen.generateWithComment("add", "PreInc: Add value by 1", Codegen.T1, Codegen.T1, "1");
+        Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0, "PreInc: Save incred value to addr");
     }
 
     /**
@@ -1063,6 +1069,11 @@ class PreDecStmtNode extends StmtNode {
 
     @Override
     public void codeGen() {
+        ((IdNode) myExp).codeGenForAssignment();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generateIndexed("lw", Codegen.T1, Codegen.T0, 0, "PreDec: Get value at Id");
+        Codegen.generateWithComment("sub", "PreDec: Sub value by 1", Codegen.T1, Codegen.T1, "1");
+        Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0, "PreDec: Save deced value to addr");
     }
 
     /**
