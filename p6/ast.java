@@ -2275,8 +2275,22 @@ abstract class BinaryExpNode extends ExpNode {
         myExp2 = exp2;
     }
 
-    @Override
-    public void codeGen() {
+    public void codeGen(String op) {
+        if (myExp2 instanceof IdNode) {
+            ((IdNode) myExp2).codeGenForExp();
+        } else {
+            myExp2.codeGen();
+        }
+        if (myExp1 instanceof IdNode) {
+            ((IdNode) myExp1).codeGenForExp();
+        } else {
+            myExp1.codeGen();
+        }
+
+        Codegen.genPop(Codegen.T0);
+        Codegen.genPop(Codegen.T1);
+        Codegen.generateWithComment(op, op, Codegen.T0, Codegen.T0, Codegen.T1);
+        Codegen.genPush(Codegen.T0);
     }
 
     /**
@@ -2414,10 +2428,6 @@ abstract class ArithmeticExpNode extends BinaryExpNode {
         super(exp1, exp2);
     }
 
-    @Override
-    public void codeGen() {
-    }
-
     /**
      * typeCheck
      */
@@ -2451,10 +2461,6 @@ abstract class LogicalExpNode extends BinaryExpNode {
         super(exp1, exp2);
     }
 
-    @Override
-    public void codeGen() {
-    }
-
     /**
      * typeCheck
      */
@@ -2486,10 +2492,6 @@ abstract class LogicalExpNode extends BinaryExpNode {
 abstract class EqualityExpNode extends BinaryExpNode {
     public EqualityExpNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
-    }
-
-    @Override
-    public void codeGen() {
     }
 
     /**
@@ -2543,10 +2545,6 @@ abstract class RelationalExpNode extends BinaryExpNode {
         super(exp1, exp2);
     }
 
-    @Override
-    public void codeGen() {
-    }
-
     /**
      * typeCheck
      */
@@ -2576,6 +2574,12 @@ abstract class RelationalExpNode extends BinaryExpNode {
 }
 
 class PlusNode extends ArithmeticExpNode {
+
+    @Override
+    public void codeGen() {
+        codeGen("add");
+    }
+
     public PlusNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
     }
@@ -2594,6 +2598,11 @@ class MinusNode extends ArithmeticExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("sub");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2606,6 +2615,11 @@ class MinusNode extends ArithmeticExpNode {
 class TimesNode extends ArithmeticExpNode {
     public TimesNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
+    }
+
+    @Override
+    public void codeGen() {
+        codeGen("mul");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -2622,6 +2636,11 @@ class DivideNode extends ArithmeticExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("div");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2634,6 +2653,11 @@ class DivideNode extends ArithmeticExpNode {
 class AndNode extends LogicalExpNode {
     public AndNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
+    }
+
+    @Override
+    public void codeGen() {
+        codeGen("and");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -2650,6 +2674,11 @@ class OrNode extends LogicalExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("or");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2662,6 +2691,11 @@ class OrNode extends LogicalExpNode {
 class EqualsNode extends EqualityExpNode {
     public EqualsNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
+    }
+
+    @Override
+    public void codeGen() {
+        codeGen("seq");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -2678,6 +2712,11 @@ class NotEqualsNode extends EqualityExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("sne");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2690,6 +2729,11 @@ class NotEqualsNode extends EqualityExpNode {
 class LessNode extends RelationalExpNode {
     public LessNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
+    }
+
+    @Override
+    public void codeGen() {
+        codeGen("slt");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -2706,6 +2750,11 @@ class GreaterNode extends RelationalExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("sgt");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2720,6 +2769,11 @@ class LessEqNode extends RelationalExpNode {
         super(exp1, exp2);
     }
 
+    @Override
+    public void codeGen() {
+        codeGen("sle");
+    }
+
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
         myExp1.unparse(p, 0);
@@ -2732,6 +2786,11 @@ class LessEqNode extends RelationalExpNode {
 class GreaterEqNode extends RelationalExpNode {
     public GreaterEqNode(ExpNode exp1, ExpNode exp2) {
         super(exp1, exp2);
+    }
+
+    @Override
+    public void codeGen() {
+        codeGen("sge");
     }
 
     public void unparse(PrintWriter p, int indent) {
