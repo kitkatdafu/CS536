@@ -2272,6 +2272,11 @@ class CallExpNode extends ExpNode {
         }
         // jump and link
         myId.codeGenForJump();
+
+        // pop parameters
+        Codegen.generateWithComment("addu", "REMOVE PARAM", Codegen.SP, Codegen.SP,
+                String.valueOf(((FnSymb) myId.sym()).getTotalSizeOfParams()));
+
         // push the returned value into $v0
         Codegen.genPush(Codegen.V0);
     }
