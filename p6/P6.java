@@ -6,11 +6,11 @@ import java_cup.runtime.*;
  * %This is the main program to test the b parser.%
  *
  * There should be 2 command-line arguments:
- *    1. the file to be parsed
- *    2. the output MIPS file
+ * 1. the file to be parsed
+ * 2. the output MIPS file
  *
  * The program opens the two files, creates a scanner and a parser, and
- * calls the parser.  If the parse is successful, then it will call name
+ * calls the parser. If the parse is successful, then it will call name
  * analysis and type checking routines. If there is no error at the end,
  * it will generate MIPS code to the output file.
  */
@@ -37,31 +37,33 @@ public class P6 {
 	 * is the command line to use. It shouldn't be invoked from
 	 * outside the class (hence the private constructor) because
 	 * it
+	 * 
 	 * @param args command line args array for [<infile> <outfile>]
 	 */
 	private P6(String[] args) {
-		//Parse arguments
+		// Parse arguments
 		if (args.length < 2) {
 			String msg = "please supply name of the input file "
-				+ "and name of file for assembly output.";
+					+ "and name of file for assembly output.";
 			pukeAndDie(msg);
 		}
 
 		try {
 			setInfile(args[0]);
 			setOutfile(args[1]);
-		} catch(BadInfileException e) {
+		} catch (BadInfileException e) {
 			pukeAndDie(e.getMessage());
-		} catch(BadOutfileException e) {
+		} catch (BadOutfileException e) {
 			pukeAndDie(e.getMessage());
 		}
 	}
 
 	/**
 	 * Source code file path
+	 * 
 	 * @param filename path to source file
 	 */
-	public void setInfile(String filename) throws BadInfileException{
+	public void setInfile(String filename) throws BadInfileException {
 		try {
 			inFile = new FileReader(filename);
 		} catch (FileNotFoundException ex) {
@@ -71,9 +73,10 @@ public class P6 {
 
 	/**
 	 * Text file output
+	 * 
 	 * @param filename path to destination file
 	 */
-	public void setOutfile(String filename) throws BadOutfileException{
+	public void setOutfile(String filename) throws BadOutfileException {
 		try {
 			outFile = new PrintWriter(filename);
 		} catch (FileNotFoundException ex) {
@@ -91,12 +94,12 @@ public class P6 {
 			try {
 				inFile.close();
 			} catch (IOException e) {
-				//At this point, users already know they screwed
+				// At this point, users already know they screwed
 				// up. No need to rub it in.
 			}
 		}
 		if (outFile != null) {
-			//If there is any output that needs to be
+			// If there is any output that needs to be
 			// written to the stream, force it out.
 			outFile.flush();
 			outFile.close();
@@ -105,6 +108,7 @@ public class P6 {
 
 	/**
 	 * Private error handling method. Convenience method for
+	 * 
 	 * @link pukeAndDie(String, int) with a default error code
 	 * @param error message to print on exit
 	 */
@@ -114,6 +118,7 @@ public class P6 {
 
 	/**
 	 * Private error handling method. Prints an error message
+	 * 
 	 * @link pukeAndDie(String, int) with a default error code
 	 * @param error message to print on exit
 	 */
@@ -123,9 +128,11 @@ public class P6 {
 		System.exit(-1);
 	}
 
-	/** the parser will return a Symbol whose value
+	/**
+	 * the parser will return a Symbol whose value
 	 * field is the translation of the root nonterminal
 	 * (i.e., of the nonterminal "program")
+	 * 
 	 * @return root of the CFG
 	 */
 	private Symbol parseCFG() {
@@ -140,12 +147,12 @@ public class P6 {
 	public int process() {
 		Symbol cfgRoot = parseCFG();
 
-		ProgramNode astRoot = (ProgramNode)cfgRoot.value;
+		ProgramNode astRoot = (ProgramNode) cfgRoot.value;
 		if (ErrMsg.getErr()) {
 			return P6.RESULT_SYNTAX_ERROR;
 		}
 
-		astRoot.nameAnalysis();	 // perform name analysis
+		astRoot.nameAnalysis(); // perform name analysis
 		if (ErrMsg.getErr()) {
 			return P6.RESULT_NAME_ANALYSIS_ERROR;
 		}
@@ -155,9 +162,10 @@ public class P6 {
 			return P6.RESULT_TYPE_ERROR;
 		}
 
-		//////////////////////////
-		// TODO: Calling codeGen   //
-		//////////////////////////
+		// code generation
+		Codegen.p = outFile;
+		astRoot.codeGen();
+		Codegen.p.close();
 
 		return P6.RESULT_CORRECT;
 	}
@@ -169,15 +177,15 @@ public class P6 {
 			return;
 		}
 
-		switch(resultCode) {
-		case RESULT_SYNTAX_ERROR:
-			pukeAndDie("Syntax error", resultCode);
-		case RESULT_TYPE_ERROR:
-			pukeAndDie("Type checking error", resultCode);
-		case RESULT_NAME_ANALYSIS_ERROR:
-			pukeAndDie("Name analysis error", resultCode);
-		default:
-			pukeAndDie("Type checking error", RESULT_OTHER_ERROR);
+		switch (resultCode) {
+			case RESULT_SYNTAX_ERROR:
+				pukeAndDie("Syntax error", resultCode);
+			case RESULT_TYPE_ERROR:
+				pukeAndDie("Type checking error", resultCode);
+			case RESULT_NAME_ANALYSIS_ERROR:
+				pukeAndDie("Name analysis error", resultCode);
+			default:
+				pukeAndDie("Type checking error", RESULT_OTHER_ERROR);
 		}
 	}
 

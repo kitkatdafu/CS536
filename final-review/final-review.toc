@@ -1,8 +1,0 @@
-\contentsline {section}{\numberline {1}Code generation \let \reserved@d =[\def \par }{1}{section.1}%
-\contentsline {subsection}{\numberline {1.1}\texttt {Spim}}{1}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Code Generation for Global Variable Declarations}{2}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Code Generation for Functions}{2}{subsection.1.3}%
-\contentsline {subsubsection}{\numberline {1.3.1}Generating Function Preamble}{2}{subsubsection.1.3.1}%
-\contentsline {subsubsection}{\numberline {1.3.2}Generating Function Entry}{2}{subsubsection.1.3.2}%
-\contentsline {subsubsection}{\numberline {1.3.3}Generating Function Body}{3}{subsubsection.1.3.3}%
-\contentsline {subsubsection}{\numberline {1.3.4}Generating Function Exit}{3}{subsubsection.1.3.4}%

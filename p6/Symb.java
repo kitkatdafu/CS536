@@ -1,22 +1,38 @@
 import java.util.*;
 
 /**
- * The Symb class defines a symbol-table entry. 
+ * The Symb class defines a symbol-table entry.
  * Each Symb contains a type (a Type).
  */
 public class Symb {
     private Type type;
-
-    private int offset;
+    private boolean isLocal = true;
+    private int offset = -1;
 
     public Symb(Type type) {
         this.type = type;
     }
-    
+
     public Type getType() {
         return type;
     }
-    
+
+    public void setIsLocal(boolean loc) {
+        this.isLocal = loc;
+    }
+
+    public boolean isLocal() {
+        return isLocal;
+    }
+
+    public int getOffset() {
+        return this.offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     public String toString() {
         return type.toString();
     }
@@ -32,25 +48,36 @@ class FnSymb extends Symb {
     private Type returnType;
     private int numParams;
     private List<Type> paramTypes;
-
+    private int totalSizeofLocalDeclare = 0;
 
     public FnSymb(Type type, int numparams) {
         super(new FnType());
         returnType = type;
         numParams = numparams;
-        offset = 4* numparams;
     }
 
     public void addFormals(List<Type> L) {
         paramTypes = L;
     }
-    
+
     public Type getReturnType() {
         return returnType;
     }
 
     public int getNumParams() {
         return numParams;
+    }
+
+    public int getTotalSizeOfParams() {
+        return numParams * 4;
+    }
+
+    public int getTotalSizeofLocalDeclare() {
+        return totalSizeofLocalDeclare;
+    }
+
+    public void setTotalSizeofLocalDeclare(int size) {
+        totalSizeofLocalDeclare = size;
     }
 
     public List<Type> getParamTypes() {
@@ -75,15 +102,15 @@ class FnSymb extends Symb {
 }
 
 /**
- * The StructSymb class is a subclass of the Symb class just for variables 
- * declared to be a struct type. 
- * Each StructSymb contains a symbol table to hold information about its 
+ * The StructSymb class is a subclass of the Symb class just for variables
+ * declared to be a struct type.
+ * Each StructSymb contains a symbol table to hold information about its
  * fields.
  */
 class StructSymb extends Symb {
     // new fields
-    private IdNode structType;  // name of the struct type
-    
+    private IdNode structType; // name of the struct type
+
     public StructSymb(IdNode id) {
         super(new StructType(id));
         structType = id;
@@ -91,19 +118,19 @@ class StructSymb extends Symb {
 
     public IdNode getStructType() {
         return structType;
-    }    
+    }
 }
-:wq
+
 /**
- * The StructDefSymb class is a subclass of the Symb class just for the 
- * definition of a struct type. 
- * Each StructDefSymb contains a symbol table to hold information about its 
+ * The StructDefSymb class is a subclass of the Symb class just for the
+ * definition of a struct type.
+ * Each StructDefSymb contains a symbol table to hold information about its
  * fields.
  */
 class StructDefSymb extends Symb {
     // new fields
     private SymTable symTab;
-    
+
     public StructDefSymb(SymTable table) {
         super(new StructDefType());
         symTab = table;
