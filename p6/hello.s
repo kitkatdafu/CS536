@@ -126,9 +126,9 @@ main:
 	li    $v0, 1
 	syscall
 	.data
-.L3:	.asciiz"\n"
+.L1:	.asciiz"\n"
 	.text
-	la    $t0, .L3
+	la    $t0, .L1
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -143,9 +143,9 @@ main:
 	li    $v0, 1
 	syscall
 	.data
-.L4:	.asciiz"\n"
+.L1:	.asciiz"\n"
 	.text
-	la    $t0, .L4
+	la    $t0, .L1
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -160,9 +160,9 @@ main:
 	li    $v0, 1
 	syscall
 	.data
-.L5:	.asciiz"\n"
+.L1:	.asciiz"\n"
 	.text
-	la    $t0, .L5
+	la    $t0, .L1
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP

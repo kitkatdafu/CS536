@@ -1765,6 +1765,9 @@ class IntLitNode extends ExpNode {
 }
 
 class StringLitNode extends ExpNode {
+
+    public static HashMap<String, String> stringPool = new HashMap<>();
+
     public StringLitNode(int lineNum, int charNum, String strVal) {
         myLineNum = lineNum;
         myCharNum = charNum;
@@ -1773,9 +1776,14 @@ class StringLitNode extends ExpNode {
 
     @Override
     public void codeGen() {
-        String label = Codegen.nextLabel();
-        Codegen.generate(".data");
-        Codegen.generateLabeled(label, ".asciiz", "", myStrVal);
+        // use a pool to remove duplciate stringlit
+        if (!stringPool.containsKey(myStrVal)) {
+            stringPool.put(myStrVal, Codegen.nextLabel());
+            Codegen.generate(".data");
+            Codegen.generateLabeled(stringPool.get(myStrVal), ".asciiz", "", myStrVal);
+        }
+
+        String label = stringPool.get(myStrVal);
         Codegen.generate(".text");
         Codegen.generate("la", Codegen.T0, label);
         Codegen.genPush(Codegen.T0);
