@@ -162,7 +162,7 @@ public class P6 {
 			return P6.RESULT_TYPE_ERROR;
 		}
 
-		astRoot.unparse(new PrintWriter(System.out, true), 0);
+		// astRoot.unparse(new PrintWriter(System.out, true), 0);
 		// code generation
 		Codegen.p = outFile;
 		astRoot.codeGen();

@@ -6,7 +6,7 @@ main:
 	sw    $fp, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	addu  $fp, $sp, 8
-	subu  $sp, $sp, 8
+	subu  $sp, $sp, 16
 	.data
 .L0:	.asciiz"Hello world!"
 	.text

@@ -641,7 +641,7 @@ class FnDeclNode extends DeclNode {
         Codegen.generate("addu", Codegen.FP, Codegen.SP, "8");
         // push space for local variables
         Codegen.generate("subu", Codegen.SP, Codegen.SP,
-                String.valueOf(((FnSymb) myId.sym()).getTotalSizeofLocalDeclare()));
+                String.valueOf(ASTnode.declOffsetCounter * 4));
     }
 
     private void genBody() {
