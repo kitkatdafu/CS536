@@ -2253,7 +2253,7 @@ class AssignNode extends ExpNode {
         Codegen.genPop(Codegen.T1); // RHS value
         Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0);
         // Leave a copy of the value on the stack
-        // TODO:
+        // TODO
     }
 
     // 2 kids
@@ -2778,11 +2778,39 @@ class AndNode extends LogicalExpNode {
 
     @Override
     public void codeGen() {
-        codeGen("and");
+        if (myExp1 instanceof IdNode) {
+            ((IdNode) myExp1).codeGenForExp();
+        } else {
+            myExp1.codeGen();
+        }
+
+        String alwaysFalseLabel = Codegen.nextLabel();
+        String exitLabel = Codegen.nextLabel();
+
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("li", Codegen.T1, 0);
+        Codegen.generate("beq", Codegen.T0, Codegen.T1, alwaysFalseLabel);
+
+        if (myExp2 instanceof IdNode) {
+            ((IdNode) myExp2).codeGenForExp();
+        } else {
+            myExp2.codeGen();
+        }
+        Codegen.genPop(Codegen.T1);
+
+        Codegen.generate("li", Codegen.T0, 1);
+        Codegen.generate("and", Codegen.T0, Codegen.T0, Codegen.T1);
+        Codegen.genPush(Codegen.T0);
+
+        Codegen.generate("jr", exitLabel);
+
+        Codegen.genLabel(alwaysFalseLabel);
+        Codegen.genPush(Codegen.T0);
+
+        Codegen.genLabel(exitLabel);
     }
 
     public void unparse(PrintWriter p, int indent) {
-        // TODO: Short circuit
         p.print("(");
         myExp1.unparse(p, 0);
         p.print(" && ");
@@ -2798,11 +2826,39 @@ class OrNode extends LogicalExpNode {
 
     @Override
     public void codeGen() {
-        codeGen("or");
+        if (myExp1 instanceof IdNode) {
+            ((IdNode) myExp1).codeGenForExp();
+        } else {
+            myExp1.codeGen();
+        }
+        Codegen.genPop(Codegen.T0);
+
+        String alwaysTrueLabel = Codegen.nextLabel();
+        String exitLabel = Codegen.nextLabel();
+
+        Codegen.generate("li", Codegen.T1, 1);
+        Codegen.generate("beq", Codegen.T0, Codegen.T1, alwaysTrueLabel);
+
+        if (myExp2 instanceof IdNode) {
+            ((IdNode) myExp2).codeGenForExp();
+        } else {
+            myExp2.codeGen();
+        }
+        Codegen.genPop(Codegen.T1);
+
+        Codegen.generate("li", Codegen.T0, 0);
+        Codegen.generate("or", Codegen.T0, Codegen.T0, Codegen.T1);
+        Codegen.genPush(Codegen.T0);
+
+        Codegen.generate("jr", exitLabel);
+
+        Codegen.genLabel(alwaysTrueLabel);
+        Codegen.genPush(Codegen.T0);
+
+        Codegen.genLabel(exitLabel);
     }
 
     public void unparse(PrintWriter p, int indent) {
-        // TODO: Short circuit
         p.print("(");
         myExp1.unparse(p, 0);
         p.print(" || ");
