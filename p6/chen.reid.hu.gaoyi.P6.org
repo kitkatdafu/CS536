@@ -1,11 +1,8 @@
 #+TITLE: P6
 #+AUTHOR: Reid Chen, Gaoyi Hu
 So, firstly we will have to implement the feature to assert if there is a main function by lookup the global function name.
-
 Then, we set the offset when set the function statement. Next, we add code to MIPS when the code generates the function, global variables and some other cases to executre the exact codes in assembly code scope. 
-
 Typically, for function, we need to substract the offset space to the sp, and for each line, we exectute it in a single stack. 
-
 And for each global variable, we simply add them to the base of the stack. 
 ** Code Generation for Global Variable Declarations 
    Let =N= denote the size of the global variable in bytes. For each global variable =_v=, we
