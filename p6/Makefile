@@ -60,10 +60,7 @@ EmptySymTableException.class: EmptySymTableException.java
 # test
 #
 test:
-
 	java -cp $(CP) P6 test.b test.s
-	java -cp $(CP) P6 test1.b test1.s  
-	java -cp $(CP) P6 test2.b test2.s > test.err
 ###
 # clean
 ###

@@ -612,20 +612,21 @@ class FnDeclNode extends DeclNode {
         genPreamble(true);
         genEntry();
         genBody();
-        genExit();
+        genExit(true);
     }
 
     public void codeGenNoneMain() {
         genPreamble(false);
         genEntry();
         genBody();
-        genExit();
+        genExit(false);
     }
 
     private void genPreamble(boolean isMain) {
         Codegen.generate(".text");
         if (isMain) {
             Codegen.generate(".globl main");
+            Codegen.genLabel("__start");
             Codegen.genLabel("main");
         } else {
             Codegen.genLabel("_" + myId.name());
@@ -648,7 +649,7 @@ class FnDeclNode extends DeclNode {
         this.myBody.codeGen();
     }
 
-    private void genExit() {
+    private void genExit(boolean isMain) {
         // load return address
         Codegen.generateIndexed("lw", Codegen.RA, Codegen.FP, 0);
         // save $sp temporarily
@@ -658,7 +659,12 @@ class FnDeclNode extends DeclNode {
         // restore $sp
         Codegen.generate("move", Codegen.SP, Codegen.T0);
         // return
-        Codegen.generate("jr", Codegen.RA);
+        if (isMain) {
+            Codegen.generate("li", Codegen.V0, 10);
+            Codegen.generate("syscall");
+        } else {
+            Codegen.generate("jr", Codegen.RA);
+        }
     }
 
     /**
