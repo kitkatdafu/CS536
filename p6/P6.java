@@ -164,6 +164,7 @@ public class P6 {
 
 		// code generation
 		Codegen.p = outFile;
+		astRoot.unparse(new PrintWriter(System.out, true), 0);
 		astRoot.codeGen();
 		Codegen.p.close();
 

@@ -626,8 +626,8 @@ class FnDeclNode extends DeclNode {
         Codegen.generate(".text");
         if (isMain) {
             Codegen.generate(".globl main");
-            Codegen.genLabel("__start");
             Codegen.genLabel("main");
+            Codegen.genLabel("__start");
         } else {
             Codegen.genLabel("_" + myId.name());
         }
@@ -641,8 +641,8 @@ class FnDeclNode extends DeclNode {
         // set the $fp
         Codegen.generate("addu", Codegen.FP, Codegen.SP, "8");
         // push space for local variables
-        Codegen.generate("subu", Codegen.SP, Codegen.SP,
-                String.valueOf(ASTnode.declOffsetCounter * 4));
+        Codegen.generateWithComment("subu", "=SPACE FOR STACK=", Codegen.SP, Codegen.SP,
+                String.valueOf(((FnSymb) this.myId.sym()).getTotalSizeofLocalDeclare()));
     }
 
     private void genBody() {
@@ -720,6 +720,9 @@ class FnDeclNode extends DeclNode {
         myBody.nameAnalysis(symTab); // process the function body
 
         try {
+            if (sym != null) {
+                sym.setTotalSizeofLocalDeclare(ASTnode.declOffsetCounter * 4);
+            }
             symTab.removeScope(); // exit scope
         } catch (EmptySymTableException ex) {
             System.err.println("Unexpected EmptySymTableException " +
@@ -1003,6 +1006,7 @@ class AssignStmtNode extends StmtNode {
     @Override
     public void codeGen() {
         myAssign.codeGen();
+        Codegen.genPop(Codegen.T0);
     }
 
     /**
@@ -1791,7 +1795,7 @@ class StringLitNode extends ExpNode {
 
         String label = stringPool.get(myStrVal);
         Codegen.generate(".text");
-        Codegen.generate("la", Codegen.T0, label);
+        Codegen.generateWithComment("la", "STRLIT", Codegen.T0, label);
         Codegen.genPush(Codegen.T0);
     }
 
@@ -2251,7 +2255,11 @@ class AssignNode extends ExpNode {
 
     public void codeGen() {
         // Evaluate RHS
-        myExp.codeGen();
+        if (myExp instanceof IdNode) {
+            ((IdNode) myExp).codeGenForExp();
+        } else {
+            myExp.codeGen();
+        }
         // Push the address of the LHS Id onto the stack
         ((IdNode) myLhs).codeGenForAssignment();
         // Store the RHS into the address
@@ -2259,7 +2267,7 @@ class AssignNode extends ExpNode {
         Codegen.genPop(Codegen.T1); // RHS value
         Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0);
         // Leave a copy of the value on the stack
-        // TODO
+        Codegen.genPush(Codegen.T1);
     }
 
     // 2 kids

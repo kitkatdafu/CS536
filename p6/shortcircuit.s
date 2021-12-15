@@ -5,11 +5,11 @@ _true:
 	sw    $fp, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	addu  $fp, $sp, 8
-	subu  $sp, $sp, 0
+	subu  $sp, $sp, 0		#=SPACE FOR STACK=
 	.data
 .L0:	.asciiz"RETURNING TRUE\n"
 	.text
-	la    $t0, .L0
+	la    $t0, .L0		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -38,11 +38,11 @@ _false:
 	sw    $fp, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	addu  $fp, $sp, 8
-	subu  $sp, $sp, 0
+	subu  $sp, $sp, 0		#=SPACE FOR STACK=
 	.data
 .L1:	.asciiz"RETURNING FALSE\n"
 	.text
-	la    $t0, .L1
+	la    $t0, .L1		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -67,16 +67,17 @@ _false:
 	.text
 	.globl main
 main:
+__start:
 	sw    $ra, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	sw    $fp, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	addu  $fp, $sp, 8
-	subu  $sp, $sp, 0
+	subu  $sp, $sp, 0		#=SPACE FOR STACK=
 	.data
 .L2:	.asciiz"=================\n"
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -115,7 +116,7 @@ main:
 	.data
 .L7:	.asciiz"Bad\n"
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -124,7 +125,7 @@ main:
 	syscall
 .L6:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -159,7 +160,7 @@ main:
 	li    $t1, 0
 	beq   $t0, $t1, .L10		#Jump to else if false
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -170,7 +171,7 @@ main:
 .L10:
 .L11:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -205,7 +206,7 @@ main:
 	li    $t1, 0
 	beq   $t0, $t1, .L14		#Jump to else if false
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -216,7 +217,7 @@ main:
 .L14:
 .L15:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -251,7 +252,7 @@ main:
 	li    $t1, 0
 	beq   $t0, $t1, .L18		#Jump to else if false
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -262,7 +263,7 @@ main:
 .L18:
 .L19:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -299,7 +300,7 @@ main:
 	jr    .L23		#Jump to exit of IfThenElse
 .L22:
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -308,7 +309,7 @@ main:
 	syscall
 .L23:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -345,7 +346,7 @@ main:
 	jr    .L27		#Jump to exit of IfThenElse
 .L26:
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -354,7 +355,7 @@ main:
 	syscall
 .L27:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -391,7 +392,7 @@ main:
 	jr    .L31		#Jump to exit of IfThenElse
 .L30:
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -400,7 +401,7 @@ main:
 	syscall
 .L31:
 	.text
-	la    $t0, .L2
+	la    $t0, .L2		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -435,7 +436,7 @@ main:
 	li    $t1, 0
 	beq   $t0, $t1, .L34		#Jump to else if false
 	.text
-	la    $t0, .L7
+	la    $t0, .L7		#STRLIT
 	sw    $t0, 0($sp)	#PUSH
 	subu  $sp, $sp, 4
 	lw    $a0, 4($sp)	#POP
@@ -449,4 +450,5 @@ main:
 	move  $t0, $fp
 	lw    $fp, -4($fp)
 	move  $sp, $t0
-	jr    $ra
+	li    $v0, 10
+	syscall
