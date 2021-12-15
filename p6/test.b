@@ -36,7 +36,7 @@ bool logic(){
     a = tru;
     b = fls;
     c = !tru;
-    d = !a; /// output -2
+    d = !a; 
     print << d;
     print << " ";
     d = a && b;
@@ -45,7 +45,7 @@ bool logic(){
     d = a || b;
     print << d;
     print << " ";
-    d = !(a||b); /// output -2
+    d = !(a||b); 
     print << d;
     print << " ";
     d = (1==1) && (0==0) && (!b);
@@ -67,9 +67,6 @@ int main() {
     bool b;
     bool c;
     c = tru;
-    a = test(10, 20);
-    print << a;
-    print << "\n";
     print << "test arithmetic";
     print << "\n";
     arithmetic();
@@ -99,7 +96,9 @@ int main() {
     }
     print << "test controflow - string";
     print << "\n";
-    ///c = "abc"=="abc"; ///unpass! 0
+    c = "abc"=="abc"; 
+    print << c;
+    print << "\n";
     c = c==c;
     print << c;
     print << "\n";
@@ -117,8 +116,11 @@ int main() {
     c = (1<2) && (2<=2) && (2>=2) && (2>1) && (3!=1) && (3==3);
     print << c;
     print << "\n";
-    print << "test functions";
+    print << "test functions (recursion, call/ret)";
     print << "\n";
     a = func1(0);
+    a = test(10, 20);
+    print << a;
+    print << "\n";
     ret 0;
 }
