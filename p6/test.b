@@ -1,23 +1,124 @@
-int a;
-int b;
-
-int func1(){
-	
-	ret 10;
+int test(int a, int b) {
+    print << a;
+    ret b;
 }
 
-int main(){
-	bool b;	
-	b = "a" == "abc";
-	if(b != fls) {print << "yes1";}
-	b = "a" == "A";
-	if(b != fls) {print << "yes2";}
-	int a;
-	a = 12;
-	int c;
-	c = 12;
-	d = a == c;	
-	if(c != fls) {print << "yes3";}
-	a = func1();
-	if(a == 10) {print << "yes4";}
+int arithmetic(){
+    int a;
+    int b;
+    int c;
+    int d;
+    a = 1;
+    b = 2;
+    c = 3;
+    d = a+b;
+    print << d;
+    print << " ";
+    d = d-1;
+    print << d;
+    print << " ";
+    d = d*0;
+    print << d;
+    print << " ";
+    d = 1/1;
+    print << d;
+    print << " ";
+    ret a;
+}
+void retVoid(){
+
+}
+bool logic(){
+    bool a;
+    bool b;
+    bool c;
+    bool d;
+    a = tru;
+    b = fls;
+    c = !tru;
+    d = !a; /// output -2
+    print << d;
+    print << " ";
+    d = a && b;
+    print << d;
+    print << " ";
+    d = a || b;
+    print << d;
+    print << " ";
+    d = !(a||b); /// output -2
+    print << d;
+    print << " ";
+    d = (1==1) && (0==0) && (!b);
+    print << d;
+    print << "\n";
+    ret tru;
+}
+int func1(int a){
+    ++a;
+    if (a==3){
+        print << "base case!\n";
+        ret 1;
+    }
+    func1(a);
+}
+
+int main() {
+    int a;
+    bool b;
+    bool c;
+    c = tru;
+    a = test(10, 20);
+    print << a;
+    print << "\n";
+    print << "test arithmetic";
+    print << "\n";
+    arithmetic();
+    retVoid();
+    print << "test logic";
+    print << "\n";
+    b = logic();
+    print << b;
+    print << "\n";
+    print << "test controflow";
+    print << "\n";
+    if(c){
+        print << "should be print\n";
+    }
+    if(c){
+        print << "should be print\n";
+    }else{
+        print << "should not be print\n";
+    }
+    if(fls){
+        print << "should not be print\n";
+    }
+    if(fls){
+        print << "should not be print\n";
+    }else{
+        print << "should be print\n";
+    }
+    print << "test controflow - string";
+    print << "\n";
+    ///c = "abc"=="abc"; ///unpass! 0
+    c = c==c;
+    print << c;
+    print << "\n";
+    if ("abc"=="abc"){
+        print << "should be print\n";
+    }
+    a = 3;
+    while (a>0){
+        print << a;
+        print << " ";
+        --a;
+    }
+    print << "test relational";
+    print << "\n";
+    c = (1<2) && (2<=2) && (2>=2) && (2>1) && (3!=1) && (3==3);
+    print << c;
+    print << "\n";
+    print << "test functions";
+    print << "\n";
+    a = func1(0);
+    ret 0;
 }
