@@ -4,7 +4,83 @@
 #+tags[]: Compiler
 #+categories[]: CS PL
 
-* Code generation [fn:1]
+* Topics on the Final Exam
+** Semantic Analysis
+- Name analysis / symbol table
+- static scope vs. dynamic scope
+- variable overloading
+- type checking
+  - What are types? $\mathbb{Z} = \text{set of all integers}$
+  - type system
+    - primitive types
+    - compound types
+    - typing rules
+  - type errors
+  - static typing
+    - checked by compiler
+    - check at compiler type
+  - dynamic typing
+    - check at runtime
+  - strong vs. weak typing
+    - the degree to which a language catch a type error at compile/run time
+** Runtime Environment
+- How the memory is laid out
+  - the stack 
+    - store temporary things
+    - activation records (AR)
+  - the heap
+    - store data dynamically allocated data
+  - caller-callee relationship
+    - parameter passing
+      - pass by value
+	- make a copy of the value
+      - pass by reference
+	- pass the address
+      - pass by value-result
+** Code Generation	  
+- Intermediate Representation (IR, pseudo assembly code)
+- Compiler Backend
+- MIPS
+- Code generation in MIPS
+  - AST $\rightarrow$ MIPS
+  - =if=, =while=, function calls, returns, etc
+- Control-flow graph (CFG)
+  - Flowchart representation of the code
+  - Each node is a basic block
+    - If you execute the beginning of a basic block, then you execute the end of the basic block.
+    - Thus, can perform optimization in a basic block
+** Optimization
+- Difficulty
+- Peephole optimization
+  - Canonical optimization
+    1. =mult by 2= $\rightarrow$ =shift by 1=
+- Loop invariant code motion (LICM)
+- Constant propagation
+- Dead-code elimination
+** Data-flow Analysis
+- Live variable analysis
+- Reachable definition
+- Static Single Assignment (SSA)
+* Semantic Analysis
+A parser can check if a program is syntactically correct, i.e it looks good. But, it can not
+determine if a program is semantically correct, i.e. it is meaningful. A semantic analyzer is able
+to check the
+The parser can only make sure that a program looks good. But, it cannot make sure a program is meaningful. It is the semantic analyzer's task to check if a program is semantically correct. A semantic analyzer consists of two parts. The first part is called name analyzer. And the second part is called type checker. Type checker should only be invoked after the name analyzer since it dependes on the information (Symbol Table) built during the pass of name analyzer. Together, the following errors can be caught by the semantic analzyer
+1. A variable is declared more than once in the same scope
+2. A variable is used before its declaration
+3. A variable of type =a= is assigned with a value of type =b=
+4. A function is called, by with incorrect number of actual parameters
+** Symbol Table
+A symbol table contains symbol entries. Each entry stores a map from a name to the attributes of the name:
+1. kind (variable, function, struct,...)
+2. type (int, string, void, ...)
+The design of the symbol is based on the scoping rule. A scoping rule tells the compiler when a name can be reused. What value should a name associate to in a nested scope. There are two types of scoping rules. The first one is called static scoping. The second one is called dynamic scoping.
+*** Static Scoping
+The correspondence between uses and declarations is made at compile time.
+*** Dynamic Scoping
+
+* Code Generation
+[fn:1]
 ** =Spim=
    Special Registers in Spim
    | Register    | Purpose                                                 |

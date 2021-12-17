@@ -1,16 +1,14 @@
-% Created 2021-12-09 Thu 20:05
+% Created 2021-12-17 Fri 08:58
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
-\usepackage{grffile}
 \usepackage{longtable}
 \usepackage{wrapfig}
 \usepackage{rotating}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
-\usepackage{textcomp}
 \usepackage{amssymb}
 \usepackage{capt-of}
 \usepackage{hyperref}
@@ -22,7 +20,7 @@
  pdftitle={CS536 Final Exam Review},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdfcreator={Emacs 29.0.50 (Org mode 9.5.1)}, 
  pdflang={English}}
 \begin{document}
 
@@ -30,10 +28,117 @@
 \tableofcontents
 
 
-\section{Code generation \footnote{Notes from \href{https://pages.cs.wisc.edu/\~aws/courses/cs536/readings/codegen.html}{CS536 Lecture Notes on Codegen}}}
-\label{sec:org9a67eca}
+\section{Topics on the Final Exam}
+\label{sec:org654c28b}
+\subsection{Semantic Analysis}
+\label{sec:org4f3fc2e}
+\begin{itemize}
+\item Name analysis / symbol table
+\item static scope vs. dynamic scope
+\item variable overloading
+\item type checking
+\begin{itemize}
+\item What are types? \(\mathbb{Z} = \text{set of all integers}\)
+\item type system
+\begin{itemize}
+\item primitive types
+\item compound types
+\item typing rules
+\end{itemize}
+\item type errors
+\item static typing
+\begin{itemize}
+\item checked by compiler
+\item check at compiler type
+\end{itemize}
+\item dynamic typing
+\begin{itemize}
+\item check at runtime
+\end{itemize}
+\item strong vs. weak typing
+\begin{itemize}
+\item the degree to which a language catch a type error at compile/run time
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Runtime Environment}
+\label{sec:org7980202}
+\begin{itemize}
+\item How the memory is laid out
+\begin{itemize}
+\item the stack 
+\begin{itemize}
+\item store temporary things
+\item activation records (AR)
+\end{itemize}
+\item the heap
+\begin{itemize}
+\item store data dynamically allocated data
+\end{itemize}
+\item caller-callee relationship
+\begin{itemize}
+\item parameter passing
+\begin{itemize}
+\item pass by value
+\begin{itemize}
+\item make a copy of the value
+\end{itemize}
+\item pass by reference
+\begin{itemize}
+\item pass the address
+\end{itemize}
+\item pass by value-result
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Code Generation}
+\label{sec:org570514c}
+\begin{itemize}
+\item Intermediate Representation (IR, pseudo assembly code)
+\item Compiler Backend
+\item MIPS
+\item Code generation in MIPS
+\begin{itemize}
+\item AST \(\rightarrow\) MIPS
+\item \texttt{if}, \texttt{while}, function calls, returns, etc
+\end{itemize}
+\item Control-flow graph (CFG)
+\begin{itemize}
+\item Flowchart representation of the code
+\item Each node is a basic block
+\begin{itemize}
+\item If you execute the beginning of a basic block, then you execute the end of the basic block.
+\item Thus, can perform optimization in a basic block
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Optimization}
+\label{sec:orgc5f8446}
+\begin{itemize}
+\item Difficulty
+\item Peephole optimization
+\begin{itemize}
+\item Canonical optimization
+\begin{enumerate}
+\item \texttt{mult by 2} \(\rightarrow\) \texttt{shift by 1}
+\end{enumerate}
+\end{itemize}
+\item Loop invariant code motion (LICM)
+\item Constant propagation
+\item Dead-code elimination
+\end{itemize}
+\subsection{Data-flow Analysis}
+\label{sec:orgd9da015}
+\begin{itemize}
+\item Live variable analysis
+\item Reachable definition
+\item Static Single Assignment (SSA)
+\end{itemize}
+\section{Code Generation}
+\label{sec:org341d5da}
 \subsection{\texttt{Spim}}
-\label{sec:orgb9d4291}
+\label{sec:orge1b140a}
 Special Registers in Spim
 \begin{center}
 \begin{tabular}{ll}
@@ -51,7 +156,7 @@ Register & Purpose\\
 \end{tabular}
 \end{center}
 \subsection{Code Generation for Global Variable Declarations}
-\label{sec:org6076987}
+\label{sec:org2fa2e18}
 Let \texttt{N} denote the size of the global variable in bytes. For each global variable \texttt{\_v}, we
 generate the following code snippet:
 \begin{verbatim}
@@ -60,7 +165,7 @@ generate the following code snippet:
 _v: .space N  # label N bytes area with name _v
 \end{verbatim}
 \subsection{Code Generation for Functions}
-\label{sec:org7675030}
+\label{sec:org5ddf4cb}
 Need to generate the following 4 parts in order:
 \begin{enumerate}
 \item preamble
@@ -69,7 +174,7 @@ Need to generate the following 4 parts in order:
 \item exit
 \end{enumerate}
 \subsubsection{Generating Function Preamble}
-\label{sec:org93ebb39}
+\label{sec:orgaa8e617}
 For the \texttt{main} function,
 \begin{verbatim}
     .text
@@ -84,7 +189,7 @@ _<functionName>:
 where \texttt{<functionName>} is a placeholder for the function called \texttt{functinoName}.
 The \texttt{.text} indicates the assembler that the instructions below should be stored in the text area.
 \subsubsection{Generating Function Entry}
-\label{sec:org0778189}
+\label{sec:orgf472759}
 We do not need to worry about the actual parameters because the caller of this function has
 already pushed them on the stack.
 We need to do the following 4 things in order:
@@ -110,11 +215,11 @@ subu $sp, $sp, <size of locals in bytes>
 where \texttt{size of locals in bytes} can be calculated during semantic analysis.
 \end{enumerate}
 \subsubsection{Generating Function Body}
-\label{sec:org6290ab8}
+\label{sec:org66a8804}
 No need to generate code for declarations, but need to generate code for each statement.
 \begin{enumerate}
 \item Write Statement
-\label{sec:org3250abb}
+\label{sec:org67bb5d5}
 \begin{enumerate}
 \item Call the \texttt{codeGen} of the expressions in the write statement so that the value to be written
 will be placed on the top of the stack.
@@ -134,11 +239,46 @@ generate("li", v0, 1);
 generate("syscall");
 \end{verbatim}
 \end{enumerate}
+\item If-Then Statement
+\label{sec:org0eb7850}
+\begin{enumerate}
+\item Evaluate the condition
+\item Pop the top-of-stack value into register \texttt{\$t0}
+\item Jump to \texttt{FalseLabel} if \texttt{\$t0} is \texttt{FALSE}
+\item Code for the statement list
+\item \texttt{FalseLabel:}
 \end{enumerate}
-
-
+\item If-Then-Else Statement
+\label{sec:org8ebfcd1}
+\begin{enumerate}
+\item Evaluate the condition
+\item Pop the top-of-stack value into register \texttt{\$t0}
+\item Jump to \texttt{FalseLabel} if \texttt{\$t0} is \texttt{FALSE}
+\item Code for the then-statement list
+\item Jump to \texttt{Exit}
+\item \texttt{FalseLabel:}
+\item \texttt{Exit:}
+\end{enumerate}
+\item While Statement
+\label{sec:org22be3f9}
+\begin{enumerate}
+\item \texttt{Start:}
+\item Evaluate the condition
+\item Pop the top-of-stack value into register \texttt{\$t0}
+\item Jump to \texttt{FalseLabel} if \texttt{\$0} is \texttt{FALSE}
+\item Code for the statement list
+\item \texttt{Start}
+\item \texttt{FalseLabel:}
+\end{enumerate}
+\item Return Statement
+\label{sec:org1fa4f9c}
+\item Read Statement
+\label{sec:orga0fc707}
+\item Identifier
+\label{sec:org10820b8}
+\end{enumerate}
 \subsubsection{Generating Function Exit}
-\label{sec:org462538a}
+\label{sec:org456a23b}
 Want to pop off this function's AR. Then jump to the address that stored in the return address
 field of this function's AR. Popping off this function's AR means to restore the \texttt{\$sp} and \texttt{\$fp}
 to its caller' values. However, instead of simply setting \texttt{\$sp} to \texttt{\$fp}, we want to store \texttt{\$fp}
