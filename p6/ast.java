@@ -258,14 +258,14 @@ class FormalsListNode extends ASTnode {
      */
     public List<Type> nameAnalysis(SymTable symTab) {
         List<Type> typeList = new LinkedList<Type>();
-        int i = 1;
+        int i = myFormals.size();
         for (FormalDeclNode node : myFormals) {
             Symb sym = node.nameAnalysis(symTab);
             if (sym != null) {
                 typeList.add(sym.getType());
                 sym.setOffset(4 * i);
             }
-            i++;
+            i--;
         }
         return typeList;
     }
